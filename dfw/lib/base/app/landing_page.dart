@@ -61,83 +61,86 @@ List<RouteConst> verifiedRoutes = [
 class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthBloc, AuthState>(
-      listener: (context, state) {
-        setState(() {
-          isAuth = state.status is StatusAuthenticated;
-        });
-        // if (state.status is StatusAuthenticated) {
-        //   print('Status -> Landing: ' + state.status.toString());
-        //   user = User(username: state.username, password: state.password);
-        // }
-        // if (state.status is StatusUnauthenticated) {
-        //   print('Status -> Landing: ' + state.status.toString());
-        //   user = null;
-        // }
-      },
-      builder: (BuildContext context, AuthState state) {
-        print('Status -> Landing: ' + state.status.toString());
-        return Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.background,
-          bottomNavigationBar: (ResponsiveWidget.isMobile(context) && isAuth)
-              ? BottomMenu(page: widget.page)
-              : null,
-          appBar: AppBar(
-            automaticallyImplyLeading:
-                (ResponsiveWidget.isMobile(context)) ? true : false,
-            title: (ResponsiveWidget.isMobile(context))
-                ? SizedBox(
-                    height: 60, child: Image.asset('images/cthtc-logo.jpg'))
+    return BlocProvider(
+      create: (context) => AuthBloc(),
+      child: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          setState(() {
+            isAuth = state.status is StatusAuthenticated;
+          });
+          // if (state.status is StatusAuthenticated) {
+          //   print('Status -> Landing: ' + state.status.toString());
+          //   user = User(username: state.username, password: state.password);
+          // }
+          // if (state.status is StatusUnauthenticated) {
+          //   print('Status -> Landing: ' + state.status.toString());
+          //   user = null;
+          // }
+        },
+        builder: (BuildContext context, AuthState state) {
+          print('Status -> Landing: ' + state.status.toString());
+          return Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.background,
+            bottomNavigationBar: (ResponsiveWidget.isMobile(context) && isAuth)
+                ? BottomMenu(page: widget.page)
                 : null,
-            leading: (ResponsiveWidget.isMobile(context))
-                ? null
-                : Image.asset('images/cthtc-logo.jpg'),
-            actions: ResponsiveWidget.isMobile(context)
-                ? null
-                : [
-                    TopMenu(page: widget.page),
-                    isAuth
-                        ? SignOutMenu(isExpanded: false)
-                        : SignInMenu(isExpanded: false)
-                  ],
-          ),
-          drawer: ResponsiveWidget.isMobile(context)
-              ? DrawerMenu(page: widget.page)
-              : null,
-          body: SafeArea(
-            child: Row(
-              children: [
-                if (ResponsiveWidget.isTablet(context) && isAuth)
-                  RailMenu(
-                    page: widget.page,
-                    isExpanded: false,
-                  ),
-                if (ResponsiveWidget.isDesktop(context) && isAuth)
-                  RailMenu(
-                    page: widget.page,
-                    isExpanded: true,
-                  ),
-                Expanded(
-                  flex: 10,
-                  child: Center(
-                    child: IndexedStack(
-                      index: (verifiedRoutes + guestRoutes + authRoutes)
-                          .map((route) => route.path)
-                          .toList()
-                          .indexOf(widget.page),
-                      children: [
-                        for (var page in verifiedRoutes) ...[page.widget],
-                        for (var page in guestRoutes) ...[page.widget],
-                        for (var page in authRoutes) ...[page.widget],
-                      ],
+            appBar: AppBar(
+              automaticallyImplyLeading:
+                  (ResponsiveWidget.isMobile(context)) ? true : false,
+              title: (ResponsiveWidget.isMobile(context))
+                  ? SizedBox(
+                      height: 60, child: Image.asset('images/cthtc-logo.jpg'))
+                  : null,
+              leading: (ResponsiveWidget.isMobile(context))
+                  ? null
+                  : Image.asset('images/cthtc-logo.jpg'),
+              actions: ResponsiveWidget.isMobile(context)
+                  ? null
+                  : [
+                      TopMenu(page: widget.page),
+                      isAuth
+                          ? SignOutMenu(isExpanded: false)
+                          : SignInMenu(isExpanded: false)
+                    ],
+            ),
+            drawer: ResponsiveWidget.isMobile(context)
+                ? DrawerMenu(page: widget.page)
+                : null,
+            body: SafeArea(
+              child: Row(
+                children: [
+                  if (ResponsiveWidget.isTablet(context) && isAuth)
+                    RailMenu(
+                      page: widget.page,
+                      isExpanded: false,
+                    ),
+                  if (ResponsiveWidget.isDesktop(context) && isAuth)
+                    RailMenu(
+                      page: widget.page,
+                      isExpanded: true,
+                    ),
+                  Expanded(
+                    flex: 10,
+                    child: Center(
+                      child: IndexedStack(
+                        index: (verifiedRoutes + guestRoutes + authRoutes)
+                            .map((route) => route.path)
+                            .toList()
+                            .indexOf(widget.page),
+                        children: [
+                          for (var page in verifiedRoutes) ...[page.widget],
+                          for (var page in guestRoutes) ...[page.widget],
+                          for (var page in authRoutes) ...[page.widget],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/error/error_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -54,6 +55,11 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/home',
       // onGenerateRoute: widget.routers!.generateRoute,
       onGenerateRoute: Fluro.router.generator,
+      // onUnknownRoute: (_) {
+      //   return MaterialPageRoute(
+      //     builder: (context) => ErrorPage(),
+      //   );
+      // },
     );
   }
 }

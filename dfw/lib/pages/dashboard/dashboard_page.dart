@@ -20,15 +20,11 @@ class DashboardPage extends StatelessWidget {
         // TODO: implement listener
       },
       builder: (context, state) {
-        if (state is Load_AuthState)
-          return ResponsiveWidget(
-            mobile: DashboardMobile(),
-            tablet: DashboardTablet(),
-            desktop: DashboardDesktop(),
-          );
-        else
-          return ErrorPage();
-        ;
+        return ResponsiveWidget(
+          mobile: DashboardMobile(),
+          tablet: DashboardTablet(),
+          desktop: DashboardDesktop(),
+        );
       },
     );
   }

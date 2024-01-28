@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uuid/uuid.dart';
 import '../base/extensions/responsiveContext.dart';
 import '../base/models/user.dart';
 import '../base/utils/authentications/auth_bloc.dart';
@@ -31,7 +32,10 @@ class _HomePageState extends State<HomePage> {
       listener: (context, state) {
         if (state.status is StatusAuthenticated) {
           print('Status -> Home: ' + state.status.toString());
-          user = User(username: state.username, password: state.password);
+          user = User(
+              uuid: const Uuid().v4(),
+              username: state.username,
+              password: state.password);
         }
         if (state.status is StatusUnauthenticated) {
           print('Status -> Home: ' + state.status.toString());

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:fluro/fluro.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../base/utils/authentications/auth_bloc.dart';
 import '../app/landing_page.dart';
@@ -7,8 +10,11 @@ import '../app/splashscreen.dart';
 class Fluro {
   static final FluroRouter router = FluroRouter();
 
-  static final Handler _splashHandler =
-      Handler(handlerFunc: (context, params) => SplashScreen());
+  static final Handler _splashHandler = Handler(
+    handlerFunc: (context, params) => SplashScreen(),
+  );
+
+  // handlerFunc: (context, params) => SplashScreen());
 
   static final Handler _mainPageHandler = Handler(
     handlerFunc: (context, params) => BlocProvider(
@@ -40,28 +46,45 @@ class Fluro {
   );
 
   static void setupRouter() {
+    TransitionType transitionType;
+
+    /// setting transition on web
+    if (kIsWeb) {
+      transitionType = TransitionType.fadeIn;
+    }
+
+    /// setting transition on android
+    else if (Platform.isAndroid) {
+      transitionType = TransitionType.material;
+    }
+
+    /// setting transition on iOS
+    else {
+      transitionType = TransitionType.inFromLeft;
+    }
+
     // router.define(
     //   '/',
+    //   handler: _splashHandler,
+    //   // transitionType: TransitionType.fadeIn,
+    // );
+
+    // router.define(
+    //   '/404',
+    //   handler: _splashHandler,
+    //   transitionType: TransitionType.fadeIn,
+    // );
+
+    // router.define(
+    //   '/signout',
     //   handler: _splashHandler,
     //   transitionType: TransitionType.fadeIn,
     // );
 
     router.define(
-      '/404',
-      handler: _splashHandler,
-      transitionType: TransitionType.fadeIn,
-    );
-
-    router.define(
-      '/signout',
-      handler: _splashHandler,
-      transitionType: TransitionType.fadeIn,
-    );
-
-    router.define(
       '/:page',
       handler: _mainPageHandler,
-      transitionType: TransitionType.fadeIn,
+      transitionType: transitionType,
     );
 
     // router.define(
