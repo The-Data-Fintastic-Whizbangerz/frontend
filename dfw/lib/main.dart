@@ -1,9 +1,7 @@
-import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/error/error_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'base/extensions/themes.dart';
 

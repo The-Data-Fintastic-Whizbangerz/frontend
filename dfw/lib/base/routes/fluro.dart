@@ -46,23 +46,6 @@ class Fluro {
   );
 
   static void setupRouter() {
-    TransitionType transitionType;
-
-    /// setting transition on web
-    if (kIsWeb) {
-      transitionType = TransitionType.fadeIn;
-    }
-
-    /// setting transition on android
-    else if (Platform.isAndroid) {
-      transitionType = TransitionType.material;
-    }
-
-    /// setting transition on iOS
-    else {
-      transitionType = TransitionType.inFromLeft;
-    }
-
     // router.define(
     //   '/',
     //   handler: _splashHandler,
@@ -75,16 +58,16 @@ class Fluro {
     //   transitionType: TransitionType.fadeIn,
     // );
 
-    // router.define(
-    //   '/signout',
-    //   handler: _splashHandler,
-    //   transitionType: TransitionType.fadeIn,
-    // );
+    router.define(
+      '/signout',
+      handler: _splashHandler,
+      transitionType: TransitionType.fadeIn,
+    );
 
     router.define(
       '/:page',
       handler: _mainPageHandler,
-      transitionType: transitionType,
+      transitionType: TransitionType.fadeIn,
     );
 
     // router.define(
