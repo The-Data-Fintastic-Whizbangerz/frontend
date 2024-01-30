@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../base/utils/authentications/auth_bloc.dart';
 import '../app/landing_page.dart';
+import '../app/landing_page1.dart';
 import '../app/splashscreen.dart';
 
 class Fluro {
@@ -16,10 +17,19 @@ class Fluro {
 
   // handlerFunc: (context, params) => SplashScreen());
 
+  // static final Handler _mainPageHandler = Handler(
+  //   handlerFunc: (context, params) => BlocProvider(
+  //     create: (context) => AuthBloc(),
+  //     child: LandingPage(
+  //       page: params['page']!.first,
+  //     ),
+  //   ),
+  // );
+
   static final Handler _mainPageHandler = Handler(
     handlerFunc: (context, params) => BlocProvider(
       create: (context) => AuthBloc(),
-      child: LandingPage(
+      child: LandingPage1(
         page: params['page']!.first,
       ),
     ),
@@ -35,15 +45,15 @@ class Fluro {
   //   ),
   // );
 
-  static final Handler _extraPageHandler = Handler(
-    handlerFunc: (context, params) => BlocProvider(
-      create: (context) => AuthBloc(),
-      child: LandingPage(
-        page: params['page']!.first,
-        extra: params['extra']!.first,
-      ),
-    ),
-  );
+  // static final Handler _extraPageHandler = Handler(
+  //   handlerFunc: (context, params) => BlocProvider(
+  //     create: (context) => AuthBloc(),
+  //     child: LandingPage(
+  //       page: params['page']!.first,
+  //       extra: params['extra']!.first,
+  //     ),
+  //   ),
+  // );
 
   static void setupRouter() {
     // router.define(
@@ -76,10 +86,10 @@ class Fluro {
     //   transitionType: TransitionType.fadeIn,
     // );
 
-    router.define(
-      '/:page/:extra',
-      handler: _extraPageHandler,
-      transitionType: TransitionType.fadeIn,
-    );
+    // router.define(
+    //   '/:page/:extra',
+    //   handler: _extraPageHandler,
+    //   transitionType: TransitionType.fadeIn,
+    // );
   }
 }
