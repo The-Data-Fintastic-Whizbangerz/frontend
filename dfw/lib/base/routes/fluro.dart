@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../base/utils/authentications/auth_bloc.dart';
 import '../app/landing_page.dart';
-import '../app/landing_page1.dart';
+// import '../app/route_delegate';
 import '../app/splashscreen.dart';
 
 class Fluro {
@@ -29,7 +29,7 @@ class Fluro {
   static final Handler _mainPageHandler = Handler(
     handlerFunc: (context, params) => BlocProvider(
       create: (context) => AuthBloc(),
-      child: LandingPage1(
+      child: LandingPage(
         page: params['page']!.first,
       ),
     ),
