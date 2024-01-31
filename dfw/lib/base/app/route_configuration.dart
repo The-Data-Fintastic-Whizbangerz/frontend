@@ -1,15 +1,17 @@
+import 'route_code.dart';
+
 class SinglePageAppConfiguration {
-  final int? colorCode;
+  final String? path;
   final bool unknown;
 
-  SinglePageAppConfiguration.home({int? colorCode})
+  SinglePageAppConfiguration.home({String? path})
       : unknown = false,
-        colorCode = colorCode;
+        path = path;
 
   SinglePageAppConfiguration.unknown()
       : unknown = true,
-        colorCode = null;
+        path = null;
 
   bool get isUnknown => unknown == true;
-  bool get isHomePage => unknown == false;
+  bool get isPage => unknown == false;
 }

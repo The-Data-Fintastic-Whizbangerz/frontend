@@ -1,6 +1,8 @@
+import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-import 'color_code.dart';
+import 'home_page.dart';
+import 'route_code.dart';
 import 'landing_page.dart';
 import 'route_configuration.dart';
 
@@ -9,24 +11,25 @@ class SinglePageAppRouterDelegate
     with
         ChangeNotifier,
         PopNavigatorRouterDelegateMixin<SinglePageAppConfiguration> {
-  final List<int> colors;
+  final List<String> routes;
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
-  late Page _homePage;
+  late Page _foundationPage;
 
   // App state fields
-  final ValueNotifier<int> _colorCodeNotifier = ValueNotifier(0);
+  final ValueNotifier<RouteCode?> _routeNotifier = ValueNotifier(null);
   final ValueNotifier<bool?> _unknownStateNotifier = ValueNotifier(null);
 
-  int get defaultColorCode => colors.first;
+  String get defaultColorCode => routes.first;
 
-  SinglePageAppRouterDelegate({required this.colors}) {
-    _homePage = MaterialPage(
+  SinglePageAppRouterDelegate({required this.routes}) {
+    _foundationPage = MaterialPage(
         key: ValueKey<String>("HomePage"),
-        child: LandingPage(
-          page: '$_colorCodeNotifier',
+        child: HomeScreen(
+          routes: routes,
+          routeNotifier: _routeNotifier,
         ));
     Listenable.merge([
-      _colorCodeNotifier,
+      _routeNotifier,
     ])
       ..addListener(() {
         print("notifying the router widget");
@@ -43,14 +46,14 @@ class SinglePageAppRouterDelegate
       return SinglePageAppConfiguration.unknown();
     } else {
       return SinglePageAppConfiguration.home(
-        colorCode: _colorCodeNotifier.value,
+        path: _routeNotifier.value?.pathCode,
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final colorCode = _colorCodeNotifier.value;
+    final routeCode = _routeNotifier.value;
     return Navigator(
       key: navigatorKey,
       pages: _unknownStateNotifier.value == true
@@ -61,7 +64,7 @@ class SinglePageAppRouterDelegate
               )
             ]
           : [
-              _homePage,
+              _foundationPage,
             ],
       onPopPage: (route, result) {
         if (!route.didPop(result)) return false;
@@ -74,13 +77,13 @@ class SinglePageAppRouterDelegate
   Future<void> setNewRoutePath(SinglePageAppConfiguration configuration) async {
     if (configuration.unknown) {
       _unknownStateNotifier.value = true;
-      _colorCodeNotifier.value = 0;
-    } else if (configuration.isHomePage) {
+      _routeNotifier.value = null;
+    } else if (configuration.isPage) {
       _unknownStateNotifier.value = false;
-      _colorCodeNotifier.value = ColorCode(
-        hexColorCode: configuration.colorCode ?? defaultColorCode,
-        source: ColorCodeSelectionSource.fromBrowserAddressBar,
-      ) as int;
+      _routeNotifier.value = RouteCode(
+        pathCode: configuration.path ?? defaultColorCode,
+        source: RouteSelectionSource.fromBrowserAddressBar,
+      );
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'base/app/route_delegate.dart';
+import 'base/app/route_information.dart';
 import 'base/extensions/themes.dart';
 
 import 'base/routes/fluro.dart';
@@ -25,11 +26,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late SinglePageAppRouterDelegate delegate;
-  final _colors = [1, 2, 3, 4, 5];
+  late SinglePageAppRouteInformationParser parser;
+  final _routes = ['home', 'calculator', 'about'];
   @override
   void initState() {
     super.initState();
-    delegate = SinglePageAppRouterDelegate(colors: _colors);
+    delegate = SinglePageAppRouterDelegate(routes: _routes);
+    parser = SinglePageAppRouteInformationParser(routes: _routes);
     // Fluro.setupRouter();
   }
 
@@ -39,7 +42,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerDelegate: delegate,
-      // routeInformationParser: parser,
+      routeInformationParser: parser,
     );
     // return MaterialApp(
     //   debugShowCheckedModeBanner: false,
