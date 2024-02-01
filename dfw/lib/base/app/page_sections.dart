@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../routes/constants.dart';
 import 'route_code.dart';
 
 class RouteSections extends StatefulWidget {
@@ -65,6 +66,12 @@ class _RouteSectionsState extends State<RouteSections> {
     );
   }
 
+  List<RouteConst> guestRoutes = [
+    RouteConst.HOME_PAGE,
+    RouteConst.CALCULATOR_PAGE,
+    RouteConst.CONTACT_PAGE,
+  ];
+
   PageView _pageView() {
     return PageView.builder(
       pageSnapping: false,
@@ -73,10 +80,11 @@ class _RouteSectionsState extends State<RouteSections> {
       itemCount: widget.routes.length,
       physics: AlwaysScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
-        final color = widget.routes[index];
-        return Container(
-          child: Text(widget.routes[index]),
-        );
+        return guestRoutes[index].widget;
+        // final color = widget.routes[index];
+        // return Container(
+        //   child: Text(widget.routes[index]),
+        // );
       },
     );
   }
