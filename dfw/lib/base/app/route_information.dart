@@ -12,11 +12,10 @@ class SinglePageAppRouteInformationParser
   Future<SinglePageAppConfiguration> parseRouteInformation(
       RouteInformation routeInformation) async {
     final uri = Uri.parse(routeInformation.location);
-    if (uri.pathSegments.length == 0) {
+    if (uri.pathSegments.isEmpty) {
       return SinglePageAppConfiguration.home();
-    } else if (uri.pathSegments.length == 2) {
+    } else if (uri.pathSegments.length == 1) {
       final first = uri.pathSegments[0].toLowerCase();
-      // final second = uri.pathSegments[1].toLowerCase();
       if (_isValidPath(first)) {
         return SinglePageAppConfiguration.home(path: first);
       } else {
@@ -34,8 +33,7 @@ class SinglePageAppRouteInformationParser
       return RouteInformation(location: '/unknown');
     } else if (configuration.isPage) {
       return RouteInformation(
-        location:
-            configuration.path == null ? '/' : '/colors/${configuration.path}',
+        location: configuration.path == null ? '/' : '/${configuration.path}',
       );
     } else {
       return null;

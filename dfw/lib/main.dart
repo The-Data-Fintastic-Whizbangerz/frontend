@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -9,8 +10,8 @@ import 'base/extensions/themes.dart';
 
 import 'base/routes/fluro.dart';
 
-void main() async {
-  setPathUrlStrategy();
+void main() {
+  setUrlStrategy(PathUrlStrategy());
   runApp(MyApp());
 }
 

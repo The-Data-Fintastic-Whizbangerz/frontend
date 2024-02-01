@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:The_Data_Fintastic_Whizbangerz_Group/base/app/color_extensions.dart';
-
 import 'menu_button.dart';
 import 'route_code.dart';
 
@@ -14,9 +11,9 @@ class TopNavigationMenu extends StatelessWidget {
     required this.routeNotifier,
   }) : super(key: key);
 
-  int get colorCodeIndex {
-    final selectedHexColorCode = routeNotifier.value;
-    int index = routes.indexWhere((element) => element == selectedHexColorCode);
+  int get routeIndex {
+    final selectedRouteCode = routeNotifier.value?.pathCode;
+    int index = routes.indexWhere((element) => element == selectedRouteCode);
     return index > -1 ? index : 0;
   }
 
@@ -33,7 +30,7 @@ class TopNavigationMenu extends StatelessWidget {
               for (int i = 0; i < routes.length; i++)
                 NavigationMenuButton(
                   path: routes[i],
-                  selected: colorCodeIndex == i,
+                  selected: routeIndex == i,
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   onPressed: () {
                     routeNotifier.value = RouteCode(

@@ -4,9 +4,7 @@ class SinglePageAppConfiguration {
   final String? path;
   final bool unknown;
 
-  SinglePageAppConfiguration.home({String? path})
-      : unknown = false,
-        path = path;
+  SinglePageAppConfiguration.home({this.path}) : unknown = false;
 
   SinglePageAppConfiguration.unknown()
       : unknown = true,

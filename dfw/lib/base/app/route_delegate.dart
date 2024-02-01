@@ -19,7 +19,7 @@ class SinglePageAppRouterDelegate
   final ValueNotifier<RouteCode?> _routeNotifier = ValueNotifier(null);
   final ValueNotifier<bool?> _unknownStateNotifier = ValueNotifier(null);
 
-  String get defaultColorCode => routes.first;
+  String get defaultRouteCode => routes.first;
 
   SinglePageAppRouterDelegate({required this.routes}) {
     _foundationPage = MaterialPage(
@@ -81,7 +81,7 @@ class SinglePageAppRouterDelegate
     } else if (configuration.isPage) {
       _unknownStateNotifier.value = false;
       _routeNotifier.value = RouteCode(
-        pathCode: configuration.path ?? defaultColorCode,
+        pathCode: configuration.path ?? defaultRouteCode,
         source: RouteSelectionSource.fromBrowserAddressBar,
       );
     }

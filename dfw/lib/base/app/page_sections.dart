@@ -23,7 +23,7 @@ class _RouteSectionsState extends State<RouteSections> {
 
   // Find the index of the color code from the colors list
   int get _colorCodeIndex {
-    final hexColorCode = widget.routeNotifier.value;
+    final hexColorCode = widget.routeNotifier.value?.pathCode;
     int index = widget.routes.indexWhere((element) {
       return element == hexColorCode;
     });
@@ -75,12 +75,7 @@ class _RouteSectionsState extends State<RouteSections> {
       itemBuilder: (BuildContext context, int index) {
         final color = widget.routes[index];
         return Container(
-          // color: color.shade100,
           child: Text(widget.routes[index]),
-          // ShapeBorderListView(
-          //   sectionColor: color,
-          //   shapeBorderTypeNotifier: widget.shapeBorderTypeNotifier,
-          //   colorCodeNotifier: widget.colorCodeNotifier,
         );
       },
     );

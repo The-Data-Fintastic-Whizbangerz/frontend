@@ -1,4 +1,3 @@
-import 'color_extensions.dart';
 import 'package:flutter/material.dart';
 
 class NavigationMenuButton extends StatelessWidget {
