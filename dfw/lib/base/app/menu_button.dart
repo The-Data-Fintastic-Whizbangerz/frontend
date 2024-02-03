@@ -23,10 +23,23 @@ class NavigationMenuButton extends StatelessWidget {
       padding: padding,
       child: selected
           ? ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.black,
+                backgroundColor: Colors.white70,
+              ),
               onPressed: () {},
               child: Text(path),
             )
-          : TextButton(onPressed: onPressed, child: Text(path)),
+          : TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.transparent,
+              ),
+              onPressed: onPressed,
+              child: Text(
+                path,
+              ),
+            ),
     );
   }
 

@@ -18,7 +18,7 @@ class SinglePageAppConfiguration {
         path = null,
         reglog = null;
 
-  bool get isUnknown => unknown == true && path == null && reglog == null;
+  bool get isUnknown => unknown == true;
   bool get isPage => unknown == false && reglog == null;
   bool get isReglog => unknown == false && path == null;
 }

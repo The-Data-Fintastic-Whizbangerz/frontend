@@ -85,7 +85,8 @@ class _RouteSectionsState extends State<RouteSections> {
   List<RouteConst> guestRoutes = [
     RouteConst.HOME_PAGE,
     RouteConst.CALCULATOR_PAGE,
-    RouteConst.CONTACT_PAGE,
+    RouteConst.GUIDES_PAGE,
+    RouteConst.ABOUT_PAGE,
   ];
 
   NotificationListener<Notification> _pageView() {

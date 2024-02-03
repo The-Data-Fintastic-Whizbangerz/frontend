@@ -15,12 +15,6 @@ import '../menus/signin_menu.dart';
 import '../menus/signout_menu.dart';
 import '../menus/top_menu.dart';
 import '../extensions/responsiveWidget.dart';
-import '../../pages/calculator/calculator_page.dart';
-import '../../pages/contact/contact_page.dart';
-import '../../pages/dashboard/dashboard_page.dart';
-import '../../pages/home_page.dart';
-import '../../pages/profile/profile_page.dart';
-import '../../pages/settings/settings_page.dart';
 
 class LandingPage extends StatefulWidget {
   final String page;
@@ -49,7 +43,8 @@ List<RouteConst> authRoutes = [
 List<RouteConst> guestRoutes = [
   RouteConst.HOME_PAGE,
   RouteConst.CALCULATOR_PAGE,
-  RouteConst.CONTACT_PAGE,
+  RouteConst.GUIDES_PAGE,
+  RouteConst.ABOUT_PAGE,
 ];
 
 List<RouteConst> verifiedRoutes = [

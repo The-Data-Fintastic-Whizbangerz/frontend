@@ -1,3 +1,4 @@
+import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_value_listenable_builder/multi_value_listenable_builder.dart';
 
@@ -29,8 +30,24 @@ class TopNavigationMenu extends StatelessWidget {
       valueListenables: [routeNotifier, reglogNotifier],
       builder: (context, values, child) {
         return Container(
-          color: Colors.black87,
+          width: MediaQuery.of(context).size.width,
+          decoration: routeIndex == 0
+              ? BoxDecoration(color: Colors.white10)
+              : BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      BasicTheme.leftBackground,
+                      BasicTheme.rightBackground,
+                      BasicTheme.leftBackground,
+                      BasicTheme.rightBackground,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    stops: [0.1, 0.3, 0.8, 1],
+                  ),
+                ),
           child: Wrap(
+            alignment: WrapAlignment.center,
             direction: Axis.horizontal,
             children: [
               for (int i = 0; i < routes.length; i++)
@@ -57,7 +74,7 @@ class TopNavigationMenu extends StatelessWidget {
                     source: RouteSelectionSource.fromButtonClick,
                   );
                 },
-              ),
+              )
             ],
           ),
         );

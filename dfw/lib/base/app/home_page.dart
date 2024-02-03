@@ -1,3 +1,4 @@
+import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/themes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:The_Data_Fintastic_Whizbangerz_Group/base/app/page_sections.dart';
@@ -22,24 +23,38 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87,
-      body: Column(
-        children: [
-          TopNavigationMenu(
-            routes: routes,
-            routeNotifier: routeNotifier,
-            reglog: reglog,
-            reglogNotifier: reglogNotifier,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              BasicTheme.leftBackground,
+              BasicTheme.rightBackground,
+              BasicTheme.leftBackground,
+              BasicTheme.rightBackground,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.1, 0.3, 0.8, 1],
           ),
-          Expanded(
-            child: RouteSections(
+        ),
+        child: Column(
+          children: [
+            TopNavigationMenu(
               routes: routes,
               routeNotifier: routeNotifier,
               reglog: reglog,
               reglogNotifier: reglogNotifier,
             ),
-          ),
-        ],
+            Expanded(
+              child: RouteSections(
+                routes: routes,
+                routeNotifier: routeNotifier,
+                reglog: reglog,
+                reglogNotifier: reglogNotifier,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

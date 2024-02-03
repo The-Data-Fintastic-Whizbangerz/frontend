@@ -28,7 +28,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late SinglePageAppRouterDelegate delegate;
   late SinglePageAppRouteInformationParser parser;
-  final _routes = ['home', 'calculator', 'about'];
+  final _routes = ['home', 'products', 'guides', 'about'];
   final _reglog = ['signin', 'signup'];
   @override
   void initState() {

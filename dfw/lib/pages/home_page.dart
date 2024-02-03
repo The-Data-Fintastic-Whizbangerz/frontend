@@ -42,91 +42,90 @@ class _HomePageState extends State<HomePage> {
     //       user = null;
     //     }
     //   },
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                autoPlay: true,
-                height: context.responsive(sm: 250, md: 350, lg: 450),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        // CarouselSlider(
+        //   options: CarouselOptions(
+        //     autoPlay: true,
+        //     height: context.responsive(sm: 250, md: 350, lg: 450),
+        //   ),
+        //   items: bannerList
+        //       .map(
+        //         (item) => Container(
+        //           padding: EdgeInsets.all(5),
+        //           child: Center(
+        //             child: Image.network(
+        //               item,
+        //               fit: BoxFit.cover,
+        //               width: width,
+        //             ),
+        //           ),
+        //         ),
+        //       )
+        //       .toList(),
+        // ),
+        Expanded(
+          child: Container(
+              height: height,
+              width: width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white54,
               ),
-              items: bannerList
-                  .map((item) => Container(
-                      padding: EdgeInsets.all(5),
-                      child: Center(
-                        child: Image.network(
-                          item,
-                          fit: BoxFit.cover,
-                          width: width,
-                        ),
-                      )))
-                  .toList(),
-            ),
-            Container(
-                height: height,
-                width: width,
-                color: Colors.white,
-                margin: EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            // color: Colors.grey,\
-                            padding: EdgeInsets.all(10),
-                            child: Center(
-                                child: Text('Most Recent News',
-                                    style: TextStyle(color: Colors.black)))),
-                        TextButton(
+              margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          padding: EdgeInsets.all(15),
                           child: Center(
-                              child: Text('Read More...',
-                                  style: TextStyle(color: Colors.black))),
-                          onPressed: () {},
+                              child: Text('Most Recent News',
+                                  style: TextStyle(color: Colors.black)))),
+                      TextButton(
+                        child: Center(
+                            child: Text('Read More...',
+                                style: TextStyle(color: Colors.black))),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        Card(
+                          margin: EdgeInsets.all(15),
+                          child: Container(
+                              height: 200,
+                              width: 200,
+                              child: Center(child: Text('NEWS'))),
+                        ),
+                        Card(
+                          margin: EdgeInsets.all(15),
+                          child: Container(
+                              height: 200,
+                              width: 200,
+                              child: Center(child: Text('NEWS'))),
+                        ),
+                        Card(
+                          margin: EdgeInsets.all(15),
+                          child: Container(
+                              height: 200,
+                              width: 200,
+                              child: Center(child: Text('NEWS'))),
                         ),
                       ],
                     ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Card(
-                            color: Colors.grey,
-                            margin: EdgeInsets.all(10),
-                            child: Container(
-                                height: 200,
-                                width: 200,
-                                child: Center(child: Text('NEWS'))),
-                          ),
-                          Card(
-                            color: Colors.grey,
-                            margin: EdgeInsets.all(10),
-                            child: Container(
-                                height: 200,
-                                width: 200,
-                                child: Center(child: Text('NEWS'))),
-                          ),
-                          Card(
-                            color: Colors.grey,
-                            margin: EdgeInsets.all(10),
-                            child: Container(
-                                height: 200,
-                                width: 200,
-                                child: Center(child: Text('NEWS'))),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                )),
-          ],
+                  ),
+                ],
+              )),
         ),
-      ),
-      // ),
+      ],
     );
   }
 }
