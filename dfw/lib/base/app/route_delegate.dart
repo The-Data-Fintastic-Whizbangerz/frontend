@@ -32,11 +32,11 @@ class SinglePageAppRouterDelegate
           reglog: reglog,
           reglogNotifier: _reglogNotifier,
         ));
-    // Listenable.merge([_routeNotifier, _reglogNotifier])
-    //   ..addListener(() {
-    //     print("notifying the router widget");
-    //     notifyListeners();
-    //   });
+    Listenable.merge([_routeNotifier, _reglogNotifier])
+      ..addListener(() {
+        print("notifying the router widget");
+        notifyListeners();
+      });
   }
 
   @override
