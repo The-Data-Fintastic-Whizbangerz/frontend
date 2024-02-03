@@ -1,14 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:url_strategy/url_strategy.dart';
-import 'base/app/route_delegate.dart';
-import 'base/app/route_information.dart';
-import 'base/extensions/themes.dart';
 
-import 'base/routes/fluro.dart';
+import 'base/routes/route_delegate.dart';
+import 'base/routes/route_information.dart';
 
 void main() {
   setUrlStrategy(PathUrlStrategy());
@@ -26,16 +20,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late SinglePageAppRouterDelegate delegate;
-  late SinglePageAppRouteInformationParser parser;
-  final _routes = ['home', 'products', 'guides', 'about'];
+  late RouteDelegate delegate;
+  late RouteParser parser;
+  final _guest = ['home', 'products', 'guides', 'about'];
   final _reglog = ['signin', 'signup'];
   @override
   void initState() {
     super.initState();
-    delegate = SinglePageAppRouterDelegate(routes: _routes, reglog: _reglog);
-    parser =
-        SinglePageAppRouteInformationParser(routes: _routes, reglog: _reglog);
+    delegate = RouteDelegate(guests: _guest, reglog: _reglog);
+    parser = RouteParser(guests: _guest, reglog: _reglog);
     // Fluro.setupRouter();
   }
 

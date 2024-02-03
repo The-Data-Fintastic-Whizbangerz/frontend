@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
-class RouteCode extends Equatable {
-  final String pathCode;
+class RouteType extends Equatable {
+  final String path;
   final RouteSelectionSource source;
 
-  RouteCode({required this.pathCode, required this.source});
+  const RouteType({required this.path, required this.source});
 
   @override
-  List<Object?> get props => [pathCode, source];
+  List<Object?> get props => [path, source];
 }
 
 enum RouteSelectionSource { fromScroll, fromButtonClick, fromBrowserAddressBar }

@@ -1,38 +1,33 @@
-import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/home_page.dart';
 import 'package:flutter/material.dart';
-
-import 'home_page.dart';
-import 'route_code.dart';
-import 'landing_page.dart';
+import '../app/landing_page.dart';
+import 'route_type.dart';
 import 'route_configuration.dart';
 
-class SinglePageAppRouterDelegate
-    extends RouterDelegate<SinglePageAppConfiguration>
-    with
-        ChangeNotifier,
-        PopNavigatorRouterDelegateMixin<SinglePageAppConfiguration> {
+class RouteDelegate extends RouterDelegate<RouteConfiguration>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouteConfiguration> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
   late Page _foundationPage;
 
   // App state fields
-  final List<String> routes;
-  final ValueNotifier<RouteCode?> _routeNotifier = ValueNotifier(null);
+  final List<String> guests;
+  final ValueNotifier<RouteType?> _guestNotifier = ValueNotifier(null);
   final List<String> reglog;
-  final ValueNotifier<RouteCode?> _reglogNotifier = ValueNotifier(null);
+  final ValueNotifier<RouteType?> _reglogNotifier = ValueNotifier(null);
   final ValueNotifier<bool?> _unknownStateNotifier = ValueNotifier(null);
 
-  String get defaultRouteCode => routes.first;
+  String get defaultRouteCode => guests.first;
+  String get defaultReglogPath => reglog.first;
 
-  SinglePageAppRouterDelegate({required this.reglog, required this.routes}) {
+  RouteDelegate({required this.reglog, required this.guests}) {
     _foundationPage = MaterialPage(
         key: ValueKey<String>("HomePage"),
-        child: HomeScreen(
-          routes: routes,
-          routeNotifier: _routeNotifier,
+        child: LandingPage(
+          guests: guests,
+          guestNotifier: _guestNotifier,
           reglog: reglog,
           reglogNotifier: _reglogNotifier,
         ));
-    Listenable.merge([_routeNotifier, _reglogNotifier])
+    Listenable.merge([_guestNotifier, _reglogNotifier])
       ..addListener(() {
         print("notifying the router widget");
         notifyListeners();
@@ -43,22 +38,18 @@ class SinglePageAppRouterDelegate
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
   @override
-  SinglePageAppConfiguration get currentConfiguration {
+  RouteConfiguration get currentConfiguration {
     if (_unknownStateNotifier.value == true) {
-      return SinglePageAppConfiguration.unknown();
+      return RouteConfiguration.unknown();
     } else if (_reglogNotifier.value != null) {
-      return SinglePageAppConfiguration.reglog(
-          reglog: _reglogNotifier.value?.pathCode);
+      return RouteConfiguration.reglog(reglogPath: _reglogNotifier.value?.path);
     } else {
-      return SinglePageAppConfiguration.home(
-          path: _routeNotifier.value?.pathCode);
+      return RouteConfiguration.guest(guestPath: _guestNotifier.value?.path);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final routeCode = _routeNotifier.value;
-    final reglogCode = _reglogNotifier.value;
     return Navigator(
       key: navigatorKey,
       pages: _unknownStateNotifier.value == true
@@ -80,25 +71,25 @@ class SinglePageAppRouterDelegate
   }
 
   @override
-  Future<void> setNewRoutePath(SinglePageAppConfiguration configuration) async {
+  Future<void> setNewRoutePath(RouteConfiguration configuration) async {
     if (configuration.unknown) {
       _unknownStateNotifier.value = true;
-      _routeNotifier.value = null;
+      _guestNotifier.value = null;
       _reglogNotifier.value = null;
     } else if (configuration.isPage) {
       _unknownStateNotifier.value = false;
-      _routeNotifier.value = RouteCode(
-        pathCode: configuration.path ?? defaultRouteCode,
+      _guestNotifier.value = RouteType(
+        path: configuration.guestPath ?? defaultRouteCode,
         source: RouteSelectionSource.fromBrowserAddressBar,
       );
       _reglogNotifier.value == null;
     } else if (configuration.isReglog) {
       _unknownStateNotifier.value = false;
-      _reglogNotifier.value = RouteCode(
-        pathCode: configuration.path ?? 'signin',
+      _reglogNotifier.value = RouteType(
+        path: configuration.reglogPath ?? defaultReglogPath,
         source: RouteSelectionSource.fromBrowserAddressBar,
       );
-      _routeNotifier.value = null;
+      _guestNotifier.value = null;
     }
   }
 }

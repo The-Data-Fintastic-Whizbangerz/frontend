@@ -1,36 +1,37 @@
-import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_value_listenable_builder/multi_value_listenable_builder.dart';
 
+import '../extensions/themes.dart';
+import '../routes/route_type.dart';
 import 'menu_button.dart';
-import 'route_code.dart';
 
 class TopNavigationMenu extends StatelessWidget {
-  final List<String> routes;
-  final ValueNotifier<RouteCode?> routeNotifier;
+  final List<String> guests;
+  final ValueNotifier<RouteType?> guestNotifier;
   final List<String> reglog;
-  final ValueNotifier<RouteCode?> reglogNotifier;
+  final ValueNotifier<RouteType?> reglogNotifier;
   const TopNavigationMenu({
     Key? key,
-    required this.routes,
-    required this.routeNotifier,
+    required this.guests,
+    required this.guestNotifier,
     required this.reglog,
     required this.reglogNotifier,
   }) : super(key: key);
 
   int get routeIndex {
-    final selectedRouteCode = routeNotifier.value?.pathCode;
-    int index = routes.indexWhere((element) => element == selectedRouteCode);
+    final selectedRouteCode = guestNotifier.value?.path;
+    int index = guests.indexWhere((element) => element == selectedRouteCode);
     return index > -1 ? index : -1;
   }
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return MultiValueListenableBuilder(
-      valueListenables: [routeNotifier, reglogNotifier],
+      valueListenables: [guestNotifier, reglogNotifier],
       builder: (context, values, child) {
         return Container(
-          width: MediaQuery.of(context).size.width,
+          width: width,
           decoration: routeIndex == 0
               ? BoxDecoration(color: Colors.white10)
               : BoxDecoration(
@@ -50,14 +51,14 @@ class TopNavigationMenu extends StatelessWidget {
             alignment: WrapAlignment.center,
             direction: Axis.horizontal,
             children: [
-              for (int i = 0; i < routes.length; i++)
+              for (int i = 0; i < guests.length; i++)
                 NavigationMenuButton(
-                  path: routes[i],
+                  path: guests[i],
                   selected: routeIndex == i,
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                   onPressed: () {
-                    routeNotifier.value = RouteCode(
-                      pathCode: routes[i],
+                    guestNotifier.value = RouteType(
+                      path: guests[i],
                       source: RouteSelectionSource.fromButtonClick,
                     );
                     reglogNotifier.value = null;
@@ -65,12 +66,13 @@ class TopNavigationMenu extends StatelessWidget {
                 ),
               NavigationMenuButton(
                 path: 'signin',
-                selected: reglogNotifier.value != null,
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                selected:
+                    reglogNotifier.value != null && guestNotifier.value == null,
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                 onPressed: () {
-                  routeNotifier.value = null;
-                  reglogNotifier.value = RouteCode(
-                    pathCode: 'signin',
+                  guestNotifier.value = null;
+                  reglogNotifier.value = RouteType(
+                    path: 'signin',
                     source: RouteSelectionSource.fromButtonClick,
                   );
                 },

@@ -2,40 +2,38 @@ import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/signin/signin_page.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_value_listenable_builder/multi_value_listenable_builder.dart';
-
-import '../../pages/signup/signup_page.dart';
 import '../routes/constants.dart';
+import '../routes/route_type.dart';
 import '../utils/authentications/auth_bloc.dart';
-import 'route_code.dart';
 
-class RouteSections extends StatefulWidget {
-  final List<String> routes;
+class PageSection extends StatefulWidget {
+  final List<String> guests;
   final List<String> reglog;
-  final ValueNotifier<RouteCode?> routeNotifier;
-  final ValueNotifier<RouteCode?> reglogNotifier;
+  final ValueNotifier<RouteType?> guestNotifier;
+  final ValueNotifier<RouteType?> reglogNotifier;
 
-  const RouteSections({
+  const PageSection({
     Key? key,
-    required this.routes,
+    required this.guests,
     required this.reglog,
-    required this.routeNotifier,
+    required this.guestNotifier,
     required this.reglogNotifier,
   }) : super(key: key);
 
   @override
-  _RouteSectionsState createState() => _RouteSectionsState();
+  _PageSectionState createState() => _PageSectionState();
 }
 
-class _RouteSectionsState extends State<RouteSections> {
+class _PageSectionState extends State<PageSection> {
   final double _minPageHeight = 600;
 
   PageController _pageController = PageController();
 
-  // Find the index of the color code from the colors list
-  int get _colorCodeIndex {
-    final hexColorCode = widget.routeNotifier.value?.pathCode;
-    int index = widget.routes.indexWhere((element) {
-      return element == hexColorCode;
+  // Find the index of the user scroll in list
+  int get _pageIndex {
+    final userScrollIndex = widget.guestNotifier.value?.path;
+    int index = widget.guests.indexWhere((element) {
+      return element == userScrollIndex;
     });
     return index > -1 ? index : 0;
   }
@@ -43,12 +41,12 @@ class _RouteSectionsState extends State<RouteSections> {
   @override
   void initState() {
     super.initState();
-    widget.routeNotifier.addListener(() {
+    widget.guestNotifier.addListener(() {
       final fromScroll =
-          widget.routeNotifier.value?.source == RouteSelectionSource.fromScroll;
+          widget.guestNotifier.value?.source == RouteSelectionSource.fromScroll;
       if (_pageController.hasClients && !fromScroll) {
         _pageController.animateToPage(
-          _colorCodeIndex,
+          _pageIndex,
           duration: Duration(milliseconds: 300),
           curve: Curves.easeInOut,
         );
@@ -59,12 +57,14 @@ class _RouteSectionsState extends State<RouteSections> {
   @override
   Widget build(BuildContext context) {
     return MultiValueListenableBuilder(
-      valueListenables: [widget.routeNotifier, widget.reglogNotifier],
+      valueListenables: [widget.guestNotifier, widget.reglogNotifier],
       builder: (BuildContext _, List<dynamic> values, Widget? __) {
         List<String?> pairs =
-            values.map((element) => (element as RouteCode?)?.pathCode).toList();
+            values.map((element) => (element as RouteType?)?.path).toList();
         print(pairs);
-        if ((values.last as RouteCode?)?.pathCode != null) {
+
+        // temporary
+        if ((values.last as RouteType?)?.path != null) {
           return BlocProvider(
             create: (context) => AuthBloc(),
             child: SignInPage(),
@@ -101,7 +101,7 @@ class _RouteSectionsState extends State<RouteSections> {
         pageSnapping: false,
         scrollDirection: Axis.vertical,
         controller: _pageController,
-        itemCount: widget.routes.length,
+        itemCount: widget.guests.length,
         physics: AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return guestRoutes[index].widget;
@@ -114,21 +114,21 @@ class _RouteSectionsState extends State<RouteSections> {
     if (availableHeight < _minPageHeight) {
       _pageController = PageController(
         viewportFraction: _minPageHeight / availableHeight,
-        initialPage: _colorCodeIndex,
+        initialPage: _pageIndex,
       );
     } else {
       _pageController = PageController(
         viewportFraction: 1,
-        initialPage: _colorCodeIndex,
+        initialPage: _pageIndex,
       );
     }
   }
 
   void _onUserScroll() {
     final pageIndex = _pageController.page?.floor() ?? 0;
-    final hexColorCode = widget.routes[pageIndex];
-    widget.routeNotifier.value = RouteCode(
-      pathCode: hexColorCode,
+    final userScrollPath = widget.guests[pageIndex];
+    widget.guestNotifier.value = RouteType(
+      path: userScrollPath,
       source: RouteSelectionSource.fromScroll,
     );
   }

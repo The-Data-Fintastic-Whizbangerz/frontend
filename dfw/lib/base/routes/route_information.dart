@@ -2,46 +2,43 @@ import 'package:flutter/material.dart';
 
 import 'route_configuration.dart';
 
-class SinglePageAppRouteInformationParser
-    extends RouteInformationParser<SinglePageAppConfiguration> {
-  final List<String> routes;
+class RouteParser extends RouteInformationParser<RouteConfiguration> {
+  final List<String> guests;
   final List<String> reglog;
 
-  SinglePageAppRouteInformationParser(
-      {required this.reglog, required this.routes});
+  RouteParser({required this.reglog, required this.guests});
 
   @override
-  Future<SinglePageAppConfiguration> parseRouteInformation(
+  Future<RouteConfiguration> parseRouteInformation(
       RouteInformation routeInformation) async {
     final uri = Uri.parse(routeInformation.location);
     if (uri.pathSegments.isEmpty) {
-      return SinglePageAppConfiguration.home();
+      return RouteConfiguration.guest();
     } else if (uri.pathSegments.length == 1) {
       final first = uri.pathSegments[0].toLowerCase();
       if (reglog.contains(first)) {
-        return SinglePageAppConfiguration.reglog(reglog: first);
-      } else if (routes.contains(first)) {
-        return SinglePageAppConfiguration.home(path: first);
+        return RouteConfiguration.reglog(reglogPath: first);
+      } else if (guests.contains(first)) {
+        return RouteConfiguration.guest(guestPath: first);
       } else {
-        return SinglePageAppConfiguration.unknown();
+        return RouteConfiguration.unknown();
       }
     } else {
-      return SinglePageAppConfiguration.unknown();
+      return RouteConfiguration.unknown();
     }
   }
 
   @override
-  RouteInformation? restoreRouteInformation(
-      SinglePageAppConfiguration configuration) {
+  RouteInformation? restoreRouteInformation(RouteConfiguration configuration) {
     if (configuration.isUnknown) {
       return RouteInformation(location: '/unknown');
     } else if (configuration.isPage) {
       return RouteInformation(
-        location: '/${configuration.path}',
+        location: '/${configuration.guestPath}',
       );
     } else if (configuration.isReglog) {
       return RouteInformation(
-        location: '/signin',
+        location: '/${configuration.reglogPath}',
       );
     } else {
       return null;
@@ -49,7 +46,7 @@ class SinglePageAppRouteInformationParser
   }
 
   bool _isValidPath(String path) {
-    return routes.contains("$path");
+    return guests.contains("$path");
   }
 
   bool _isRegPath(String path) {

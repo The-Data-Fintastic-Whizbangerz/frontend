@@ -1,11 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uuid/uuid.dart';
-import '../base/extensions/responsiveContext.dart';
 import '../base/models/user.dart';
-import '../base/utils/authentications/auth_bloc.dart';
-import '../base/utils/states/status.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,6 +17,7 @@ final List<String> bannerList = [
   'https://plus.unsplash.com/premium_photo-1679923677983-02b9f3b166be?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 ];
 
+// test as news
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {

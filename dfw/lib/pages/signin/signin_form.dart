@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../base/app/landing_page.dart';
 import '../../base/extensions/neumorphism.dart';
 import '../../base/utils/authentications/auth_bloc.dart';
 

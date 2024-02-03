@@ -1,3 +1,4 @@
+import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/string.dart';
 import 'package:flutter/material.dart';
 
 class NavigationMenuButton extends StatelessWidget {
@@ -16,29 +17,26 @@ class NavigationMenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Brightness brightness = ThemeData.estimateBrightnessForColor(path);
-    // Color textColor =
-    //     brightness == Brightness.light ? Colors.black : Colors.white;
     return Padding(
       padding: padding,
       child: selected
           ? ElevatedButton(
               style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(20),
                 foregroundColor: Colors.black,
                 backgroundColor: Colors.white70,
               ),
-              onPressed: () {},
-              child: Text(path),
+              onPressed: onPressed,
+              child: Text(path.capitalize()),
             )
           : TextButton(
               style: TextButton.styleFrom(
+                padding: EdgeInsets.all(20),
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.transparent,
               ),
               onPressed: onPressed,
-              child: Text(
-                path,
-              ),
+              child: Text(path.capitalize()),
             ),
     );
   }
