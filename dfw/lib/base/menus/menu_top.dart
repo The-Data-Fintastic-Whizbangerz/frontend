@@ -21,7 +21,7 @@ class TopNavigationMenu extends StatelessWidget {
   int get routeIndex {
     final selectedRouteCode = guestNotifier.value?.path;
     int index = guests.indexWhere((element) => element == selectedRouteCode);
-    return index > -1 ? index : -1;
+    return index > -1 ? index : 0;
   }
 
   @override
@@ -47,37 +47,39 @@ class TopNavigationMenu extends StatelessWidget {
                     stops: [0.1, 0.3, 0.8, 1],
                   ),
                 ),
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            direction: Axis.horizontal,
-            children: [
-              for (int i = 0; i < guests.length; i++)
+          child: SafeArea(
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              direction: Axis.horizontal,
+              children: [
+                for (int i = 0; i < guests.length; i++)
+                  NavigationMenuButton(
+                    path: guests[i],
+                    selected: routeIndex == i && reglogNotifier.value == null,
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                    onPressed: () {
+                      guestNotifier.value = RouteType(
+                        path: guests[i],
+                        source: RouteSelectionSource.fromButtonClick,
+                      );
+                      reglogNotifier.value = null;
+                    },
+                  ),
                 NavigationMenuButton(
-                  path: guests[i],
-                  selected: routeIndex == i,
+                  path: 'login',
+                  selected: reglogNotifier.value != null &&
+                      guestNotifier.value == null,
                   padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                   onPressed: () {
-                    guestNotifier.value = RouteType(
-                      path: guests[i],
+                    guestNotifier.value = null;
+                    reglogNotifier.value = RouteType(
+                      path: 'login',
                       source: RouteSelectionSource.fromButtonClick,
                     );
-                    reglogNotifier.value = null;
                   },
-                ),
-              NavigationMenuButton(
-                path: 'signin',
-                selected:
-                    reglogNotifier.value != null && guestNotifier.value == null,
-                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                onPressed: () {
-                  guestNotifier.value = null;
-                  reglogNotifier.value = RouteType(
-                    path: 'signin',
-                    source: RouteSelectionSource.fromButtonClick,
-                  );
-                },
-              )
-            ],
+                )
+              ],
+            ),
           ),
         );
       },

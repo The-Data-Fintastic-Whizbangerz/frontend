@@ -39,7 +39,7 @@ dependencies:
   # fluro: ^2.0.5
   # timeline_tile: ^2.0.0
   # carousel_slider: ^4.0.0
-  # shared_preferences: ^2.2.2
+  shared_preferences: ^2.2.2
   uuid: ^3.0.0
   equatable: ^2.0.3
   # formz: ^0.6.0

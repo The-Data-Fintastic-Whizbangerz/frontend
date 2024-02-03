@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:url_strategy/url_strategy.dart';
+// import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 import 'base/routes/route_delegate.dart';
 import 'base/routes/route_information.dart';
 
 void main() {
-  setUrlStrategy(PathUrlStrategy());
+  setPathUrlStrategy();
   runApp(MyApp());
 }
 
@@ -22,8 +23,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late RouteDelegate delegate;
   late RouteParser parser;
-  final _guest = ['home', 'products', 'guides', 'about'];
-  final _reglog = ['signin', 'signup'];
+  final _guest = ['home', 'products', 'guides', 'news', 'about'];
+  final _reglog = ['login', 'register'];
   @override
   void initState() {
     super.initState();

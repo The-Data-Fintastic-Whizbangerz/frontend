@@ -62,63 +62,15 @@ class _HomePageState extends State<HomePage> {
         // ),
         Expanded(
           child: Container(
-              height: height,
-              width: width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white54,
-              ),
-              margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          padding: EdgeInsets.all(15),
-                          child: Center(
-                              child: Text('Most Recent News',
-                                  style: TextStyle(color: Colors.black)))),
-                      TextButton(
-                        child: Center(
-                            child: Text('Read More...',
-                                style: TextStyle(color: Colors.black))),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        Card(
-                          margin: EdgeInsets.all(15),
-                          child: Container(
-                              height: 200,
-                              width: 200,
-                              child: Center(child: Text('NEWS'))),
-                        ),
-                        Card(
-                          margin: EdgeInsets.all(15),
-                          child: Container(
-                              height: 200,
-                              width: 200,
-                              child: Center(child: Text('NEWS'))),
-                        ),
-                        Card(
-                          margin: EdgeInsets.all(15),
-                          child: Container(
-                              height: 200,
-                              width: 200,
-                              child: Center(child: Text('NEWS'))),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              )),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white54,
+            ),
+            margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            child: Center(
+              child: Text('Banner Here'),
+            ),
+          ),
         ),
       ],
     );

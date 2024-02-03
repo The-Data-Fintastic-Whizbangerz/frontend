@@ -22,7 +22,7 @@ class NavigationMenuButton extends StatelessWidget {
       child: selected
           ? ElevatedButton(
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 foregroundColor: Colors.black,
                 backgroundColor: Colors.white70,
               ),
@@ -31,7 +31,7 @@ class NavigationMenuButton extends StatelessWidget {
             )
           : TextButton(
               style: TextButton.styleFrom(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.transparent,
               ),

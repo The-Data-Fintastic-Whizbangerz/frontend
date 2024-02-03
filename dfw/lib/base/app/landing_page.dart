@@ -1,4 +1,4 @@
-import 'package:The_Data_Fintastic_Whizbangerz_Group/base/app/page_sections.dart';
+import '../app/page_sections.dart';
 import 'package:flutter/material.dart';
 
 import '../extensions/themes.dart';

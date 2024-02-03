@@ -86,6 +86,7 @@ class _PageSectionState extends State<PageSection> {
     RouteConst.HOME_PAGE,
     RouteConst.CALCULATOR_PAGE,
     RouteConst.GUIDES_PAGE,
+    RouteConst.NEWS_PAGE,
     RouteConst.ABOUT_PAGE,
   ];
 

@@ -1,4 +1,5 @@
 import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/guide/guide_page.dart';
+import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/news/news_page.dart';
 import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/product/product_page.dart';
 
 import '../../pages/about/about_page.dart';
@@ -14,15 +15,18 @@ import '/pages/signup/signup_page.dart';
 import 'package:flutter/material.dart';
 
 enum RouteConst {
-  // LANDING_PAGE('', Icons.pages_rounded, 0),
-  DASHBOARD_PAGE('dashboard', Icons.grid_view_rounded, DashboardPage()),
   HOME_PAGE('home', Icons.home_filled, HomePage()),
   ABOUT_PAGE('about', Icons.home_filled, AboutPage()),
   PRODUCT_PAGE('products', Icons.home_filled, ProductPage()),
-  GUIDES_PAGE('guides', Icons.home_filled, GuidePage()),
-  PROFILE_PAGE('profile', Icons.person_rounded, ProfilePage()),
-  // STATISTIC_PAGE('statistic', Icons.analytics, ),
   CALCULATOR_PAGE('calculator', Icons.calculate, CalculatorPage()),
+  GUIDES_PAGE('guides', Icons.home_filled, GuidePage()),
+  NEWS_PAGE('news', Icons.person_rounded, NewsPage()),
+
+  DASHBOARD_PAGE('dashboard', Icons.grid_view_rounded, DashboardPage()),
+  PROFILE_PAGE('profile', Icons.person_rounded, ProfilePage()),
+
+  // STATISTIC_PAGE('statistic', Icons.analytics, ),
+
   CONTACT_PAGE('contact', Icons.mail, ContactPage()),
   SETTING_PAGE('settings', Icons.settings, SettingsPage()),
   SIGNIN_PAGE('signin', Icons.input_rounded, SignInPage()),
