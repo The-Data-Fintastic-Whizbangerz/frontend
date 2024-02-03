@@ -1,16 +1,25 @@
+import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/signin/signin_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:multi_value_listenable_builder/multi_value_listenable_builder.dart';
 
+import '../../pages/signup/signup_page.dart';
 import '../routes/constants.dart';
+import '../utils/authentications/auth_bloc.dart';
 import 'route_code.dart';
 
 class RouteSections extends StatefulWidget {
   final List<String> routes;
+  final List<String> reglog;
   final ValueNotifier<RouteCode?> routeNotifier;
+  final ValueNotifier<RouteCode?> reglogNotifier;
 
   const RouteSections({
     Key? key,
     required this.routes,
+    required this.reglog,
     required this.routeNotifier,
+    required this.reglogNotifier,
   }) : super(key: key);
 
   @override
@@ -49,19 +58,26 @@ class _RouteSectionsState extends State<RouteSections> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        final availableHeight = constraints.maxHeight;
-        _updatePageController(availableHeight);
-        return NotificationListener<ScrollNotification>(
-          onNotification: (notification) {
-            if (notification is UserScrollNotification) {
-              _onUserScroll();
-            }
-            return true;
-          },
-          child: _pageView(),
-        );
+    return MultiValueListenableBuilder(
+      valueListenables: [widget.routeNotifier, widget.reglogNotifier],
+      builder: (BuildContext _, List<dynamic> values, Widget? __) {
+        List<String?> pairs =
+            values.map((element) => (element as RouteCode?)?.pathCode).toList();
+        print(pairs);
+        if ((values.last as RouteCode?)?.pathCode != null) {
+          return BlocProvider(
+            create: (context) => AuthBloc(),
+            child: SignInPage(),
+          );
+        } else {
+          return LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              final availableHeight = constraints.maxHeight;
+              _updatePageController(availableHeight);
+              return _pageView();
+            },
+          );
+        }
       },
     );
   }
@@ -72,20 +88,24 @@ class _RouteSectionsState extends State<RouteSections> {
     RouteConst.CONTACT_PAGE,
   ];
 
-  PageView _pageView() {
-    return PageView.builder(
-      pageSnapping: false,
-      scrollDirection: Axis.vertical,
-      controller: _pageController,
-      itemCount: widget.routes.length,
-      physics: AlwaysScrollableScrollPhysics(),
-      itemBuilder: (BuildContext context, int index) {
-        return guestRoutes[index].widget;
-        // final color = widget.routes[index];
-        // return Container(
-        //   child: Text(widget.routes[index]),
-        // );
+  NotificationListener<Notification> _pageView() {
+    return NotificationListener(
+      onNotification: (notification) {
+        if (notification is UserScrollNotification) {
+          _onUserScroll();
+        }
+        return true;
       },
+      child: PageView.builder(
+        pageSnapping: false,
+        scrollDirection: Axis.vertical,
+        controller: _pageController,
+        itemCount: widget.routes.length,
+        physics: AlwaysScrollableScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) {
+          return guestRoutes[index].widget;
+        },
+      ),
     );
   }
 

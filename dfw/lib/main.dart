@@ -29,11 +29,13 @@ class _MyAppState extends State<MyApp> {
   late SinglePageAppRouterDelegate delegate;
   late SinglePageAppRouteInformationParser parser;
   final _routes = ['home', 'calculator', 'about'];
+  final _reglog = ['signin', 'signup'];
   @override
   void initState() {
     super.initState();
-    delegate = SinglePageAppRouterDelegate(routes: _routes);
-    parser = SinglePageAppRouteInformationParser(routes: _routes);
+    delegate = SinglePageAppRouterDelegate(routes: _routes, reglog: _reglog);
+    parser =
+        SinglePageAppRouteInformationParser(routes: _routes, reglog: _reglog);
     // Fluro.setupRouter();
   }
 
