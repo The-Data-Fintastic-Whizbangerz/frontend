@@ -72,6 +72,7 @@ class SinglePageAppRouterDelegate
               _foundationPage,
             ],
       onPopPage: (route, result) {
+        print('pop' + result.toString());
         if (!route.didPop(result)) return false;
         return true;
       },

@@ -56,11 +56,11 @@ class TopNavigationMenu extends StatelessWidget {
                   selected: routeIndex == i,
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   onPressed: () {
-                    reglogNotifier.value = null;
                     routeNotifier.value = RouteCode(
                       pathCode: routes[i],
                       source: RouteSelectionSource.fromButtonClick,
                     );
+                    reglogNotifier.value = null;
                   },
                 ),
               NavigationMenuButton(

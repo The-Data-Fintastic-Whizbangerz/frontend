@@ -41,7 +41,7 @@ class SinglePageAppRouteInformationParser
       );
     } else if (configuration.isReglog) {
       return RouteInformation(
-        location: '/${configuration.path}',
+        location: '/signin',
       );
     } else {
       return null;
