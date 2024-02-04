@@ -26,12 +26,14 @@ class TopNavigationMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ValueNotifier<RouteType?> hoverNotifier = ValueNotifier(null);
     double width = MediaQuery.of(context).size.width;
     return MultiValueListenableBuilder(
-      valueListenables: [guestNotifier, reglogNotifier],
+      valueListenables: [guestNotifier, reglogNotifier, hoverNotifier],
       builder: (context, values, child) {
         return Container(
           width: width,
+          height: 60,
           decoration: routeIndex == 0
               ? BoxDecoration(color: Colors.white10)
               : BoxDecoration(
@@ -48,35 +50,67 @@ class TopNavigationMenu extends StatelessWidget {
                   ),
                 ),
           child: SafeArea(
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              direction: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                for (int i = 0; i < guests.length; i++)
-                  NavigationMenuButton(
-                    path: guests[i],
-                    selected: routeIndex == i && reglogNotifier.value == null,
-                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                    onPressed: () {
-                      guestNotifier.value = RouteType(
-                        path: guests[i],
-                        source: RouteSelectionSource.fromButtonClick,
+                Expanded(
+                  flex: (guests.length * 100) ~/ width,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: guests.length,
+                    itemBuilder: (context, index) {
+                      return NavigationMenuButton(
+                        path: guests[index],
+                        selected:
+                            routeIndex == index && reglogNotifier.value == null,
+                        hasSubMenu: hoverNotifier.value?.path == 'products',
+                        onPressed: () {
+                          guestNotifier.value = RouteType(
+                            path: guests[index],
+                            source: RouteSelectionSource.fromButtonClick,
+                          );
+                          reglogNotifier.value = null;
+                        },
+                        onHover: (value) {
+                          hoverNotifier.value = RouteType(
+                            path: guests[index],
+                            source: RouteSelectionSource.fromButtonHover,
+                          );
+                        },
+                        itemBuilder: (BuildContext) {
+                          if (hoverNotifier.value?.path == 'products') {
+                            return [
+                              PopupMenuItem(child: Text('Test')),
+                              PopupMenuItem(child: Text('Test')),
+                              PopupMenuItem(child: Text('Test')),
+                              PopupMenuItem(child: Text('Test')),
+                            ];
+                          }
+                          return [];
+                        },
                       );
-                      reglogNotifier.value = null;
                     },
                   ),
-                NavigationMenuButton(
-                  path: 'login',
-                  selected: reglogNotifier.value != null &&
-                      guestNotifier.value == null,
-                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                  onPressed: () {
-                    guestNotifier.value = null;
-                    reglogNotifier.value = RouteType(
-                      path: 'login',
-                      source: RouteSelectionSource.fromButtonClick,
-                    );
-                  },
+                ),
+                Expanded(
+                  flex: (reglog.length * 100) ~/ width,
+                  child: NavigationMenuButton(
+                    path: 'login',
+                    selected: reglogNotifier.value != null &&
+                        guestNotifier.value == null,
+                    hasSubMenu: false,
+                    onPressed: () {
+                      guestNotifier.value = null;
+                      reglogNotifier.value = RouteType(
+                        path: 'login',
+                        source: RouteSelectionSource.fromButtonClick,
+                      );
+                    },
+                    itemBuilder: (BuildContext) {
+                      return [];
+                    },
+                  ),
                 )
               ],
             ),

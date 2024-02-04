@@ -10,4 +10,9 @@ class RouteType extends Equatable {
   List<Object?> get props => [path, source];
 }
 
-enum RouteSelectionSource { fromScroll, fromButtonClick, fromBrowserAddressBar }
+enum RouteSelectionSource {
+  fromScroll,
+  fromButtonClick,
+  fromButtonHover,
+  fromBrowserAddressBar
+}

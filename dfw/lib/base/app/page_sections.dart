@@ -84,7 +84,7 @@ class _PageSectionState extends State<PageSection> {
 
   List<RouteConst> guestRoutes = [
     RouteConst.HOME_PAGE,
-    RouteConst.CALCULATOR_PAGE,
+    RouteConst.PRODUCT_PAGE,
     RouteConst.GUIDES_PAGE,
     RouteConst.NEWS_PAGE,
     RouteConst.ABOUT_PAGE,

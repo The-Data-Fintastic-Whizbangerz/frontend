@@ -1,33 +1,54 @@
-import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/string.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/string.dart';
 
 class NavigationMenuButton extends StatelessWidget {
   final String path;
   final bool selected;
+  final bool hasSubMenu;
   final EdgeInsets padding;
   final VoidCallback onPressed;
+  final Function(dynamic)? onSelected;
+  final Function(bool)? onHover;
+  final List<PopupMenuEntry<dynamic>> Function(BuildContext) itemBuilder;
 
   const NavigationMenuButton({
     Key? key,
     required this.path,
     required this.selected,
+    required this.hasSubMenu,
+    this.padding = const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
     required this.onPressed,
-    this.padding = EdgeInsets.zero,
+    this.onSelected,
+    this.onHover,
+    required this.itemBuilder,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Widget subMenu = PopupMenuButton(
+      offset: Offset(-30, 30),
+      position: PopupMenuPosition.under,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      itemBuilder: itemBuilder,
+      child: Text(path.capitalize()),
+    );
+
     return Padding(
       padding: padding,
       child: selected
-          ? ElevatedButton(
-              style: ElevatedButton.styleFrom(
+          ? TextButton(
+              style: TextButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 foregroundColor: Colors.black,
                 backgroundColor: Colors.white70,
               ),
               onPressed: onPressed,
-              child: Text(path.capitalize()),
+              onHover: onHover,
+              child: hasSubMenu ? subMenu : Text(path.capitalize()),
             )
           : TextButton(
               style: TextButton.styleFrom(
@@ -36,14 +57,9 @@ class NavigationMenuButton extends StatelessWidget {
                 backgroundColor: Colors.transparent,
               ),
               onPressed: onPressed,
-              child: Text(path.capitalize()),
+              onHover: onHover,
+              child: hasSubMenu ? subMenu : Text(path.capitalize()),
             ),
     );
   }
-
-  // Text _text(BuildContext context, Color? textColor) => Text(
-  //       "#${color.toHex()}",
-  //       style:
-  //           Theme.of(context).textTheme.headline6!.copyWith(color: textColor),
-  //     );
 }
