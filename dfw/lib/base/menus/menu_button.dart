@@ -1,7 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/string.dart';
+import '../../base/extensions/string.dart';
 
 class NavigationMenuButton extends StatelessWidget {
   final String path;
@@ -28,6 +27,11 @@ class NavigationMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget subMenu = PopupMenuButton(
+      elevation: 2,
+      color: Colors.white70,
+      shadowColor: Colors.black87,
+      surfaceTintColor: Colors.white,
+      tooltip: 'Show More Menus',
       offset: Offset(-30, 30),
       position: PopupMenuPosition.under,
       shape: RoundedRectangleBorder(
@@ -48,8 +52,7 @@ class NavigationMenuButton extends StatelessWidget {
               ),
               onPressed: onPressed,
               onHover: onHover,
-              child: hasSubMenu ? subMenu : Text(path.capitalize()),
-            )
+              child: hasSubMenu ? subMenu : Text(path.capitalize()))
           : TextButton(
               style: TextButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
@@ -58,8 +61,7 @@ class NavigationMenuButton extends StatelessWidget {
               ),
               onPressed: onPressed,
               onHover: onHover,
-              child: hasSubMenu ? subMenu : Text(path.capitalize()),
-            ),
+              child: hasSubMenu ? subMenu : Text(path.capitalize())),
     );
   }
 }

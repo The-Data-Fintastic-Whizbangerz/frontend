@@ -23,6 +23,15 @@ class RouteParser extends RouteInformationParser<RouteConfiguration> {
       } else {
         return RouteConfiguration.unknown();
       }
+      // testing only for products??? need change global
+    } else if (uri.pathSegments.length == 2) {
+      final first = uri.pathSegments[0].toLowerCase();
+      final second = uri.pathSegments[1].toLowerCase();
+      if (first == 'products') {
+        return RouteConfiguration.product(extraPath: second);
+      } else {
+        return RouteConfiguration.unknown();
+      }
     } else {
       return RouteConfiguration.unknown();
     }
@@ -40,6 +49,8 @@ class RouteParser extends RouteInformationParser<RouteConfiguration> {
       return RouteInformation(
         location: '/${configuration.reglogPath}',
       );
+    } else if (configuration.isProductsPage) {
+      return RouteInformation(location: '/products/${configuration.extraPath}');
     } else {
       return null;
     }
