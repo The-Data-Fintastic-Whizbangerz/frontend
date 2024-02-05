@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   late RouteDelegate delegate;
   late RouteParser parser;
   final _guest = ['home', 'products', 'guides', 'news', 'about'];
-  final _reglog = ['login', 'register'];
+  final _reglog = ['login', 'register', 'signout'];
   @override
   void initState() {
     super.initState();

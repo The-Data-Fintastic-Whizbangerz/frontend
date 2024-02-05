@@ -32,25 +32,25 @@ class _SignInFormState extends State<SignInForm> {
         // }
       },
       builder: (context, state) {
+        double ratio = MediaQuery.of(context).size.aspectRatio;
         return Form(
           key: _formKey,
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 50),
-            height: 400,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Login to CTHTC'),
-                  _usernameField(),
-                  _passwordField(),
-                  _loginButton(),
-                  _registerButton(),
-                ],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Login Loan Wise',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 50 * ratio,
+                    fontWeight: FontWeight.bold),
               ),
-            ).addNeumorphismInner(context),
+              _usernameField(),
+              _passwordField(),
+              _loginButton(),
+              _registerButton(),
+            ],
           ),
         );
       },
@@ -62,8 +62,10 @@ class _SignInFormState extends State<SignInForm> {
       builder: (context, state) {
         return Container(
           height: 50.0,
+          margin: EdgeInsets.symmetric(vertical: 5),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.0),
+            color: Colors.white60,
+            borderRadius: BorderRadius.circular(5),
           ),
           child: TextFormField(
             style: TextStyle(
@@ -88,7 +90,7 @@ class _SignInFormState extends State<SignInForm> {
               context.read<AuthBloc>().add(Username_AuthEvent(username: value));
             },
           ),
-        ).addNeumorphismInner(context);
+        );
       },
     );
   }
@@ -98,8 +100,10 @@ class _SignInFormState extends State<SignInForm> {
       builder: (context, state) {
         return Container(
           height: 50.0,
+          margin: EdgeInsets.symmetric(vertical: 5),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.0),
+            color: Colors.white60,
+            borderRadius: BorderRadius.circular(5),
           ),
           child: TextFormField(
               style: TextStyle(
@@ -127,7 +131,7 @@ class _SignInFormState extends State<SignInForm> {
               onChanged: (value) => context.read<AuthBloc>().add(
                     Password_AuthEvent(password: value),
                   )),
-        ).addNeumorphismInner(context);
+        );
       },
     );
   }
@@ -135,14 +139,13 @@ class _SignInFormState extends State<SignInForm> {
   Widget _loginButton() {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
-        return InkWell(
-          borderRadius: BorderRadius.circular(10),
-          child: Container(
-            width: 150,
-            height: 50,
-            child: Center(child: Text('Log In')),
-          ).addNeumorphism(context),
-          onTap: () {
+        return TextButton(
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.black,
+          ),
+          child: Center(heightFactor: 3, child: Text('Log In')),
+          onPressed: () {
             if (_formKey.currentState!.validate()) {
               (context).read<AuthBloc>().add(Submit_AuthEvent(
                   username: state.username, password: state.password));

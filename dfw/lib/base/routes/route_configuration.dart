@@ -29,5 +29,6 @@ class RouteConfiguration {
       unknown == false && reglogPath == null && extraPath == null;
   bool get isProductsPage =>
       unknown == false && reglogPath == null && guestPath == null;
-  bool get isReglog => unknown == false && guestPath == null;
+  bool get isReglog =>
+      unknown == false && guestPath == null && reglogPath != null;
 }

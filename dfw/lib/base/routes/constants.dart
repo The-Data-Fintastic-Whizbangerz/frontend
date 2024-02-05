@@ -36,7 +36,7 @@ enum RouteConst {
 
   CONTACT_PAGE('contact', Icons.mail, ContactPage()),
   SETTING_PAGE('settings', Icons.settings, SettingsPage()),
-  SIGNIN_PAGE('signin', Icons.input_rounded, SignInPage()),
+  SIGNIN_PAGE('signin', Icons.input_rounded, SignInWidget()),
   SIGNUP_PAGE('signup', Icons.rectangle_rounded, SignUpPage()),
   SIGNOUT_PAGE('signout', Icons.output_rounded, SignOutPage());
 

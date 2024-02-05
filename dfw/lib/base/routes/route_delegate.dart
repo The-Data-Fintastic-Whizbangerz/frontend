@@ -73,7 +73,7 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
                     extra: _extraNotifier.value?.path)
             ],
       onPopPage: (route, result) {
-        print('pop' + result.toString());
+        print('pop' + route.settings.name.toString());
         if (!route.didPop(result)) return false;
         return true;
       },

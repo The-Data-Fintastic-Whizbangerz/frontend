@@ -16,7 +16,7 @@ class UnknownPage extends Page {
 }
 
 class ErrorPage extends StatelessWidget {
-  String title;
+  String? title;
   ErrorPage({
     Key? key,
     required this.title,
@@ -29,7 +29,7 @@ class ErrorPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(title),
+            Text(title!),
             TextButton(
               onPressed: () {},
               child: Text('Go to homepage'),

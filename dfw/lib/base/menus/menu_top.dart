@@ -119,8 +119,7 @@ class TopNavigationMenu extends StatelessWidget {
                     height: 60,
                     child: NavigationMenuButton(
                       path: 'login',
-                      selected: reglogNotifier.value != null &&
-                          guestNotifier.value == null,
+                      selected: reglogNotifier.value?.path == 'login',
                       hasSubMenu: false,
                       onPressed: () {
                         guestNotifier.value = null;

@@ -27,13 +27,22 @@ class PageSection extends StatefulWidget {
 class _PageSectionState extends State<PageSection> {
   final double _minPageHeight = 600;
 
-  PageController _pageController = PageController();
+  PageController _guestController = PageController();
+  PageController _reglogController = PageController();
 
   // Find the index of the user scroll in list
-  int get _pageIndex {
+  int get _guestIndex {
     final userScrollIndex = widget.guestNotifier.value?.path;
     int index = widget.guests.indexWhere((element) {
       return element == userScrollIndex;
+    });
+    return index > -1 ? index : 0;
+  }
+
+  int get _reglogIndex {
+    final userTypeUrl = widget.reglogNotifier.value?.path;
+    int index = widget.reglog.indexWhere((element) {
+      return element == userTypeUrl;
     });
     return index > -1 ? index : 0;
   }
@@ -44,11 +53,20 @@ class _PageSectionState extends State<PageSection> {
     widget.guestNotifier.addListener(() {
       final fromScroll =
           widget.guestNotifier.value?.source == RouteSelectionSource.fromScroll;
-      if (_pageController.hasClients && !fromScroll) {
-        _pageController.animateToPage(
-          _pageIndex,
+      if (_guestController.hasClients && !fromScroll) {
+        _guestController.animateToPage(
+          _guestIndex,
           duration: Duration(milliseconds: 300),
           curve: Curves.easeInOut,
+        );
+      }
+    });
+    widget.reglogNotifier.addListener(() {
+      final fromAddress = widget.reglogNotifier.value?.source ==
+          RouteSelectionSource.fromBrowserAddressBar;
+      if (_reglogController.hasClients && !fromAddress) {
+        _reglogController.jumpToPage(
+          _reglogIndex,
         );
       }
     });
@@ -65,28 +83,40 @@ class _PageSectionState extends State<PageSection> {
 
         // temporary
         if ((values.last as RouteType?)?.path != null) {
-          return BlocProvider(
-            create: (context) => AuthBloc(),
+          _reglogController = PageController(
+            viewportFraction: 1,
+            initialPage: _reglogIndex,
+          );
+          return NotificationListener<Notification>(
+            onNotification: (notification) {
+              if (notification is UserScrollNotification) {
+                _onReglogEnter();
+              }
+              return true;
+            },
             child: _pageView(
                 routes: reglogRoutes,
-                controller: null,
+                controller: _reglogController,
                 physics: NeverScrollableScrollPhysics()),
           );
         } else {
           return LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
-              final availableHeight = constraints.maxHeight;
-              _updatePageController(availableHeight);
+              // final availableHeight = constraints.maxHeight;
+              _guestController = PageController(
+                viewportFraction: 1,
+                initialPage: _guestIndex,
+              );
               return NotificationListener<Notification>(
                 onNotification: (notification) {
                   if (notification is UserScrollNotification) {
-                    _onUserScroll();
+                    _onGuestScroll();
                   }
                   return true;
                 },
                 child: _pageView(
                     routes: guestRoutes,
-                    controller: _pageController,
+                    controller: _guestController,
                     physics: AlwaysScrollableScrollPhysics()),
               );
             },
@@ -126,26 +156,21 @@ class _PageSectionState extends State<PageSection> {
     );
   }
 
-  void _updatePageController(double availableHeight) {
-    if (availableHeight < _minPageHeight) {
-      _pageController = PageController(
-        viewportFraction: _minPageHeight / availableHeight,
-        initialPage: _pageIndex,
-      );
-    } else {
-      _pageController = PageController(
-        viewportFraction: 1,
-        initialPage: _pageIndex,
-      );
-    }
-  }
-
-  void _onUserScroll() {
-    final pageIndex = _pageController.page?.floor() ?? 0;
+  void _onGuestScroll() {
+    final pageIndex = _guestController.page?.floor() ?? 0;
     final userScrollPath = widget.guests[pageIndex];
     widget.guestNotifier.value = RouteType(
       path: userScrollPath,
       source: RouteSelectionSource.fromScroll,
+    );
+  }
+
+  void _onReglogEnter() {
+    final pageIndex = _reglogController.page?.floor() ?? 0;
+    final reglogPath = widget.reglog[pageIndex];
+    widget.reglogNotifier.value = RouteType(
+      path: reglogPath,
+      source: RouteSelectionSource.fromBrowserAddressBar,
     );
   }
 }
