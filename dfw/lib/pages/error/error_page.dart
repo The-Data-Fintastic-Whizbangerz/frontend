@@ -16,8 +16,8 @@ class UnknownPage extends Page {
 }
 
 class ErrorPage extends StatelessWidget {
-  String? title;
-  ErrorPage({
+  final String? title;
+  const ErrorPage({
     Key? key,
     required this.title,
   }) : super(key: key);

@@ -1,5 +1,5 @@
-import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/error/error_page.dart';
-import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/product/product_page.dart';
+import '../../pages/error/error_page.dart';
+import '../../pages/product/product_page.dart';
 import 'package:flutter/material.dart';
 import '../app/landing_page.dart';
 import 'route_type.dart';
@@ -59,7 +59,7 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
 
   @override
   Widget build(BuildContext context) {
-    List<Page> stack;
+    // List<Page> stack;
 
     return Navigator(
       key: navigatorKey,

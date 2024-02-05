@@ -28,7 +28,7 @@ class TopNavigationMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final ValueNotifier<RouteType?> hoverNotifier = ValueNotifier(null);
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.width;
+    // double height = MediaQuery.of(context).size.width;
     return MultiValueListenableBuilder(
       valueListenables: [guestNotifier, reglogNotifier, hoverNotifier],
       builder: (context, values, child) {

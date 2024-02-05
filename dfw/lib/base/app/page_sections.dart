@@ -1,10 +1,7 @@
-import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/signin/signin_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_value_listenable_builder/multi_value_listenable_builder.dart';
 import '../routes/constants.dart';
 import '../routes/route_type.dart';
-import '../utils/authentications/auth_bloc.dart';
 
 class PageSection extends StatefulWidget {
   final List<String> guests;
@@ -25,7 +22,7 @@ class PageSection extends StatefulWidget {
 }
 
 class _PageSectionState extends State<PageSection> {
-  final double _minPageHeight = 600;
+  // final double _minPageHeight = 600;
 
   PageController _guestController = PageController();
   PageController _reglogController = PageController();

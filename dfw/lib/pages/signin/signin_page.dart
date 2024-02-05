@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../base/extensions/responsiveWidget.dart';
 import '../../base/utils/authentications/auth_bloc.dart';
-import 'signin_desktop.dart';
-import 'signin_mobile.dart';
-import 'signin_tablet.dart';
+import 'signin_form.dart';
 
 class SignInPage extends Page {
   @override
@@ -23,14 +19,15 @@ class SignInWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthBloc(),
-      child: SignInTablet(),
-      // child: ResponsiveWidget(
-      //   mobile: SignInMobile(),
-      //   tablet: SignInTablet(),
-      //   desktop: SignInDesktop(),
-      // ),
+    double ratio = MediaQuery.of(context).size.aspectRatio;
+    return Container(
+      color: Colors.black26,
+      child: Container(
+        margin:
+            EdgeInsets.symmetric(horizontal: ratio * 200, vertical: ratio * 80),
+        // color: Colors.amber,
+        child: SignInForm(),
+      ),
     );
   }
 }
