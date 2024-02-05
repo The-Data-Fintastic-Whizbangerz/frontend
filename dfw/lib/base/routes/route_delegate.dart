@@ -91,15 +91,16 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
     } else if (configuration.isPage) {
       _unknownStateNotifier.value = false;
       _guestNotifier.value = RouteType(
-        path: '${configuration.guestPath}',
+        path: configuration.guestPath ?? defaultRouteCode,
         source: RouteSelectionSource.fromBrowserAddressBar,
       );
+      _extraNotifier.value = null;
       _reglogNotifier.value == null;
     } else if (configuration.isProductsPage) {
       print('extra');
       _unknownStateNotifier.value = false;
       _guestNotifier.value = RouteType(
-        path: '${configuration.guestPath}',
+        path: configuration.guestPath ?? defaultRouteCode,
         source: RouteSelectionSource.fromBrowserAddressBar,
       );
       _extraNotifier.value = RouteType(
