@@ -28,12 +28,12 @@ class TopNavigationMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final ValueNotifier<RouteType?> hoverNotifier = ValueNotifier(null);
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.width;
     return MultiValueListenableBuilder(
       valueListenables: [guestNotifier, reglogNotifier, hoverNotifier],
       builder: (context, values, child) {
         return Container(
           width: width,
-          height: 60,
           decoration: routeIndex == 0
               ? BoxDecoration(color: Colors.white10)
               : BoxDecoration(
@@ -50,66 +50,89 @@ class TopNavigationMenu extends StatelessWidget {
                   ),
                 ),
           child: SafeArea(
+            bottom: false,
+            minimum: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   flex: (guests.length * 100) ~/ width,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: guests.length,
-                    itemBuilder: (context, index) {
-                      return NavigationMenuButton(
-                        path: guests[index],
-                        selected:
-                            routeIndex == index && reglogNotifier.value == null,
-                        hasSubMenu: hoverNotifier.value?.path == 'products',
-                        onPressed: () {
-                          guestNotifier.value = RouteType(
-                            path: guests[index],
-                            source: RouteSelectionSource.fromButtonClick,
-                          );
-                          reglogNotifier.value = null;
-                        },
-                        onHover: (value) {
-                          hoverNotifier.value = RouteType(
-                            path: guests[index],
-                            source: RouteSelectionSource.fromButtonHover,
-                          );
-                        },
-                        itemBuilder: (BuildContext) {
-                          if (hoverNotifier.value?.path == 'products') {
-                            return [
-                              PopupMenuItem(child: Text('Test')),
-                              PopupMenuItem(child: Text('Test')),
-                              PopupMenuItem(child: Text('Test')),
-                              PopupMenuItem(child: Text('Test')),
-                            ];
-                          }
-                          return [];
-                        },
-                      );
-                    },
+                  child: SizedBox(
+                    height: 60,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      // padding: EdgeInsets.zero,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: guests.length,
+                      itemBuilder: (context, index) {
+                        return NavigationMenuButton(
+                          path: guests[index],
+                          selected: routeIndex == index &&
+                              reglogNotifier.value == null,
+                          hasSubMenu: hoverNotifier.value?.path == 'products',
+                          onPressed: () {
+                            guestNotifier.value = RouteType(
+                              path: guests[index],
+                              source: RouteSelectionSource.fromButtonClick,
+                            );
+                            reglogNotifier.value = null;
+                          },
+                          onHover: (value) {
+                            hoverNotifier.value = RouteType(
+                              path: guests[index],
+                              source: RouteSelectionSource.fromButtonHover,
+                            );
+                          },
+                          itemBuilder: (BuildContext) {
+                            if (hoverNotifier.value?.path == 'products') {
+                              return [
+                                PopupMenuItem(
+                                  child: Text('Borrowing calculator'),
+                                  onTap: () {
+                                    guestNotifier.value = RouteType(
+                                      path:
+                                          '${guests[index]}/borrowing-calculator',
+                                      source:
+                                          RouteSelectionSource.fromButtonClick,
+                                    );
+                                  },
+                                ),
+                                PopupMenuItem(
+                                  child: Text('Repayment calculator'),
+                                ),
+                                PopupMenuItem(
+                                  child: Text('Loan recommender'),
+                                ),
+                                PopupMenuItem(child: Text('Test')),
+                              ];
+                            }
+                            return [];
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
                 Expanded(
                   flex: (reglog.length * 100) ~/ width,
-                  child: NavigationMenuButton(
-                    path: 'login',
-                    selected: reglogNotifier.value != null &&
-                        guestNotifier.value == null,
-                    hasSubMenu: false,
-                    onPressed: () {
-                      guestNotifier.value = null;
-                      reglogNotifier.value = RouteType(
-                        path: 'login',
-                        source: RouteSelectionSource.fromButtonClick,
-                      );
-                    },
-                    itemBuilder: (BuildContext) {
-                      return [];
-                    },
+                  child: SizedBox(
+                    height: 60,
+                    child: NavigationMenuButton(
+                      path: 'login',
+                      selected: reglogNotifier.value != null &&
+                          guestNotifier.value == null,
+                      hasSubMenu: false,
+                      onPressed: () {
+                        guestNotifier.value = null;
+                        reglogNotifier.value = RouteType(
+                          path: 'login',
+                          source: RouteSelectionSource.fromButtonClick,
+                        );
+                      },
+                      itemBuilder: (BuildContext) {
+                        return [];
+                      },
+                    ),
                   ),
                 )
               ],

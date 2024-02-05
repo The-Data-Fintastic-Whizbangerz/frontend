@@ -17,7 +17,7 @@ class NavigationMenuButton extends StatelessWidget {
     required this.path,
     required this.selected,
     required this.hasSubMenu,
-    this.padding = const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+    this.padding = const EdgeInsets.all(5),
     required this.onPressed,
     this.onSelected,
     this.onHover,
@@ -27,12 +27,13 @@ class NavigationMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget subMenu = PopupMenuButton(
-      elevation: 2,
+      elevation: 3,
       color: Colors.white70,
+      padding: EdgeInsets.zero,
       shadowColor: Colors.black87,
       surfaceTintColor: Colors.white,
       tooltip: 'Show More Menus',
-      offset: Offset(-30, 30),
+      offset: Offset(-80, 30),
       position: PopupMenuPosition.under,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
@@ -46,7 +47,6 @@ class NavigationMenuButton extends StatelessWidget {
       child: selected
           ? TextButton(
               style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 foregroundColor: Colors.black,
                 backgroundColor: Colors.white70,
               ),
@@ -55,7 +55,6 @@ class NavigationMenuButton extends StatelessWidget {
               child: hasSubMenu ? subMenu : Text(path.capitalize()))
           : TextButton(
               style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.transparent,
               ),

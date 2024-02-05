@@ -65,16 +65,31 @@ class _PageSectionState extends State<PageSection> {
 
         // temporary
         if ((values.last as RouteType?)?.path != null) {
+          _pageController.jumpTo(0);
           return BlocProvider(
             create: (context) => AuthBloc(),
-            child: SignInPage(),
+            child: _pageView(
+                routes: reglogRoutes,
+                controller: _pageController,
+                physics: NeverScrollableScrollPhysics()),
           );
         } else {
           return LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
               final availableHeight = constraints.maxHeight;
               _updatePageController(availableHeight);
-              return _pageView();
+              return NotificationListener<Notification>(
+                onNotification: (notification) {
+                  if (notification is UserScrollNotification) {
+                    _onUserScroll();
+                  }
+                  return true;
+                },
+                child: _pageView(
+                    routes: guestRoutes,
+                    controller: _pageController,
+                    physics: AlwaysScrollableScrollPhysics()),
+              );
             },
           );
         }
@@ -90,24 +105,25 @@ class _PageSectionState extends State<PageSection> {
     RouteConst.ABOUT_PAGE,
   ];
 
-  NotificationListener<Notification> _pageView() {
-    return NotificationListener(
-      onNotification: (notification) {
-        if (notification is UserScrollNotification) {
-          _onUserScroll();
-        }
-        return true;
+  List<RouteConst> reglogRoutes = [
+    RouteConst.SIGNIN_PAGE,
+    RouteConst.SIGNUP_PAGE,
+    RouteConst.SIGNOUT_PAGE,
+  ];
+
+  PageView _pageView(
+      {required List<RouteConst> routes,
+      required PageController? controller,
+      required ScrollPhysics? physics}) {
+    return PageView.builder(
+      pageSnapping: false,
+      scrollDirection: Axis.vertical,
+      controller: controller,
+      itemCount: routes.length,
+      physics: physics,
+      itemBuilder: (BuildContext context, int index) {
+        return routes[index].widget;
       },
-      child: PageView.builder(
-        pageSnapping: false,
-        scrollDirection: Axis.vertical,
-        controller: _pageController,
-        itemCount: widget.guests.length,
-        physics: AlwaysScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          return guestRoutes[index].widget;
-        },
-      ),
     );
   }
 

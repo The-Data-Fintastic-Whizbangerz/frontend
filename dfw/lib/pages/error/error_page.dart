@@ -8,19 +8,34 @@ class UnknownPage extends Page {
     return MaterialPageRoute(
         settings: this,
         builder: (BuildContext context) {
-          return ErrorPage();
+          return ErrorPage(
+            title: 'Unknown Page',
+          );
         });
   }
 }
 
 class ErrorPage extends StatelessWidget {
-  const ErrorPage({super.key});
+  String title;
+  ErrorPage({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('ErrorPage'),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(title),
+            TextButton(
+              onPressed: () {},
+              child: Text('Go to homepage'),
+            ),
+          ],
+        ),
       ),
     );
   }
