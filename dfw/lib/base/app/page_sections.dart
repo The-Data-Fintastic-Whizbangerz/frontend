@@ -65,12 +65,11 @@ class _PageSectionState extends State<PageSection> {
 
         // temporary
         if ((values.last as RouteType?)?.path != null) {
-          _pageController.jumpTo(0);
           return BlocProvider(
             create: (context) => AuthBloc(),
             child: _pageView(
                 routes: reglogRoutes,
-                controller: _pageController,
+                controller: null,
                 physics: NeverScrollableScrollPhysics()),
           );
         } else {
