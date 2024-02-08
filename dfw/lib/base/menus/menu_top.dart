@@ -83,14 +83,20 @@ class TopNavigationMenu extends StatelessWidget {
                               path: guests[index],
                               source: RouteSelectionSource.fromButtonClick,
                             );
+                            hoverNotifier.value = null;
                             reglogNotifier.value = null;
                             productNotifier.value = null;
                           },
                           onHover: (value) {
+                            guestNotifier.value = RouteType(
+                              path: guests[index],
+                              source: RouteSelectionSource.fromButtonHover,
+                            );
                             hoverNotifier.value = RouteType(
                               path: guests[index],
                               source: RouteSelectionSource.fromButtonHover,
                             );
+                            reglogNotifier.value = null;
                           },
                           itemBuilder: (BuildContext) {
                             if (hoverNotifier.value?.path == 'products') {
@@ -103,6 +109,7 @@ class TopNavigationMenu extends StatelessWidget {
                                       source:
                                           RouteSelectionSource.fromButtonClick,
                                     );
+                                    hoverNotifier.value = null;
                                     guestNotifier.value = null;
                                     reglogNotifier.value = null;
                                   },
@@ -137,6 +144,17 @@ class TopNavigationMenu extends StatelessWidget {
                           path: 'login',
                           source: RouteSelectionSource.fromButtonClick,
                         );
+                      },
+                      onHover: (value) {
+                        hoverNotifier.value = RouteType(
+                          path: 'login',
+                          source: RouteSelectionSource.fromButtonHover,
+                        );
+                        reglogNotifier.value = RouteType(
+                          path: 'login',
+                          source: RouteSelectionSource.fromButtonClick,
+                        );
+                        guestNotifier.value = null;
                       },
                       itemBuilder: (BuildContext) {
                         return [];

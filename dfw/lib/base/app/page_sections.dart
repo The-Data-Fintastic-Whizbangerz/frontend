@@ -59,14 +59,14 @@ class _PageSectionState extends State<PageSection> {
       if (_guestController.hasClients && !fromScroll) {
         _guestController.animateToPage(
           _guestIndex,
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.slowMiddle,
         );
       }
     });
     widget.productNotifier.addListener(() {
       final fromClick = widget.productNotifier.value?.source ==
-          RouteSelectionSource.fromScroll;
+          RouteSelectionSource.fromButtonClick;
       if (_productController.hasClients && !fromClick) {
         _productController.jumpToPage(0);
       }
