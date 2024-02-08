@@ -13,7 +13,7 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
   // App state fields
   final List<String> guests;
   final ValueNotifier<RouteType?> _guestNotifier = ValueNotifier(null);
-  final ValueNotifier<RouteType?> _extraNotifier = ValueNotifier(null);
+  final ValueNotifier<RouteType?> _productNotifier = ValueNotifier(null);
   final List<String> reglog;
   final ValueNotifier<RouteType?> _reglogNotifier = ValueNotifier(null);
   final ValueNotifier<bool?> _unknownStateNotifier = ValueNotifier(null);
@@ -27,14 +27,18 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
         child: LandingPage(
           guests: guests,
           guestNotifier: _guestNotifier,
+          productNotifier: _productNotifier,
           reglog: reglog,
           reglogNotifier: _reglogNotifier,
         ));
-    Listenable.merge([_guestNotifier, _reglogNotifier])
-      ..addListener(() {
-        print("notifying the router widget");
-        notifyListeners();
-      });
+    Listenable.merge([
+      _guestNotifier,
+      _reglogNotifier,
+      _productNotifier,
+    ]).addListener(() {
+      print("notifying the router widget");
+      notifyListeners();
+    });
   }
 
   @override
@@ -46,10 +50,9 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
       return RouteConfiguration.unknown();
     } else if (_reglogNotifier.value != null) {
       return RouteConfiguration.reglog(reglogPath: _reglogNotifier.value?.path);
-    } else if (_extraNotifier.value != null) {
+    } else if (_productNotifier.value != null) {
       return RouteConfiguration.product(
-          guestPath: _guestNotifier.value?.path,
-          extraPath: _extraNotifier.value?.path);
+          productPath: _productNotifier.value?.path);
     } else {
       return RouteConfiguration.guest(guestPath: _guestNotifier.value?.path);
     }
@@ -67,10 +70,6 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
           ? _unknownStack
           : [
               _foundationPage,
-              if (_extraNotifier.value != null)
-                ProductPage(
-                    path: _guestNotifier.value?.path,
-                    extra: _extraNotifier.value?.path)
             ],
       onPopPage: (route, result) {
         print('pop' + route.settings.name.toString());
@@ -82,11 +81,12 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
 
   @override
   Future<void> setNewRoutePath(RouteConfiguration configuration) async {
-    print('>>>${configuration.guestPath}/${configuration.extraPath}');
+    // print('>>>${configuration.guestPath}/${configuration.productPath}');
     print('>>>${configuration.isProductsPage}');
     if (configuration.unknown) {
       _unknownStateNotifier.value = true;
       _guestNotifier.value = null;
+      _productNotifier.value = null;
       _reglogNotifier.value = null;
     } else if (configuration.isPage) {
       _unknownStateNotifier.value = false;
@@ -94,17 +94,14 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
         path: configuration.guestPath ?? defaultRouteCode,
         source: RouteSelectionSource.fromBrowserAddressBar,
       );
-      _extraNotifier.value = null;
+      _productNotifier.value = null;
       _reglogNotifier.value == null;
     } else if (configuration.isProductsPage) {
-      print('extra');
+      print('product page >>>');
       _unknownStateNotifier.value = false;
-      _guestNotifier.value = RouteType(
-        path: configuration.guestPath ?? defaultRouteCode,
-        source: RouteSelectionSource.fromBrowserAddressBar,
-      );
-      _extraNotifier.value = RouteType(
-        path: '${configuration.extraPath}',
+      _guestNotifier.value = null;
+      _productNotifier.value = RouteType(
+        path: '${configuration.productPath}',
         source: RouteSelectionSource.fromBrowserAddressBar,
       );
       _reglogNotifier.value == null;
@@ -115,6 +112,7 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
         source: RouteSelectionSource.fromBrowserAddressBar,
       );
       _guestNotifier.value = null;
+      _productNotifier.value = null;
     }
   }
 }

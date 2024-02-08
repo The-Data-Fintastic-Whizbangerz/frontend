@@ -1,5 +1,8 @@
+import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/product/loan_page.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_value_listenable_builder/multi_value_listenable_builder.dart';
+
+import '../../pages/product/product_page.dart';
 import '../routes/constants.dart';
 import '../routes/route_type.dart';
 
@@ -7,6 +10,7 @@ class PageSection extends StatefulWidget {
   final List<String> guests;
   final List<String> reglog;
   final ValueNotifier<RouteType?> guestNotifier;
+  final ValueNotifier<RouteType?> productNotifier;
   final ValueNotifier<RouteType?> reglogNotifier;
 
   const PageSection({
@@ -14,6 +18,7 @@ class PageSection extends StatefulWidget {
     required this.guests,
     required this.reglog,
     required this.guestNotifier,
+    required this.productNotifier,
     required this.reglogNotifier,
   }) : super(key: key);
 
@@ -25,6 +30,7 @@ class _PageSectionState extends State<PageSection> {
   // final double _minPageHeight = 600;
 
   PageController _guestController = PageController();
+  PageController _productController = PageController();
   PageController _reglogController = PageController();
 
   // Find the index of the user scroll in list
@@ -58,6 +64,13 @@ class _PageSectionState extends State<PageSection> {
         );
       }
     });
+    widget.productNotifier.addListener(() {
+      final fromClick = widget.productNotifier.value?.source ==
+          RouteSelectionSource.fromScroll;
+      if (_productController.hasClients && !fromClick) {
+        _productController.jumpToPage(0);
+      }
+    });
     widget.reglogNotifier.addListener(() {
       final fromAddress = widget.reglogNotifier.value?.source ==
           RouteSelectionSource.fromBrowserAddressBar;
@@ -72,12 +85,20 @@ class _PageSectionState extends State<PageSection> {
   @override
   Widget build(BuildContext context) {
     return MultiValueListenableBuilder(
-      valueListenables: [widget.guestNotifier, widget.reglogNotifier],
+      valueListenables: [
+        widget.guestNotifier,
+        widget.productNotifier,
+        widget.reglogNotifier
+      ],
       builder: (BuildContext _, List<dynamic> values, Widget? __) {
         List<String?> pairs =
             values.map((element) => (element as RouteType?)?.path).toList();
         print(pairs);
 
+//              if (productNotifier.value != null)
+//                 ProductPage(
+//                     path: guestNotifier.value?.path,
+//                     extra: productNotifier.value?.path)
         // temporary
         if ((values.last as RouteType?)?.path != null) {
           _reglogController = PageController(
@@ -96,6 +117,8 @@ class _PageSectionState extends State<PageSection> {
                 controller: _reglogController,
                 physics: NeverScrollableScrollPhysics()),
           );
+        } else if ((values[1] as RouteType?)?.path != null) {
+          return LoanPage();
         } else {
           return LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {

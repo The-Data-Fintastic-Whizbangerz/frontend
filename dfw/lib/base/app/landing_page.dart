@@ -1,6 +1,7 @@
-import '../app/page_sections.dart';
 import 'package:flutter/material.dart';
 
+import '../../pages/product/product_page.dart';
+import '../app/page_sections.dart';
 import '../extensions/themes.dart';
 import '../menus/menu_top.dart';
 import '../routes/route_type.dart';
@@ -8,6 +9,7 @@ import '../routes/route_type.dart';
 class LandingPage extends StatelessWidget {
   final List<String> guests;
   final ValueNotifier<RouteType?> guestNotifier;
+  final ValueNotifier<RouteType?> productNotifier;
   final List<String> reglog;
   final ValueNotifier<RouteType?> reglogNotifier;
 
@@ -15,6 +17,7 @@ class LandingPage extends StatelessWidget {
     Key? key,
     required this.guests,
     required this.guestNotifier,
+    required this.productNotifier,
     required this.reglog,
     required this.reglogNotifier,
   }) : super(key: key);
@@ -41,6 +44,7 @@ class LandingPage extends StatelessWidget {
             TopNavigationMenu(
               guests: guests,
               guestNotifier: guestNotifier,
+              productNotifier: productNotifier,
               reglog: reglog,
               reglogNotifier: reglogNotifier,
             ),
@@ -48,6 +52,7 @@ class LandingPage extends StatelessWidget {
               child: PageSection(
                 guests: guests,
                 guestNotifier: guestNotifier,
+                productNotifier: productNotifier,
                 reglog: reglog,
                 reglogNotifier: reglogNotifier,
               ),

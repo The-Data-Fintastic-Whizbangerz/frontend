@@ -8,12 +8,14 @@ import 'menu_button.dart';
 class TopNavigationMenu extends StatelessWidget {
   final List<String> guests;
   final ValueNotifier<RouteType?> guestNotifier;
+  final ValueNotifier<RouteType?> productNotifier;
   final List<String> reglog;
   final ValueNotifier<RouteType?> reglogNotifier;
   const TopNavigationMenu({
     Key? key,
     required this.guests,
     required this.guestNotifier,
+    required this.productNotifier,
     required this.reglog,
     required this.reglogNotifier,
   }) : super(key: key);
@@ -30,7 +32,12 @@ class TopNavigationMenu extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     // double height = MediaQuery.of(context).size.width;
     return MultiValueListenableBuilder(
-      valueListenables: [guestNotifier, reglogNotifier, hoverNotifier],
+      valueListenables: [
+        guestNotifier,
+        reglogNotifier,
+        hoverNotifier,
+        productNotifier
+      ],
       builder: (context, values, child) {
         return Container(
           width: width,
@@ -68,7 +75,8 @@ class TopNavigationMenu extends StatelessWidget {
                         return NavigationMenuButton(
                           path: guests[index],
                           selected: routeIndex == index &&
-                              reglogNotifier.value == null,
+                              reglogNotifier.value == null &&
+                              productNotifier.value == null,
                           hasSubMenu: hoverNotifier.value?.path == 'products',
                           onPressed: () {
                             guestNotifier.value = RouteType(
@@ -76,6 +84,7 @@ class TopNavigationMenu extends StatelessWidget {
                               source: RouteSelectionSource.fromButtonClick,
                             );
                             reglogNotifier.value = null;
+                            productNotifier.value = null;
                           },
                           onHover: (value) {
                             hoverNotifier.value = RouteType(
@@ -89,12 +98,13 @@ class TopNavigationMenu extends StatelessWidget {
                                 PopupMenuItem(
                                   child: Text('Borrowing calculator'),
                                   onTap: () {
-                                    guestNotifier.value = RouteType(
-                                      path:
-                                          '${guests[index]}/borrowing-calculator',
+                                    productNotifier.value = const RouteType(
+                                      path: 'borrowing-calculator',
                                       source:
                                           RouteSelectionSource.fromButtonClick,
                                     );
+                                    guestNotifier.value = null;
+                                    reglogNotifier.value = null;
                                   },
                                 ),
                                 PopupMenuItem(
