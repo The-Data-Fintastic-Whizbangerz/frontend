@@ -1,3 +1,5 @@
+import 'package:The_Data_Fintastic_Whizbangerz_Group/base/routes/route_initial.dart';
+
 import '../../pages/error/error_page.dart';
 import '../../pages/product/product_page.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +20,23 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
   final ValueNotifier<RouteType?> _reglogNotifier = ValueNotifier(null);
   final ValueNotifier<bool?> _unknownStateNotifier = ValueNotifier(null);
 
+  final List<RouteInitial> routes;
+
   String get defaultRouteCode => guests.first;
   String get defaultReglogPath => reglog.first;
 
-  RouteDelegate({required this.reglog, required this.guests}) {
+  RouteDelegate(
+      {required this.reglog, required this.guests, required this.routes}) {
+    final test_guest =
+        routes.where((route) => route.level == RouteLevel.guest).toList();
+    final test_reglog =
+        routes.where((route) => route.level == RouteLevel.reglog).toList();
+    final test_account =
+        routes.where((route) => route.level == RouteLevel.account).toList();
+    final test_product = routes
+        .where((route) => (route.level.floor == RouteFloor.second))
+        .toList();
+    print(test_product);
     _foundationPage = MaterialPage(
         key: ValueKey<String>("HomePage"),
         child: LandingPage(
@@ -92,7 +107,7 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
       _unknownStateNotifier.value = false;
       _guestNotifier.value = RouteType(
         path: configuration.guestPath ?? defaultRouteCode,
-        source: RouteSelectionSource.fromBrowserAddressBar,
+        source: RouteSource.fromAddress,
       );
       _productNotifier.value = null;
       _reglogNotifier.value == null;
@@ -102,14 +117,14 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
       _guestNotifier.value = null;
       _productNotifier.value = RouteType(
         path: '${configuration.productPath}',
-        source: RouteSelectionSource.fromBrowserAddressBar,
+        source: RouteSource.fromAddress,
       );
       _reglogNotifier.value == null;
     } else if (configuration.isReglog) {
       _unknownStateNotifier.value = false;
       _reglogNotifier.value = RouteType(
         path: configuration.reglogPath ?? defaultReglogPath,
-        source: RouteSelectionSource.fromBrowserAddressBar,
+        source: RouteSource.fromAddress,
       );
       _guestNotifier.value = null;
       _productNotifier.value = null;

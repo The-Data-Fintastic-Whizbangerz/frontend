@@ -81,7 +81,7 @@ class TopNavigationMenu extends StatelessWidget {
                           onPressed: () {
                             guestNotifier.value = RouteType(
                               path: guests[index],
-                              source: RouteSelectionSource.fromButtonClick,
+                              source: RouteSource.fromClick,
                             );
                             hoverNotifier.value = null;
                             reglogNotifier.value = null;
@@ -90,11 +90,11 @@ class TopNavigationMenu extends StatelessWidget {
                           onHover: (value) {
                             guestNotifier.value = RouteType(
                               path: guests[index],
-                              source: RouteSelectionSource.fromButtonHover,
+                              source: RouteSource.fromHover,
                             );
                             hoverNotifier.value = RouteType(
                               path: guests[index],
-                              source: RouteSelectionSource.fromButtonHover,
+                              source: RouteSource.fromHover,
                             );
                             reglogNotifier.value = null;
                           },
@@ -104,10 +104,9 @@ class TopNavigationMenu extends StatelessWidget {
                                 PopupMenuItem(
                                   child: Text('Borrowing calculator'),
                                   onTap: () {
-                                    productNotifier.value = const RouteType(
+                                    productNotifier.value = RouteType(
                                       path: 'borrowing-calculator',
-                                      source:
-                                          RouteSelectionSource.fromButtonClick,
+                                      source: RouteSource.fromClick,
                                     );
                                     hoverNotifier.value = null;
                                     guestNotifier.value = null;
@@ -142,17 +141,17 @@ class TopNavigationMenu extends StatelessWidget {
                         guestNotifier.value = null;
                         reglogNotifier.value = RouteType(
                           path: 'login',
-                          source: RouteSelectionSource.fromButtonClick,
+                          source: RouteSource.fromClick,
                         );
                       },
                       onHover: (value) {
                         hoverNotifier.value = RouteType(
                           path: 'login',
-                          source: RouteSelectionSource.fromButtonHover,
+                          source: RouteSource.fromHover,
                         );
                         reglogNotifier.value = RouteType(
                           path: 'login',
-                          source: RouteSelectionSource.fromButtonClick,
+                          source: RouteSource.fromClick,
                         );
                         guestNotifier.value = null;
                       },

@@ -1,18 +1,14 @@
 import 'package:equatable/equatable.dart';
 
+import 'package:The_Data_Fintastic_Whizbangerz_Group/base/routes/route_initial.dart';
+
 class RouteType extends Equatable {
   final String path;
-  final RouteSelectionSource source;
+  final RouteSource? source;
 
-  const RouteType({required this.path, required this.source});
-
+  RouteType({required this.path, this.source});
   @override
   List<Object?> get props => [path, source];
 }
 
-enum RouteSelectionSource {
-  fromScroll,
-  fromButtonClick,
-  fromButtonHover,
-  fromBrowserAddressBar
-}
+enum RouteSource { fromScroll, fromClick, fromHover, fromAddress }

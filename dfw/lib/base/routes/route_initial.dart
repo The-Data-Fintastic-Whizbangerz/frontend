@@ -1,77 +1,55 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class RouteInitial extends Equatable {
-  String path;
-  RouteCategory category;
-  Widget? widget;
-  Page? page;
+import 'route_type.dart';
 
-  RouteInitial(
-    this.path,
-    this.category,
+class RouteInitial extends Equatable {
+  final RouteType type;
+  final RouteLevel level;
+  final Widget? widget;
+
+  const RouteInitial({
+    required this.type,
+    required this.level,
     this.widget,
-    this.page,
-  );
+  });
 
   @override
   List<Object?> get props {
     return [
-      path,
-      category,
+      type,
+      level,
       widget,
-      page,
     ];
   }
 
-  List<RouteFloor> get floor {
-    return category.item.values.single;
-  }
+  // List<RouteFloor> get floor {
+  //   return category.item.values.single;
+  // }
 }
 
-enum RouteRule {
-  public,
-  protected,
-  private,
-}
+enum RouteState { public, protected, private }
 
-enum RouteCategory {
-  home({
-    RouteRule.public: [RouteFloor.first]
-  }),
-  products({
-    RouteRule.public: [RouteFloor.first, RouteFloor.second]
-  }),
-  guides({
-    RouteRule.public: [RouteFloor.first]
-  }),
-  news({
-    RouteRule.public: [RouteFloor.first]
-  }),
-  about({
-    RouteRule.public: [RouteFloor.first]
-  }),
-  contact({
-    RouteRule.public: [RouteFloor.first]
-  }),
-  login({
-    RouteRule.protected: [RouteFloor.first]
-  }),
-  register({
-    RouteRule.protected: [RouteFloor.first]
-  }),
-  dashboard({
-    RouteRule.private: [RouteFloor.first]
-  });
+enum RouteFloor { ground, first, second, third }
 
-  final Map<RouteRule, List<RouteFloor>> item;
+class RouteLevel extends Equatable {
+  final RouteState state;
+  final RouteFloor floor;
 
-  const RouteCategory(this.item);
-}
+  RouteLevel({required this.state, required this.floor});
 
-enum RouteFloor {
-  ground,
-  first,
-  second,
-  third,
+  static get guest =>
+      RouteLevel(state: RouteState.public, floor: RouteFloor.first);
+  static get reglog =>
+      RouteLevel(state: RouteState.protected, floor: RouteFloor.first);
+  static get account =>
+      RouteLevel(state: RouteState.private, floor: RouteFloor.first);
+
+  @override
+  String toString() => 'RouteLevel($state, $floor)';
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [state, floor];
 }

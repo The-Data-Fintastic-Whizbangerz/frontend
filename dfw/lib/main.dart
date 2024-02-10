@@ -1,3 +1,4 @@
+import 'package:The_Data_Fintastic_Whizbangerz_Group/base/routes/route_type.dart';
 import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
 
@@ -40,11 +41,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    delegate = RouteDelegate(guests: _guest, reglog: _reglog);
+    delegate = RouteDelegate(guests: _guest, reglog: _reglog, routes: test);
     parser = RouteParser(guests: _guest, reglog: _reglog);
     // Fluro.setupRouter();
-
-    print(test[1].floor);
   }
 
   // This widget is the root of your application.
@@ -55,76 +54,55 @@ class _MyAppState extends State<MyApp> {
       routerDelegate: delegate,
       routeInformationParser: parser,
     );
-    // return MaterialApp(
-    //   debugShowCheckedModeBanner: false,
-    //   title: 'Credit Scoring - CTHTC',
-    //   theme: NeumorphismTheme.lightTheme(),
-    //   darkTheme: NeumorphismTheme.darkTheme(),
-    //   initialRoute: '/home',
-    //   onGenerateRoute: Fluro.router.generator,
-    // );
   }
 }
 
 List<RouteInitial> test = [
   RouteInitial(
-    'home',
-    RouteCategory.home,
-    HomePage(),
-    null,
-  ),
+      type: RouteType(path: 'home'),
+      level: RouteLevel.guest,
+      widget: HomePage()),
   RouteInitial(
-    'products',
-    RouteCategory.products,
-    ProductWidget(),
-    null,
-  ),
+      type: RouteType(path: 'products'),
+      level: RouteLevel.guest,
+      widget: ProductWidget()),
   RouteInitial(
-    'borrowing-calculator',
-    RouteCategory.products,
-    LoanPage(),
-    null,
-  ),
+      type: RouteType(path: 'borrowing-calculator'),
+      level: RouteLevel(state: RouteState.public, floor: RouteFloor.second),
+      widget: LoanPage()),
   RouteInitial(
-    'guides',
-    RouteCategory.guides,
-    GuidePage(),
-    null,
-  ),
+      type: RouteType(path: 'guides'),
+      level: RouteLevel.guest,
+      widget: GuidePage()),
   RouteInitial(
-    'news',
-    RouteCategory.news,
-    NewsPage(),
-    null,
-  ),
+      type: RouteType(path: 'news'),
+      level: RouteLevel.guest,
+      widget: NewsPage()),
   RouteInitial(
-    'about',
-    RouteCategory.about,
-    AboutPage(),
-    null,
-  ),
+      type: RouteType(path: 'about'),
+      level: RouteLevel.guest,
+      widget: AboutPage()),
   RouteInitial(
-    'contact',
-    RouteCategory.contact,
-    ContactPage(),
-    null,
-  ),
+      type: RouteType(path: 'contact'),
+      level: RouteLevel.guest,
+      widget: ContactPage()),
   RouteInitial(
-    'login',
-    RouteCategory.login,
-    SignInWidget(),
-    null,
-  ),
+      type: RouteType(path: 'login'),
+      level: RouteLevel.reglog,
+      widget: SignInWidget()),
   RouteInitial(
-    'register',
-    RouteCategory.register,
-    SignUpPage(),
-    null,
-  ),
+      type: RouteType(path: 'register'),
+      level: RouteLevel.reglog,
+      widget: SignUpPage()),
   RouteInitial(
-    'dashboard',
-    RouteCategory.dashboard,
-    DashboardPage(),
-    null,
-  ),
+      type: RouteType(path: 'dashboard'),
+      level: RouteLevel.account,
+      widget: DashboardPage()),
+
+  // RouteInitial(
+  //   'borrowing-calculator',
+  //   RouteCategory.products,
+  //   LoanPage(),
+  //   null,
+  // ),
 ];

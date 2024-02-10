@@ -55,7 +55,7 @@ class _PageSectionState extends State<PageSection> {
     super.initState();
     widget.guestNotifier.addListener(() {
       final fromScroll =
-          widget.guestNotifier.value?.source == RouteSelectionSource.fromScroll;
+          widget.guestNotifier.value?.source == RouteSource.fromScroll;
       if (_guestController.hasClients && !fromScroll) {
         _guestController.animateToPage(
           _guestIndex,
@@ -65,15 +65,15 @@ class _PageSectionState extends State<PageSection> {
       }
     });
     widget.productNotifier.addListener(() {
-      final fromClick = widget.productNotifier.value?.source ==
-          RouteSelectionSource.fromButtonClick;
+      final fromClick =
+          widget.productNotifier.value?.source == RouteSource.fromClick;
       if (_productController.hasClients && !fromClick) {
         _productController.jumpToPage(0);
       }
     });
     widget.reglogNotifier.addListener(() {
-      final fromAddress = widget.reglogNotifier.value?.source ==
-          RouteSelectionSource.fromBrowserAddressBar;
+      final fromAddress =
+          widget.reglogNotifier.value?.source == RouteSource.fromAddress;
       if (_reglogController.hasClients && !fromAddress) {
         _reglogController.jumpToPage(
           _reglogIndex,
@@ -181,7 +181,7 @@ class _PageSectionState extends State<PageSection> {
     final userScrollPath = widget.guests[pageIndex];
     widget.guestNotifier.value = RouteType(
       path: userScrollPath,
-      source: RouteSelectionSource.fromScroll,
+      source: RouteSource.fromScroll,
     );
   }
 
@@ -190,7 +190,7 @@ class _PageSectionState extends State<PageSection> {
     final reglogPath = widget.reglog[pageIndex];
     widget.reglogNotifier.value = RouteType(
       path: reglogPath,
-      source: RouteSelectionSource.fromBrowserAddressBar,
+      source: RouteSource.fromAddress,
     );
   }
 }
