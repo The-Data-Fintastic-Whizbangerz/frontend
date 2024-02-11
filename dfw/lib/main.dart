@@ -36,7 +36,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late RouteDelegate delegate;
   late RouteParser parser;
-  final _guest = ['home', 'products', 'guides', 'news', 'about'];
+  final _guest = ['home', 'products', 'guides', 'news', 'about', 'contact'];
   final _reglog = ['login', 'register', 'signout'];
   @override
   void initState() {
@@ -68,7 +68,7 @@ List<RouteInitial> test = [
       widget: ProductWidget()),
   RouteInitial(
       type: RouteType(path: 'borrowing-calculator'),
-      level: RouteLevel(state: RouteState.public, floor: RouteFloor.second),
+      level: RouteLevel(status: RouteStatus.public, floor: RouteFloor.second),
       widget: LoanPage()),
   RouteInitial(
       type: RouteType(path: 'guides'),

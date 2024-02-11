@@ -93,7 +93,7 @@ class _PageSectionState extends State<PageSection> {
       builder: (BuildContext _, List<dynamic> values, Widget? __) {
         List<String?> pairs =
             values.map((element) => (element as RouteType?)?.path).toList();
-        print(pairs);
+        // print(pairs);
 
 //              if (productNotifier.value != null)
 //                 ProductPage(
@@ -152,6 +152,7 @@ class _PageSectionState extends State<PageSection> {
     RouteConst.GUIDES_PAGE,
     RouteConst.NEWS_PAGE,
     RouteConst.ABOUT_PAGE,
+    RouteConst.CONTACT_PAGE,
   ];
 
   List<RouteConst> reglogRoutes = [

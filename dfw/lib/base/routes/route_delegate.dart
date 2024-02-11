@@ -1,9 +1,11 @@
-import 'package:The_Data_Fintastic_Whizbangerz_Group/base/routes/route_initial.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../pages/error/error_page.dart';
 import '../../pages/product/product_page.dart';
 import 'package:flutter/material.dart';
 import '../app/landing_page.dart';
+import 'route_bloc.dart';
+import 'route_initial.dart';
 import 'route_type.dart';
 import 'route_configuration.dart';
 
@@ -36,15 +38,29 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
     final test_product = routes
         .where((route) => (route.level.floor == RouteFloor.second))
         .toList();
-    print(test_product);
+    // print(test_product);
+
     _foundationPage = MaterialPage(
         key: ValueKey<String>("HomePage"),
-        child: LandingPage(
-          guests: guests,
-          guestNotifier: _guestNotifier,
-          productNotifier: _productNotifier,
-          reglog: reglog,
-          reglogNotifier: _reglogNotifier,
+        child: BlocProvider(
+          create: (context) => RouteBloc()
+            ..add(Guest_RouteEvent(guests: test_guest))
+            ..add(Reglog_RouteEvent(reglogs: test_reglog)),
+          child: BlocConsumer<RouteBloc, RouteState>(
+            listener: (context, state) {
+              // print(state.routes);
+              // TODO: implement listener
+            },
+            builder: (context, state) {
+              return LandingPage(
+                guests: guests,
+                guestNotifier: _guestNotifier,
+                productNotifier: _productNotifier,
+                reglog: reglog,
+                reglogNotifier: _reglogNotifier,
+              );
+            },
+          ),
         ));
     Listenable.merge([
       _guestNotifier,
@@ -97,7 +113,7 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
   @override
   Future<void> setNewRoutePath(RouteConfiguration configuration) async {
     // print('>>>${configuration.guestPath}/${configuration.productPath}');
-    print('>>>${configuration.isProductsPage}');
+    // print('>>>${configuration.isProductsPage}');
     if (configuration.unknown) {
       _unknownStateNotifier.value = true;
       _guestNotifier.value = null;

@@ -42,7 +42,6 @@ class LandingPage extends StatelessWidget {
         child: Column(
           children: [
             TopNavigationMenu(
-              guests: guests,
               guestNotifier: guestNotifier,
               productNotifier: productNotifier,
               reglog: reglog,
