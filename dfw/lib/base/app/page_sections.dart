@@ -1,22 +1,21 @@
-import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/product/loan_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_value_listenable_builder/multi_value_listenable_builder.dart';
+
+import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/product/loan_page.dart';
 
 import '../../pages/product/product_page.dart';
 import '../routes/constants.dart';
+import '../routes/route_bloc.dart';
 import '../routes/route_type.dart';
 
 class PageSection extends StatefulWidget {
-  final List<String> guests;
-  final List<String> reglog;
   final ValueNotifier<RouteType?> guestNotifier;
   final ValueNotifier<RouteType?> productNotifier;
   final ValueNotifier<RouteType?> reglogNotifier;
 
   const PageSection({
     Key? key,
-    required this.guests,
-    required this.reglog,
     required this.guestNotifier,
     required this.productNotifier,
     required this.reglogNotifier,
@@ -33,20 +32,10 @@ class _PageSectionState extends State<PageSection> {
   PageController _productController = PageController();
   PageController _reglogController = PageController();
 
-  // Find the index of the user scroll in list
-  int get _guestIndex {
-    final userScrollIndex = widget.guestNotifier.value?.path;
-    int index = widget.guests.indexWhere((element) {
-      return element == userScrollIndex;
-    });
-    return index > -1 ? index : 0;
-  }
-
-  int get _reglogIndex {
-    final userTypeUrl = widget.reglogNotifier.value?.path;
-    int index = widget.reglog.indexWhere((element) {
-      return element == userTypeUrl;
-    });
+  List<RouteType> test_guests = [];
+  List<RouteType> test_reglog = [];
+  int getCurrent(List<RouteType> s1, RouteType? s2) {
+    int index = s1.indexWhere((element) => element.path == s2?.path);
     return index > -1 ? index : 0;
   }
 
@@ -58,7 +47,7 @@ class _PageSectionState extends State<PageSection> {
           widget.guestNotifier.value?.source == RouteSource.fromScroll;
       if (_guestController.hasClients && !fromScroll) {
         _guestController.animateToPage(
-          _guestIndex,
+          getCurrent(test_guests, widget.guestNotifier.value),
           duration: Duration(milliseconds: 500),
           curve: Curves.slowMiddle,
         );
@@ -76,7 +65,7 @@ class _PageSectionState extends State<PageSection> {
           widget.reglogNotifier.value?.source == RouteSource.fromAddress;
       if (_reglogController.hasClients && !fromAddress) {
         _reglogController.jumpToPage(
-          _reglogIndex,
+          getCurrent(test_reglog, widget.reglogNotifier.value),
         );
       }
     });
@@ -84,64 +73,73 @@ class _PageSectionState extends State<PageSection> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiValueListenableBuilder(
-      valueListenables: [
-        widget.guestNotifier,
-        widget.productNotifier,
-        widget.reglogNotifier
-      ],
-      builder: (BuildContext _, List<dynamic> values, Widget? __) {
-        List<String?> pairs =
-            values.map((element) => (element as RouteType?)?.path).toList();
-        // print(pairs);
-
-//              if (productNotifier.value != null)
-//                 ProductPage(
-//                     path: guestNotifier.value?.path,
-//                     extra: productNotifier.value?.path)
-        // temporary
-        if ((values.last as RouteType?)?.path != null) {
-          _reglogController = PageController(
-            viewportFraction: 1,
-            initialPage: _reglogIndex,
-          );
-          return NotificationListener<Notification>(
-            onNotification: (notification) {
-              if (notification is UserScrollNotification) {
-                _onReglogEnter();
-              }
-              return true;
-            },
-            child: _pageView(
-                routes: reglogRoutes,
-                controller: _reglogController,
-                physics: NeverScrollableScrollPhysics()),
-          );
-        } else if ((values[1] as RouteType?)?.path != null) {
-          return LoanPage();
-        } else {
-          return LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              // final availableHeight = constraints.maxHeight;
-              _guestController = PageController(
+    return BlocConsumer<RouteBloc, RouteState>(
+      listener: (context, state) {
+        if (state is Guest_RouteState) {
+          test_guests = state.routes.map((e) => e.type).toList();
+        }
+        if (state is Reglog_RouteState) {
+          test_reglog = state.routes.map((e) => e.type).toList();
+        }
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        return MultiValueListenableBuilder(
+          valueListenables: [
+            widget.guestNotifier,
+            widget.productNotifier,
+            widget.reglogNotifier
+          ],
+          builder: (BuildContext _, List<dynamic> values, Widget? __) {
+            List<String?> pairs =
+                values.map((element) => (element as RouteType?)?.path).toList();
+            // print(pairs);
+            if ((values.last as RouteType?)?.path != null) {
+              _reglogController = PageController(
                 viewportFraction: 1,
-                initialPage: _guestIndex,
+                initialPage:
+                    getCurrent(test_reglog, widget.reglogNotifier.value),
               );
               return NotificationListener<Notification>(
                 onNotification: (notification) {
                   if (notification is UserScrollNotification) {
-                    _onGuestScroll();
+                    _onReglogEnter();
                   }
                   return true;
                 },
                 child: _pageView(
-                    routes: guestRoutes,
-                    controller: _guestController,
-                    physics: AlwaysScrollableScrollPhysics()),
+                    routes: reglogRoutes,
+                    controller: _reglogController,
+                    physics: NeverScrollableScrollPhysics()),
               );
-            },
-          );
-        }
+            } else if ((values[1] as RouteType?)?.path != null) {
+              return LoanPage();
+            } else {
+              return LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  // final availableHeight = constraints.maxHeight;
+                  _guestController = PageController(
+                    viewportFraction: 1,
+                    initialPage:
+                        getCurrent(test_guests, widget.guestNotifier.value),
+                  );
+                  return NotificationListener<Notification>(
+                    onNotification: (notification) {
+                      if (notification is UserScrollNotification) {
+                        _onGuestScroll();
+                      }
+                      return true;
+                    },
+                    child: _pageView(
+                        routes: guestRoutes,
+                        controller: _guestController,
+                        physics: AlwaysScrollableScrollPhysics()),
+                  );
+                },
+              );
+            }
+          },
+        );
       },
     );
   }
@@ -179,7 +177,7 @@ class _PageSectionState extends State<PageSection> {
 
   void _onGuestScroll() {
     final pageIndex = _guestController.page?.floor() ?? 0;
-    final userScrollPath = widget.guests[pageIndex];
+    final userScrollPath = test_guests[pageIndex].path;
     widget.guestNotifier.value = RouteType(
       path: userScrollPath,
       source: RouteSource.fromScroll,
@@ -188,7 +186,7 @@ class _PageSectionState extends State<PageSection> {
 
   void _onReglogEnter() {
     final pageIndex = _reglogController.page?.floor() ?? 0;
-    final reglogPath = widget.reglog[pageIndex];
+    final reglogPath = test_reglog[pageIndex].path;
     widget.reglogNotifier.value = RouteType(
       path: reglogPath,
       source: RouteSource.fromAddress,

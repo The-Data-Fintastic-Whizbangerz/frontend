@@ -11,13 +11,11 @@ import 'menu_button.dart';
 class TopNavigationMenu extends StatefulWidget {
   final ValueNotifier<RouteType?> guestNotifier;
   final ValueNotifier<RouteType?> productNotifier;
-  final List<String> reglog;
   final ValueNotifier<RouteType?> reglogNotifier;
-  TopNavigationMenu({
+  const TopNavigationMenu({
     Key? key,
     required this.guestNotifier,
     required this.productNotifier,
-    required this.reglog,
     required this.reglogNotifier,
   }) : super(key: key);
 
@@ -38,9 +36,10 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
   //   return index > -1 ? index : 0;
   // }
 
-  List<String> test_guests = [];
-  int getCurrent(List<String> s1, String? s2) {
-    int index = s1.indexWhere((element) => element == s2);
+  List<RouteType> test_guests = [];
+  List<RouteType> test_reglog = [];
+  int getCurrent(List<RouteType> s1, RouteType? s2) {
+    int index = s1.indexWhere((element) => element.path == s2?.path);
     return index > -1 ? index : 0;
   }
 
@@ -52,7 +51,10 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
     return BlocConsumer<RouteBloc, RouteState>(
       listener: (context, state) {
         if (state is Guest_RouteState) {
-          test_guests = state.routes.map((e) => e.type.path).toList();
+          test_guests = state.routes.map((e) => e.type).toList();
+        }
+        if (state is Reglog_RouteState) {
+          test_reglog = state.routes.map((e) => e.type).toList();
         }
       },
       builder: (context, state) {
@@ -67,7 +69,7 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
             return Container(
               width: width,
               decoration:
-                  getCurrent(test_guests, widget.guestNotifier.value?.path) == 0
+                  getCurrent(test_guests, widget.guestNotifier.value) == 0
                       ? BoxDecoration(color: Colors.white10)
                       : BoxDecoration(
                           gradient: LinearGradient(
@@ -101,9 +103,9 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
                             // print(test_current.indexWhere((element) =>
                             //     element == widget.guestNotifier.value?.path));
                             return NavigationMenuButton(
-                              path: test_guests[index],
+                              path: test_guests[index].path,
                               selected: getCurrent(test_guests,
-                                          widget.guestNotifier.value?.path) ==
+                                          widget.guestNotifier.value) ==
                                       index &&
                                   widget.reglogNotifier.value == null &&
                                   widget.productNotifier.value == null,
@@ -111,7 +113,7 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
                                   hoverNotifier.value?.path == 'products',
                               onPressed: () {
                                 widget.guestNotifier.value = RouteType(
-                                  path: test_guests[index],
+                                  path: test_guests[index].path,
                                   source: RouteSource.fromClick,
                                 );
                                 hoverNotifier.value = null;
@@ -122,11 +124,11 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
                               },
                               onHover: (value) {
                                 widget.guestNotifier.value = RouteType(
-                                  path: test_guests[index],
+                                  path: test_guests[index].path,
                                   source: RouteSource.fromHover,
                                 );
                                 hoverNotifier.value = RouteType(
-                                  path: test_guests[index],
+                                  path: test_guests[index].path,
                                   source: RouteSource.fromHover,
                                 );
                                 widget.reglogNotifier.value = null;
@@ -164,7 +166,7 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
                       ),
                     ),
                     Expanded(
-                      flex: (widget.reglog.length * 100) ~/ width,
+                      flex: (test_reglog.length * 100) ~/ width,
                       child: SizedBox(
                         height: 60,
                         child: NavigationMenuButton(

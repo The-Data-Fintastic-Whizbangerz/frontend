@@ -15,20 +15,17 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
   late Page _foundationPage;
 
   // App state fields
-  final List<String> guests;
   final ValueNotifier<RouteType?> _guestNotifier = ValueNotifier(null);
   final ValueNotifier<RouteType?> _productNotifier = ValueNotifier(null);
-  final List<String> reglog;
   final ValueNotifier<RouteType?> _reglogNotifier = ValueNotifier(null);
   final ValueNotifier<bool?> _unknownStateNotifier = ValueNotifier(null);
 
   final List<RouteInitial> routes;
 
-  String get defaultRouteCode => guests.first;
-  String get defaultReglogPath => reglog.first;
+  // String get defaultRouteCode => guests.first;
+  // String get defaultReglogPath => reglog.first;
 
-  RouteDelegate(
-      {required this.reglog, required this.guests, required this.routes}) {
+  RouteDelegate({required this.routes}) {
     final test_guest =
         routes.where((route) => route.level == RouteLevel.guest).toList();
     final test_reglog =
@@ -53,10 +50,8 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
             },
             builder: (context, state) {
               return LandingPage(
-                guests: guests,
                 guestNotifier: _guestNotifier,
                 productNotifier: _productNotifier,
-                reglog: reglog,
                 reglogNotifier: _reglogNotifier,
               );
             },
@@ -122,7 +117,7 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
     } else if (configuration.isPage) {
       _unknownStateNotifier.value = false;
       _guestNotifier.value = RouteType(
-        path: configuration.guestPath ?? defaultRouteCode,
+        path: '${configuration.guestPath}',
         source: RouteSource.fromAddress,
       );
       _productNotifier.value = null;
@@ -139,7 +134,7 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
     } else if (configuration.isReglog) {
       _unknownStateNotifier.value = false;
       _reglogNotifier.value = RouteType(
-        path: configuration.reglogPath ?? defaultReglogPath,
+        path: '${configuration.reglogPath}',
         source: RouteSource.fromAddress,
       );
       _guestNotifier.value = null;

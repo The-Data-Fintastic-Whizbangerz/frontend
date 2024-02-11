@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    delegate = RouteDelegate(guests: _guest, reglog: _reglog, routes: test);
+    delegate = RouteDelegate(routes: routes);
     parser = RouteParser(guests: _guest, reglog: _reglog);
     // Fluro.setupRouter();
   }
@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-List<RouteInitial> test = [
+List<RouteInitial> routes = [
   RouteInitial(
       type: RouteType(path: 'home'),
       level: RouteLevel.guest,
