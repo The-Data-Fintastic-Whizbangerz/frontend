@@ -10,15 +10,11 @@ import '../routes/route_bloc.dart';
 import '../routes/route_type.dart';
 
 class PageSection extends StatefulWidget {
-  final ValueNotifier<RouteType?> guestNotifier;
   final ValueNotifier<RouteType?> productNotifier;
-  final ValueNotifier<RouteType?> reglogNotifier;
 
   const PageSection({
     Key? key,
-    required this.guestNotifier,
     required this.productNotifier,
-    required this.reglogNotifier,
   }) : super(key: key);
 
   @override
@@ -32,41 +28,35 @@ class _PageSectionState extends State<PageSection> {
   PageController _productController = PageController();
   PageController _reglogController = PageController();
 
-  List<RouteType> test_guests = [];
-  List<RouteType> test_reglog = [];
+  ValueNotifier<RouteType?> guest_notifier = ValueNotifier(null);
+  ValueNotifier<RouteType?> reglog_notifier = ValueNotifier(null);
+  List<RouteType> guests = [];
+  List<RouteType> reglog = [];
   int getCurrent(List<RouteType> s1, RouteType? s2) {
     int index = s1.indexWhere((element) => element.path == s2?.path);
     return index > -1 ? index : 0;
   }
 
-  @override
-  void initState() {
-    super.initState();
-    widget.guestNotifier.addListener(() {
-      final fromScroll =
-          widget.guestNotifier.value?.source == RouteSource.fromScroll;
+  void test() {
+    guest_notifier.addListener(() {
+      final fromScroll = guest_notifier.value?.source == RouteSource.fromScroll;
       if (_guestController.hasClients && !fromScroll) {
-        _guestController.animateToPage(
-          getCurrent(test_guests, widget.guestNotifier.value),
-          duration: Duration(milliseconds: 500),
-          curve: Curves.slowMiddle,
+        _guestController.jumpToPage(
+          getCurrent(guests, guest_notifier.value),
         );
       }
     });
+  }
+
+  @override
+  initState() {
+    super.initState();
+
     widget.productNotifier.addListener(() {
       final fromClick =
           widget.productNotifier.value?.source == RouteSource.fromClick;
       if (_productController.hasClients && !fromClick) {
         _productController.jumpToPage(0);
-      }
-    });
-    widget.reglogNotifier.addListener(() {
-      final fromAddress =
-          widget.reglogNotifier.value?.source == RouteSource.fromAddress;
-      if (_reglogController.hasClients && !fromAddress) {
-        _reglogController.jumpToPage(
-          getCurrent(test_reglog, widget.reglogNotifier.value),
-        );
       }
     });
   }
@@ -76,29 +66,47 @@ class _PageSectionState extends State<PageSection> {
     return BlocConsumer<RouteBloc, RouteState>(
       listener: (context, state) {
         if (state is Guest_RouteState) {
-          test_guests = state.routes.map((e) => e.type).toList();
+          guests = state.routes;
+          guest_notifier = state.notifier;
+          guest_notifier.addListener(() {
+            final fromScroll =
+                guest_notifier.value?.source == RouteSource.fromScroll;
+            if (_guestController.hasClients && !fromScroll) {
+              _guestController.jumpToPage(
+                getCurrent(guests, guest_notifier.value),
+              );
+            }
+          });
         }
         if (state is Reglog_RouteState) {
-          test_reglog = state.routes.map((e) => e.type).toList();
+          reglog = state.routes;
+          reglog_notifier = state.notifier;
+          reglog_notifier.addListener(() {
+            final fromAddress =
+                reglog_notifier.value?.source == RouteSource.fromAddress;
+            if (_reglogController.hasClients && !fromAddress) {
+              _reglogController.jumpToPage(
+                getCurrent(reglog, reglog_notifier.value),
+              );
+            }
+          });
         }
-        // TODO: implement listener
       },
       builder: (context, state) {
         return MultiValueListenableBuilder(
           valueListenables: [
-            widget.guestNotifier,
+            guest_notifier,
             widget.productNotifier,
-            widget.reglogNotifier
+            reglog_notifier,
           ],
-          builder: (BuildContext _, List<dynamic> values, Widget? __) {
+          builder: (context, values, child) {
             List<String?> pairs =
                 values.map((element) => (element as RouteType?)?.path).toList();
-            // print(pairs);
+            print(pairs);
             if ((values.last as RouteType?)?.path != null) {
               _reglogController = PageController(
                 viewportFraction: 1,
-                initialPage:
-                    getCurrent(test_reglog, widget.reglogNotifier.value),
+                initialPage: getCurrent(reglog, reglog_notifier.value),
               );
               return NotificationListener<Notification>(
                 onNotification: (notification) {
@@ -120,8 +128,7 @@ class _PageSectionState extends State<PageSection> {
                   // final availableHeight = constraints.maxHeight;
                   _guestController = PageController(
                     viewportFraction: 1,
-                    initialPage:
-                        getCurrent(test_guests, widget.guestNotifier.value),
+                    initialPage: getCurrent(guests, guest_notifier.value),
                   );
                   return NotificationListener<Notification>(
                     onNotification: (notification) {
@@ -177,17 +184,18 @@ class _PageSectionState extends State<PageSection> {
 
   void _onGuestScroll() {
     final pageIndex = _guestController.page?.floor() ?? 0;
-    final userScrollPath = test_guests[pageIndex].path;
-    widget.guestNotifier.value = RouteType(
+    final userScrollPath = guests[pageIndex].path;
+    guest_notifier.value = RouteType(
       path: userScrollPath,
       source: RouteSource.fromScroll,
     );
+    print('PAGE SCROLL: ${guest_notifier}');
   }
 
   void _onReglogEnter() {
     final pageIndex = _reglogController.page?.floor() ?? 0;
-    final reglogPath = test_reglog[pageIndex].path;
-    widget.reglogNotifier.value = RouteType(
+    final reglogPath = reglog[pageIndex].path;
+    reglog_notifier.value = RouteType(
       path: reglogPath,
       source: RouteSource.fromAddress,
     );

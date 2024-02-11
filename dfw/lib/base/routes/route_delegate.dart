@@ -18,7 +18,7 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
   final ValueNotifier<RouteType?> _guestNotifier = ValueNotifier(null);
   final ValueNotifier<RouteType?> _productNotifier = ValueNotifier(null);
   final ValueNotifier<RouteType?> _reglogNotifier = ValueNotifier(null);
-  final ValueNotifier<bool?> _unknownStateNotifier = ValueNotifier(null);
+  final ValueNotifier<bool?> _unknownNotifier = ValueNotifier(null);
 
   final List<RouteInitial> routes;
 
@@ -35,24 +35,32 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
     final test_product = routes
         .where((route) => (route.level.floor == RouteFloor.second))
         .toList();
-    // print(test_product);
+    print(test_reglog);
 
     _foundationPage = MaterialPage(
         key: ValueKey<String>("HomePage"),
         child: BlocProvider(
           create: (context) => RouteBloc()
-            ..add(Guest_RouteEvent(guests: test_guest))
-            ..add(Reglog_RouteEvent(reglogs: test_reglog)),
+            ..add(Guest_RouteEvent(
+              guests: test_guest.map((guest) => guest.type).toList(),
+              notifier: _guestNotifier,
+            ))
+            ..add(Reglog_RouteEvent(
+              reglogs: test_reglog.map((reglog) => reglog.type).toList(),
+              notifier: _reglogNotifier,
+            )),
           child: BlocConsumer<RouteBloc, RouteState>(
             listener: (context, state) {
-              // print(state.routes);
-              // TODO: implement listener
+              if (state is Guest_RouteState) {
+                print('DELEGATE guest: ${state.notifier}');
+              }
+              if (state is Reglog_RouteState) {
+                print('DELEGATE reg: ${state.notifier}');
+              }
             },
             builder: (context, state) {
               return LandingPage(
-                guestNotifier: _guestNotifier,
                 productNotifier: _productNotifier,
-                reglogNotifier: _reglogNotifier,
               );
             },
           ),
@@ -72,7 +80,7 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
 
   @override
   RouteConfiguration get currentConfiguration {
-    if (_unknownStateNotifier.value == true) {
+    if (_unknownNotifier.value == true) {
       return RouteConfiguration.unknown();
     } else if (_reglogNotifier.value != null) {
       return RouteConfiguration.reglog(reglogPath: _reglogNotifier.value?.path);
@@ -92,7 +100,7 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
 
     return Navigator(
       key: navigatorKey,
-      pages: _unknownStateNotifier.value == true
+      pages: _unknownNotifier.value == true
           ? _unknownStack
           : [
               _foundationPage,
@@ -110,21 +118,21 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
     // print('>>>${configuration.guestPath}/${configuration.productPath}');
     // print('>>>${configuration.isProductsPage}');
     if (configuration.unknown) {
-      _unknownStateNotifier.value = true;
+      _unknownNotifier.value = true;
       _guestNotifier.value = null;
       _productNotifier.value = null;
       _reglogNotifier.value = null;
     } else if (configuration.isPage) {
-      _unknownStateNotifier.value = false;
+      _unknownNotifier.value = false;
       _guestNotifier.value = RouteType(
-        path: '${configuration.guestPath}',
+        path: configuration.guestPath ?? '/',
         source: RouteSource.fromAddress,
       );
       _productNotifier.value = null;
       _reglogNotifier.value == null;
     } else if (configuration.isProductsPage) {
       print('product page >>>');
-      _unknownStateNotifier.value = false;
+      _unknownNotifier.value = false;
       _guestNotifier.value = null;
       _productNotifier.value = RouteType(
         path: '${configuration.productPath}',
@@ -132,7 +140,7 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
       );
       _reglogNotifier.value == null;
     } else if (configuration.isReglog) {
-      _unknownStateNotifier.value = false;
+      _unknownNotifier.value = false;
       _reglogNotifier.value = RouteType(
         path: '${configuration.reglogPath}',
         source: RouteSource.fromAddress,

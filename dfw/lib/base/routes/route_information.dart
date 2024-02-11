@@ -57,12 +57,4 @@ class RouteParser extends RouteInformationParser<RouteConfiguration> {
       return null;
     }
   }
-
-  bool _isValidPath(String path) {
-    return guests.contains("$path");
-  }
-
-  bool _isRegPath(String path) {
-    return reglog.contains("$path");
-  }
 }

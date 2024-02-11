@@ -8,21 +8,25 @@ sealed class RouteEvent extends Equatable {
 }
 
 class Guest_RouteEvent extends RouteEvent {
-  final List<RouteInitial> guests;
+  final List<RouteType> guests;
+  final ValueNotifier<RouteType?> notifier;
   Guest_RouteEvent({
     required this.guests,
+    required this.notifier,
   });
 }
 
 class Reglog_RouteEvent extends RouteEvent {
-  final List<RouteInitial> reglogs;
+  final List<RouteType> reglogs;
+  final ValueNotifier<RouteType?> notifier;
   Reglog_RouteEvent({
     required this.reglogs,
+    required this.notifier,
   });
 }
 
 class Account_RouteEvent extends RouteEvent {
-  List<RouteInitial> accounts;
+  List<RouteType> accounts;
   Account_RouteEvent({
     required this.accounts,
   });

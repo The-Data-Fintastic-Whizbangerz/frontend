@@ -7,15 +7,11 @@ import '../menus/menu_top.dart';
 import '../routes/route_type.dart';
 
 class LandingPage extends StatelessWidget {
-  final ValueNotifier<RouteType?> guestNotifier;
   final ValueNotifier<RouteType?> productNotifier;
-  final ValueNotifier<RouteType?> reglogNotifier;
 
   LandingPage({
     Key? key,
-    required this.guestNotifier,
     required this.productNotifier,
-    required this.reglogNotifier,
   }) : super(key: key);
 
   @override
@@ -38,15 +34,11 @@ class LandingPage extends StatelessWidget {
         child: Column(
           children: [
             TopNavigationMenu(
-              guestNotifier: guestNotifier,
               productNotifier: productNotifier,
-              reglogNotifier: reglogNotifier,
             ),
             Expanded(
               child: PageSection(
-                guestNotifier: guestNotifier,
                 productNotifier: productNotifier,
-                reglogNotifier: reglogNotifier,
               ),
             ),
           ],
