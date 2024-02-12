@@ -39,7 +39,8 @@ class _HomePageState extends State<HomePage> {
               children: [
                 StaggeredGridTile.extent(
                   crossAxisCellCount: context.responsive(sm: 1),
-                  mainAxisExtent: MediaQuery.of(context).size.height * 4 / 5,
+                  mainAxisExtent: MediaQuery.of(context).size.height *
+                      context.responsive(sm: 0.3, md: 4 / 5),
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +65,8 @@ class _HomePageState extends State<HomePage> {
                 ),
                 StaggeredGridTile.extent(
                   crossAxisCellCount: context.responsive(sm: 1, md: 3),
-                  mainAxisExtent: MediaQuery.of(context).size.height * 4 / 5,
+                  mainAxisExtent: MediaQuery.of(context).size.height *
+                      context.responsive(sm: 0.5, md: 4 / 5),
                   child: CarouselSlider(
                     options: CarouselOptions(
                       autoPlay: true,
