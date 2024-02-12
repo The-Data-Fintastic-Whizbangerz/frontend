@@ -5,6 +5,8 @@ class BasicTheme {
   static Color lightBackground = Color(0xFFF0F0F3);
   static Color lightPrimary = Colors.white;
   static Color lightSecondary = Color(0xFFAEAEC0);
+  static Color leftBackground = Color(0xff7024b4);
+  static Color rightBackground = Color(0xffd83ca4);
 
   //dark
   static Color darkBackground = Colors.grey.shade900;

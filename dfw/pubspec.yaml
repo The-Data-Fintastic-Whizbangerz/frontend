@@ -30,18 +30,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
   flutter_bloc: ^8.0.0
-  hydrated_bloc: ^9.1.3
+  # hydrated_bloc: ^9.1.3
   path_provider: ^2.1.2
-
   url_strategy: ^0.2.0
-  fluro: ^2.0.5
-  timeline_tile: ^2.0.0
-  carousel_slider: ^4.0.0
+  # fluro: ^2.0.5
+  # timeline_tile: ^2.0.0
+  # carousel_slider: ^4.0.0
   shared_preferences: ^2.2.2
   uuid: ^3.0.0
   equatable: ^2.0.3
-  formz: ^0.6.0
+  # formz: ^0.6.0
+  multi_value_listenable_builder: ^0.0.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

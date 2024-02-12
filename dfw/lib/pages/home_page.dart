@@ -1,11 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uuid/uuid.dart';
-import '../base/extensions/responsiveContext.dart';
 import '../base/models/user.dart';
-import '../base/utils/authentications/auth_bloc.dart';
-import '../base/utils/states/status.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -26,107 +20,22 @@ final List<String> bannerList = [
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
-    return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
-        if (state.status is StatusAuthenticated) {
-          print('Status -> Home: ' + state.status.toString());
-          user = User(
-              uuid: const Uuid().v4(),
-              username: state.username,
-              password: state.password);
-        }
-        if (state.status is StatusUnauthenticated) {
-          print('Status -> Home: ' + state.status.toString());
-          user = null;
-        }
-      },
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              CarouselSlider(
-                options: CarouselOptions(
-                  autoPlay: true,
-                  height: context.responsive(sm: 250, md: 350, lg: 450),
-                ),
-                items: bannerList
-                    .map((item) => Container(
-                        padding: EdgeInsets.all(5),
-                        child: Center(
-                          child: Image.network(
-                            item,
-                            fit: BoxFit.cover,
-                            width: width,
-                          ),
-                        )))
-                    .toList(),
-              ),
-              Container(
-                  height: height,
-                  width: width,
-                  color: Colors.white,
-                  margin: EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              // color: Colors.grey,\
-                              padding: EdgeInsets.all(10),
-                              child: Center(
-                                  child: Text('Most Recent News',
-                                      style: TextStyle(color: Colors.black)))),
-                          TextButton(
-                            child: Center(
-                                child: Text('Read More...',
-                                    style: TextStyle(color: Colors.black))),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            Card(
-                              color: Colors.grey,
-                              margin: EdgeInsets.all(10),
-                              child: Container(
-                                  height: 200,
-                                  width: 200,
-                                  child: Center(child: Text('NEWS'))),
-                            ),
-                            Card(
-                              color: Colors.grey,
-                              margin: EdgeInsets.all(10),
-                              child: Container(
-                                  height: 200,
-                                  width: 200,
-                                  child: Center(child: Text('NEWS'))),
-                            ),
-                            Card(
-                              color: Colors.grey,
-                              margin: EdgeInsets.all(10),
-                              child: Container(
-                                  height: 200,
-                                  width: 200,
-                                  child: Center(child: Text('NEWS'))),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  )),
-            ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white54,
+            ),
+            margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            child: Center(
+              child: Text('Banner Here'),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

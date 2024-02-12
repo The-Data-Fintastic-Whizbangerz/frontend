@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../base/app/landing_page.dart';
-import '../../base/extensions/neumorphism.dart';
-import '../../base/utils/authentications/auth_bloc.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -23,149 +18,127 @@ class _SignInFormState extends State<SignInForm> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthBloc, AuthState>(
-      listener: (context, state) {
-        // if (state.status is StatusAuthenticated) {
-        //   print('Status -> Signin: ' + state.status.toString());
-        //   Navigator.popAndPushNamed(context, '/home');
-        // }
-        // if (state.status is StatusUnauthenticated) {
-        //   print('Status -> Signin: ' + state.status.toString());
-        // }
-      },
-      builder: (context, state) {
-        return Form(
-          key: _formKey,
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 50),
-            height: 400,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Login to CTHTC'),
-                  _usernameField(),
-                  _passwordField(),
-                  _loginButton(),
-                  _registerButton(),
-                ],
-              ),
-            ).addNeumorphismInner(context),
+    double ratio = MediaQuery.of(context).size.aspectRatio;
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            'Loan Wise',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 60 * ratio,
+                fontWeight: FontWeight.bold),
           ),
-        );
-      },
+          _usernameField(),
+          _passwordField(),
+          _loginButton(),
+          _registerButton(),
+        ],
+      ),
     );
   }
 
   Widget _usernameField() {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        return Container(
-          height: 50.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.0),
-          ),
-          child: TextFormField(
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 15.0,
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              prefixIcon: Icon(Icons.email),
-              hintText: 'Enter Email',
-              contentPadding: EdgeInsets.only(top: 15),
-            ),
-            keyboardType: TextInputType.emailAddress,
-            validator: (value) {
-              if ((value == null || value.isEmpty)) {
-                // if ((value == null || value.isEmpty) || !state.isValidUsername) {
-                return 'Username required \"@\" domain';
-              }
-              return null;
-            },
-            onChanged: (value) {
-              context.read<AuthBloc>().add(Username_AuthEvent(username: value));
-            },
-          ),
-        ).addNeumorphismInner(context);
-      },
+    return Container(
+      height: 50.0,
+      margin: EdgeInsets.symmetric(vertical: 5),
+      decoration: BoxDecoration(
+        color: Colors.white60,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: TextFormField(
+        style: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 15.0,
+        ),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          prefixIcon: Icon(Icons.email),
+          hintText: 'Enter Email',
+          contentPadding: EdgeInsets.only(top: 15),
+        ),
+        keyboardType: TextInputType.emailAddress,
+        validator: (value) {
+          if ((value == null || value.isEmpty)) {
+            // if ((value == null || value.isEmpty) || !state.isValidUsername) {
+            return 'Username required \"@\" domain';
+          }
+          return null;
+        },
+        onChanged: (value) {},
+      ),
     );
   }
 
   Widget _passwordField() {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        return Container(
-          height: 50.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.0),
+    return Container(
+      height: 50.0,
+      margin: EdgeInsets.symmetric(vertical: 5),
+      decoration: BoxDecoration(
+        color: Colors.white60,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: TextFormField(
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 15.0,
           ),
-          child: TextFormField(
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 15.0,
-              ),
-              obscureText: true,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                suffixIcon: IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.remove_red_eye),
-                ),
-                prefixIcon: Icon(Icons.remove_red_eye),
-                contentPadding: const EdgeInsets.only(top: 18.0),
-                hintText: 'Enter Password',
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  // if (value == null || value.isEmpty || !state.isValidPassword) {
-                  return 'Password required uppercase, lowercase, digit, special';
-                }
-                return null;
-              },
-              onChanged: (value) => context.read<AuthBloc>().add(
-                    Password_AuthEvent(password: value),
-                  )),
-        ).addNeumorphismInner(context);
-      },
+          obscureText: true,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            suffixIcon: IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.remove_red_eye),
+            ),
+            prefixIcon: Icon(Icons.remove_red_eye),
+            contentPadding: const EdgeInsets.only(top: 18.0),
+            hintText: 'Enter Password',
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              // if (value == null || value.isEmpty || !state.isValidPassword) {
+              return 'Password required uppercase, lowercase, digit, special';
+            }
+            return null;
+          },
+          onChanged: (value) {}),
     );
   }
 
   Widget _loginButton() {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        return InkWell(
-          borderRadius: BorderRadius.circular(10),
-          child: Container(
-            width: 150,
-            height: 50,
-            child: Center(child: Text('Log In')),
-          ).addNeumorphism(context),
-          onTap: () {
-            if (_formKey.currentState!.validate()) {
-              (context).read<AuthBloc>().add(Submit_AuthEvent(
-                  username: state.username, password: state.password));
-
-              // (context).read<AuthBloc>().add(Verify_AuthEvent());
-              Navigator.popAndPushNamed(context, '/home');
-            }
-          },
-        );
-      },
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 5),
+      child: TextButton(
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.black,
+        ),
+        child: Center(heightFactor: 3, child: Text('Log In')),
+        onPressed: () {},
+      ),
     );
   }
 
   Widget _registerButton() {
-    return InkWell(
-      borderRadius: BorderRadius.all(Radius.circular(10)),
-      child: Container(
-          padding: EdgeInsets.all(15), child: Text('Register Account')),
-      onTap: () {
-        // Navigator.pushNamed(context, '/signup');
-      },
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 5),
+      child: TextButton(
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.transparent,
+        ),
+        child: Center(heightFactor: 3, child: Text('Register')),
+        onPressed: () {
+          // guestNotifier.value = null;
+          // reglogNotifier.value = RouteType(
+          //   path: 'register',
+          //   source: RouteSelectionSource.fromButtonClick,
+          // );
+        },
+      ),
     );
   }
 }
