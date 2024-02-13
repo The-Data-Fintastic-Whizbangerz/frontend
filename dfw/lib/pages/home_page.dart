@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
               color: Colors.white54,
             ),
             margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            padding: EdgeInsets.all(15),
             child: StaggeredGrid.count(
               crossAxisCount: context.responsive(sm: 1, md: 4),
               mainAxisSpacing: 10,

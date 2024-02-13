@@ -1,6 +1,6 @@
-import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/responsiveContext.dart';
-import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/themes.dart';
-import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/product/loan_page.dart';
+import '/base/extensions/responsiveContext.dart';
+import '/base/extensions/themes.dart';
+import '/pages/product/loan_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -30,10 +30,16 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-          child: Center(
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+        padding: EdgeInsets.symmetric(vertical: 20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey[200],
+        ),
+        child: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             child: StaggeredGrid.count(
               crossAxisCount: context.responsive(sm: 1, md: 2),
               mainAxisSpacing: context.responsive(sm: 1, md: 10),
@@ -142,7 +148,8 @@ class ProductWidget extends StatelessWidget {
                 StaggeredGridTile.fit(
                   crossAxisCellCount: 2,
                   child: Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 10),
                     child: TextButton(
                       onPressed: () {},
                       child: Center(child: Text('Check my eligibility')),
