@@ -48,10 +48,22 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Text(
                           'Borrowing made easy',
-                          style: TextStyle(fontSize: 40),
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.justify,
                         ),
+                        Divider(color: Colors.transparent),
                         Text(
-                            'Check your eligibility in minutes - without affecting your credit score'),
+                          'Check your eligibility in minutes - without affecting your credit score',
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                            fontSize: 16,
+                            height: 1.6,
+                          ),
+                        ),
+                        Divider(color: Colors.transparent, height: 20),
                         TextButton(
                           onPressed: () {},
                           child: Center(child: Text('Try now!')),
