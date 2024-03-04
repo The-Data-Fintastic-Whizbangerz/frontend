@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                       // crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Borrowing made easy',
+                          'Will I qualify for a loan?',
                           style: TextStyle(
                             fontSize: 40,
                             fontWeight: FontWeight.bold,
@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Divider(color: Colors.transparent),
                         Text(
-                          'Check your eligibility in minutes - without affecting your credit score',
+                          'Check your loan eligibility with our calculator in minutes - without affecting your credit score',
                           textAlign: TextAlign.justify,
                           style: TextStyle(
                             fontSize: 16,
