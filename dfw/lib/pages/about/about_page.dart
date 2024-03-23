@@ -46,9 +46,9 @@ class _AboutWidgetState extends State<AboutWidget> {
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
             Text(
-                '[At LoanWise, we make it easy for consumers to check their loan eligibility without affect their credit score.'),
+                'At LoanWise, we envision a future where accessing financial solutions is straightforward and empowering for everyone.'),
             Text(
-                'We believe that borrowers should be able to assess their eligibility before making an application so that their credit score will not be affected.]'),
+                'Our mission is to provide users a seamless loan process experience, tailored to your needs, while priortising your data privacy and security.'),
             TextButton(
               onPressed: () {},
               child: Text('Get Started'),
