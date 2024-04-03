@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 
 enum RouteConst {
   HOME_PAGE('home', Icons.home_filled, HomePage()),
-  ABOUT_PAGE('about', Icons.home_filled, AboutPage()),
+  ABOUT_PAGE('about', Icons.home_filled, AboutWidget()),
   PRODUCT_PAGE('products', Icons.home_filled, ProductWidget()),
   BORROWING_PAGE(
       'products/borrowing-calculator', Icons.home_filled, BorrowingPage()),

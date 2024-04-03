@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_value_listenable_builder/multi_value_listenable_builder.dart';
 
-import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/product/loan_page.dart';
-
+import '../../pages/product/loan_page.dart';
 import '../../pages/product/product_page.dart';
 import '../routes/constants.dart';
 import '../routes/route_bloc.dart';
 import '../routes/route_type.dart';
+import '/base/extensions/themes.dart';
 
 class PageSection extends StatefulWidget {
   final ValueNotifier<RouteType?> productNotifier;
@@ -32,20 +32,19 @@ class _PageSectionState extends State<PageSection> {
   ValueNotifier<RouteType?> reglog_notifier = ValueNotifier(null);
   List<RouteType> guests = [];
   List<RouteType> reglog = [];
+
+  bool isOnTop = false;
+
   int getCurrent(List<RouteType> s1, RouteType? s2) {
     int index = s1.indexWhere((element) => element.path == s2?.path);
     return index > -1 ? index : 0;
   }
 
-  void test() {
-    guest_notifier.addListener(() {
-      final fromScroll = guest_notifier.value?.source == RouteSource.fromScroll;
-      if (_guestController.hasClients && !fromScroll) {
-        _guestController.jumpToPage(
-          getCurrent(guests, guest_notifier.value),
-        );
-      }
+  void goOnTop() {
+    setState(() {
+      isOnTop = false;
     });
+    _guestController.jumpToPage(0);
   }
 
   @override
@@ -130,6 +129,7 @@ class _PageSectionState extends State<PageSection> {
                     viewportFraction: 1,
                     initialPage: getCurrent(guests, guest_notifier.value),
                   );
+
                   return NotificationListener<Notification>(
                     onNotification: (notification) {
                       if (notification is UserScrollNotification) {
@@ -137,10 +137,24 @@ class _PageSectionState extends State<PageSection> {
                       }
                       return true;
                     },
-                    child: _pageView(
-                        routes: guestRoutes,
-                        controller: _guestController,
-                        physics: AlwaysScrollableScrollPhysics()),
+                    child: Scaffold(
+                      backgroundColor: Colors.transparent,
+                      floatingActionButton: Visibility(
+                        visible: isOnTop,
+                        child: FloatingActionButton(
+                          backgroundColor: BasicTheme.leftBackground,
+                          hoverColor: BasicTheme.rightBackground,
+                          child: Icon(Icons.arrow_upward),
+                          onPressed: () {
+                            goOnTop();
+                          },
+                        ),
+                      ),
+                      body: _pageView(
+                          routes: guestRoutes,
+                          controller: _guestController,
+                          physics: AlwaysScrollableScrollPhysics()),
+                    ),
                   );
                 },
               );
@@ -189,6 +203,9 @@ class _PageSectionState extends State<PageSection> {
       path: userScrollPath,
       source: RouteSource.fromScroll,
     );
+    setState(() {
+      isOnTop = (pageIndex == 0) ? false : true;
+    });
     print('PAGE SCROLL: ${guest_notifier}');
   }
 

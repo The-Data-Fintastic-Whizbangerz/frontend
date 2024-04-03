@@ -81,7 +81,7 @@ List<RouteInitial> routes = [
   RouteInitial(
       type: RouteType(path: 'about'),
       level: RouteLevel.guest,
-      widget: AboutPage()),
+      widget: AboutWidget()),
   RouteInitial(
       type: RouteType(path: 'contact'),
       level: RouteLevel.guest,

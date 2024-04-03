@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_value_listenable_builder/multi_value_listenable_builder.dart';
@@ -60,21 +62,22 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
           builder: (context, values, child) {
             return Container(
               width: width,
-              decoration: getCurrent(guests, guest_notifier.value) == 0
-                  ? BoxDecoration(color: Colors.white10)
-                  : BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          BasicTheme.leftBackground,
-                          BasicTheme.rightBackground,
-                          BasicTheme.leftBackground,
-                          BasicTheme.rightBackground,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        stops: [0.1, 0.3, 0.8, 1],
-                      ),
-                    ),
+              decoration:
+                  // getCurrent(guests, guest_notifier.value) == 0
+                  BoxDecoration(color: Colors.white10),
+              // : BoxDecoration(
+              //     gradient: LinearGradient(
+              //       colors: [
+              //         BasicTheme.leftBackground,
+              //         BasicTheme.rightBackground,
+              //         BasicTheme.leftBackground,
+              //         BasicTheme.rightBackground,
+              //       ],
+              //       begin: Alignment.topRight,
+              //       end: Alignment.bottomLeft,
+              //       stops: [0.1, 0.4, 0.7, 1],
+              //     ),
+              //   ),
               child: SafeArea(
                 bottom: false,
                 minimum: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
