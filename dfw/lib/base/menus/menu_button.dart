@@ -39,7 +39,7 @@ class NavigationMenuButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
       ),
       itemBuilder: itemBuilder,
-      child: Text(path.capitalize()),
+      child: Text(path.toCapitalise()),
     );
 
     return Padding(
@@ -52,7 +52,7 @@ class NavigationMenuButton extends StatelessWidget {
               ),
               onPressed: onPressed,
               onHover: onHover,
-              child: hasSubMenu ? subMenu : Text(path.capitalize()))
+              child: hasSubMenu ? subMenu : Text(path.toCapitalise()))
           : TextButton(
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
@@ -60,7 +60,7 @@ class NavigationMenuButton extends StatelessWidget {
               ),
               onPressed: onPressed,
               onHover: onHover,
-              child: hasSubMenu ? subMenu : Text(path.capitalize())),
+              child: hasSubMenu ? subMenu : Text(path.toCapitalise())),
     );
   }
 }

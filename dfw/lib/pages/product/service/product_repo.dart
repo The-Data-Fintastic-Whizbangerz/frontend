@@ -5,7 +5,8 @@ import 'package:The_Data_Fintastic_Whizbangerz_Group/base/models/creditForm.dart
 import 'package:http/http.dart' as http;
 
 class ProductRepository {
-  final url = 'https://dfw.cthtc.com';
+  final url = 'http://127.0.0.1:5000';
+  // final url = 'https://dfw.cthtc.com';
 
   ProductRepository._();
   static final ProductRepository instance = ProductRepository._();
@@ -21,42 +22,35 @@ class ProductRepository {
   }
 
   Future<String> submitData({
+    required int creditamount,
+    required int duration,
     required String purpose,
+    required int disposible,
     required int occupation,
     required int employLength,
     required String guarantor,
     required String house,
     required String residentLength,
     required int ageGroup,
-    required String sex,
     required int numChild,
   }) async {
     var response;
     try {
       CreditForm creditForm = CreditForm.fromMap({
+        'creditamount': creditamount,
+        'duration': duration,
         'purpose': purpose,
+        'disposible': disposible,
         'occupation': (occupation),
         'employLength': (employLength),
         'guarantor': guarantor,
         'house': house,
         'residentLength': residentLength,
         'ageGroup': (ageGroup),
-        'sex': sex,
         'numChild': (numChild),
       });
 
-      // var map = {};
-      // map['Purpose'] = purpose;
-      // map['Occupation'] = occupation;
-      // map['Employment_length'] = employLength;
-      // map['Other_debtors_or_guarantors'] = guarantor;
-      // map['Housing'] = house;
-      // map['Residence_length'] = residentLength;
-      // map['Age_group'] = ageGroup;
-      // map['Sex'] = sex;
-      // map['Number_of_dependents'] = numChild;
-
-      response = await http.post(Uri.parse(url + '/predict'),
+      response = await http.post(Uri.parse(url + '/api/predict'),
           // headers: {'Accept': 'application/json'}, body: json.encode(map));
           headers: {'Accept': 'application/json'},
           body: creditForm.toJson());
