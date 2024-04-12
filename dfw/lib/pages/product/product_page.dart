@@ -1,3 +1,4 @@
+import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/string.dart';
 import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/product/service/product_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -37,14 +38,16 @@ class ProductWidget extends StatefulWidget {
 }
 
 CreditForm creditForm = CreditForm(
+    creditamount: 0,
+    duration: 0,
     purpose: 'purpose',
+    disposible: 0,
     occupation: 0,
     employLength: 0,
     guarantor: 'guarantor',
     house: 'house',
     residentLength: 'residentLength',
     ageGroup: 0,
-    sex: 'sex',
     numChild: 0);
 
 class _ProductWidgetState extends State<ProductWidget> {
@@ -185,14 +188,16 @@ class _ProductWidgetState extends State<ProductWidget> {
         print(creditForm.toJson());
         // ProductRepository.instance.testAPI();
         String submit = await ProductRepository.instance.submitData(
+          creditamount: creditForm.creditamount,
+          duration: creditForm.duration,
           purpose: creditForm.purpose,
+          disposible: creditForm.disposible,
           occupation: (creditForm.occupation),
           employLength: creditForm.employLength,
           guarantor: creditForm.guarantor,
           house: creditForm.house,
           residentLength: creditForm.residentLength,
           ageGroup: creditForm.ageGroup,
-          sex: creditForm.sex,
           numChild: creditForm.numChild,
         );
 
@@ -262,6 +267,30 @@ Widget _form(BuildContext context) {
     children: [
       gridTile(
           context,
+          Text('Credit Amount'),
+          dropdownField(
+              items: List.generate(
+                  creditamount.length,
+                  (index) => DropdownMenuItem(
+                      value: creditamount[index],
+                      alignment: Alignment.center,
+                      child: Text(creditamount[index]),
+                      onTap: () => creditForm.setCreditamount =
+                          creditamount.length - index)))),
+      gridTile(
+          context,
+          Text('Duration (month)'),
+          dropdownField(
+              items: List.generate(
+                  duration.length,
+                  (index) => DropdownMenuItem(
+                      value: duration[index],
+                      alignment: Alignment.center,
+                      child: Text(duration[index]),
+                      onTap: () => creditForm.setDuration =
+                          duration.length - index - 1)))),
+      gridTile(
+          context,
           Text('Purpose'),
           dropdownField(
               items: List.generate(
@@ -269,8 +298,21 @@ Widget _form(BuildContext context) {
                   (index) => DropdownMenuItem(
                       value: purpose[index],
                       alignment: Alignment.center,
-                      child: Text(purpose[index]),
+                      child: Text(purpose[index]
+                          .replaceAll(RegExp('_'), ' ')
+                          .toCapitalise()),
                       onTap: () => creditForm.setPurpose = purpose[index])))),
+      gridTile(
+          context,
+          Text('Disposible'),
+          dropdownField(
+              items: List.generate(
+                  disposible.length,
+                  (index) => DropdownMenuItem(
+                      value: disposible[index],
+                      alignment: Alignment.center,
+                      child: Text(disposible[index]),
+                      onTap: () => creditForm.setDisposible = index + 1)))),
       gridTile(
           context,
           Text('Occupation'),
@@ -281,7 +323,8 @@ Widget _form(BuildContext context) {
                       value: occupation[index],
                       alignment: Alignment.center,
                       child: Text(occupation[index]),
-                      onTap: () => creditForm.setOccupation = index + 1)))),
+                      onTap: () => creditForm.setOccupation =
+                          occupation.length - index)))),
       gridTile(
           context,
           Text('Employment Length'),
@@ -302,7 +345,9 @@ Widget _form(BuildContext context) {
                   (index) => DropdownMenuItem(
                       value: otherDebtorsGuarantors[index],
                       alignment: Alignment.center,
-                      child: Text(otherDebtorsGuarantors[index]),
+                      child: Text(otherDebtorsGuarantors[index]
+                          .replaceAll(RegExp('_'), ' ')
+                          .toCapitalise()),
                       onTap: () => creditForm.setGuarantor =
                           otherDebtorsGuarantors[index])))),
       gridTile(
@@ -314,7 +359,9 @@ Widget _form(BuildContext context) {
                   (index) => DropdownMenuItem(
                       value: housing[index],
                       alignment: Alignment.center,
-                      child: Text(housing[index]),
+                      child: Text(housing[index]
+                          .replaceAll(RegExp('_'), ' ')
+                          .toCapitalise()),
                       onTap: () => creditForm.setHouse = housing[index])))),
       gridTile(
           context,
@@ -325,7 +372,9 @@ Widget _form(BuildContext context) {
                   (index) => DropdownMenuItem(
                       value: residenceLength[index],
                       alignment: Alignment.center,
-                      child: Text(residenceLength[index]),
+                      child: Text(residenceLength[index]
+                          .replaceAll(RegExp('_'), ' ')
+                          .toCapitalise()),
                       onTap: () => creditForm.setResidentLength =
                           residenceLength[index])))),
       gridTile(
@@ -341,17 +390,6 @@ Widget _form(BuildContext context) {
                       onTap: () => creditForm.setAgeGroup = index + 1)))),
       gridTile(
           context,
-          Text('What is your gender?'),
-          dropdownField(
-              items: List.generate(
-                  sex.length,
-                  (index) => DropdownMenuItem(
-                      value: sex[index],
-                      alignment: Alignment.center,
-                      child: Text(sex[index]),
-                      onTap: () => creditForm.setSex = sex[index])))),
-      gridTile(
-          context,
           Text('Number of children'),
           dropdownField(
               items: List.generate(
@@ -360,7 +398,8 @@ Widget _form(BuildContext context) {
                       value: numberOfDependents[index],
                       alignment: Alignment.center,
                       child: Text(numberOfDependents[index]),
-                      onTap: () => creditForm.setNumChild = index + 1)))),
+                      onTap: () => creditForm.setNumChild =
+                          numberOfDependents.length - index)))),
     ],
     // children: [
     //   type(
@@ -466,6 +505,40 @@ Widget _form(BuildContext context) {
   );
 }
 
+// mapping creditamount REVERSE index
+List<String> creditamount = [
+  'Below £2,000',
+  '£2,001 - £4,000',
+  '£4,001 - £6,000',
+  '£6,001 - £8,000',
+  '£8,001 - £10,000',
+  '£10,001 - £12,000',
+  '£12,001 - £14,000',
+  '£14,001 - £16,000',
+  '£16,001 - £18,000',
+  'Above £18,001',
+];
+
+// mapping duration REVERSE index
+List<String> duration = [
+  'Below 5 months',
+  '6 to 10 months',
+  '11 to 15 months',
+  '16 to 20 months',
+  '21 to 25 months',
+  '26 to 30 months',
+  '31 to 35 months',
+  '36 to 40 months',
+  '41 to 45 months',
+  '46 to 50 months',
+  '51 to 55 months',
+  '56 to 60 months',
+  // '61 - 65',
+  // '66 - 70',
+  // '71 - 75',
+  // '76+',
+];
+
 List<String> purpose = [
   'radio_television',
   'car_new',
@@ -478,17 +551,44 @@ List<String> purpose = [
   'retraining',
   'others',
 ];
-List<String> occupation = [
-  'Unemployed/unskilled/nonresident',
-  'Unskilled resident',
-  'Skilled Employee/official',
-  'Management/selfemployed/highly-qualified',
+
+// mapping disposible index
+List<String> disposible = [
+  'Below £2,000',
+  '£2,001 - £4,000',
+  '£4,001 - £6,000',
+  '£6,001 - £8,000',
+  '£8,001 - £10,000',
+  '£10,001 - £12,000',
+  '£12,001 - £14,000',
+  '£14,001 - £16,000',
+  '£16,001 - £18,000',
+  'Above £18,001',
 ];
+
+// mapping occupation REVERSE index
+List<String> occupation = [
+  'Management/Selfemployed',
+  'Skilled Employee/official',
+  'Unskilled resident',
+  'Unemployed',
+  // 'unemployed_unskilled_nonresident',
+  // 'unskilled_resident',
+  // 'skilledEmployee_or_official',
+  // 'management_or_selfEmployed_or_highlyQualifiedEmployee',
+];
+
+// mapping employmentLength index
 List<String> employmentLength = [
   'Less than 1 year',
-  '1-4 years',
-  '4-7 years',
+  '1 to 4 years',
+  '4 to 7 years',
   'More than 7 years',
+
+  // 'Less_than_1_year',
+  // 'one_4_years',
+  // 'four_7_years',
+  // 'More_than_7_years',
 ];
 List<String> otherDebtorsGuarantors = [
   'co_applicant',
@@ -507,26 +607,23 @@ List<String> residenceLength = [
   'More_than_4_years'
 ];
 List<String> ageGroup = [
-  'Between 18 and 25',
-  'Between 26 and 30',
-  'Between 31 and 35',
-  'Between 36 and 40',
-  'Between 41 and 45',
-  'Between 46 and 50',
-  'Between 51 and 55',
-  'Between 56 and 60',
-  'Between 61 and 65',
-  'Between 66 and 70',
-  'Between 71 and 75',
+  '18 to 25',
+  '26 to 30',
+  '31 to 35',
+  '36 to 40',
+  '41 to 45',
+  '46 to 50',
+  '51 to 55',
+  '56 to 60',
+  '61 to 65',
+  '66 to 70',
+  '71 to 75',
 ];
 
-List<String> sex = [
-  'female',
-  'male',
-];
+// mapping numberOfDependents index
 List<String> numberOfDependents = [
-  '2 or more',
-  '1',
+  '1 child',
+  '2 children or more',
 ];
 
 
