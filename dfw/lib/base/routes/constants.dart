@@ -20,11 +20,12 @@ enum RouteConst {
   HOME_PAGE('home', Icons.home_filled, HomePage()),
   ABOUT_PAGE('about', Icons.home_filled, AboutWidget()),
   PRODUCT_PAGE('products', Icons.home_filled, ProductWidget()),
-  BORROWING_PAGE(
-      'products/borrowing-calculator', Icons.home_filled, BorrowingPage()),
+  // BORROWING_PAGE('products/loan-eligibility-calculator', Icons.home_filled,
+  //     BorrowingPage()),
   REPAYMENT_PAGE(
       'products/repayment-calculator', Icons.home_filled, RepaymentPage()),
-  LOAN_PAGE('products/loan-recommender', Icons.home_filled, LoanPage()),
+  LOAN_PAGE(
+      'products/loan-eligibility-calculator', Icons.home_filled, LoanPage()),
   CALCULATOR_PAGE('calculator', Icons.calculate, CalculatorPage()),
   GUIDES_PAGE('guides', Icons.home_filled, GuidePage()),
   NEWS_PAGE('news', Icons.person_rounded, NewsPage()),

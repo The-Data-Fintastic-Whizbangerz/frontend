@@ -67,7 +67,7 @@ List<RouteInitial> routes = [
       level: RouteLevel.guest,
       widget: ProductWidget()),
   RouteInitial(
-      type: RouteType(path: 'borrowing-calculator'),
+      type: RouteType(path: 'loan-eligibility-calculator'),
       level: RouteLevel(status: RouteStatus.public, floor: RouteFloor.second),
       widget: LoanPage()),
   RouteInitial(
