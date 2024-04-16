@@ -24,7 +24,7 @@ class _AboutWidgetState extends State<AboutWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
-              radius: width / context.responsive(sm: 7, md: 12, lg: 16, xl: 20),
+              radius: width / context.responsive(xs: 7, sm: 12, md: 16, lg: 20),
               backgroundColor: Colors.black26,
               foregroundColor: Colors.white,
               child: Text('Image'),

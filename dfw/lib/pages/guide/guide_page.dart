@@ -27,7 +27,7 @@ class GuidePage extends StatelessWidget {
             ),
             Expanded(
               child: MasonryGridView.count(
-                crossAxisCount: context.responsive(sm: 1, md: 2, lg: 3, xl: 6),
+                crossAxisCount: context.responsive(xs: 1, sm: 2, md: 3, lg: 6),
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 // maxCrossAxisExtent: 200,
                 mainAxisSpacing: 4,

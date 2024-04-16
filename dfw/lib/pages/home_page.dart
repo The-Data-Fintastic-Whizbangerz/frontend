@@ -21,6 +21,8 @@ final List<String> bannerList = [
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -30,17 +32,18 @@ class _HomePageState extends State<HomePage> {
               borderRadius: BorderRadius.circular(10),
               color: Colors.white54,
             ),
-            margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            padding: EdgeInsets.all(15),
+            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+            // Consider FLEX
             child: StaggeredGrid.count(
-              crossAxisCount: context.responsive(sm: 1, md: 4),
+              crossAxisCount: context.responsive(xs: 1, md: 4),
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
               children: [
                 StaggeredGridTile.extent(
-                  crossAxisCellCount: context.responsive(sm: 1),
+                  crossAxisCellCount: context.responsive(xs: 1),
                   mainAxisExtent: MediaQuery.of(context).size.height *
-                      context.responsive(sm: 0.3, md: 4 / 5),
+                      context.responsive(xs: 0.3, md: 4 / 5),
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -48,11 +51,11 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Text(
                           'Will I qualify for a loan?',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 40,
+                            fontSize: context.responsive(xs: width /14, md: height/width *50) ,
                             fontWeight: FontWeight.bold,
                           ),
-                          textAlign: TextAlign.justify,
                         ),
                         Divider(color: Colors.transparent),
                         Text(
@@ -60,10 +63,10 @@ class _HomePageState extends State<HomePage> {
                           textAlign: TextAlign.justify,
                           style: TextStyle(
                             fontSize: 16,
-                            height: 1.6,
+                            height: 1.5,
                           ),
                         ),
-                        Divider(color: Colors.transparent, height: 20),
+                        Divider(color: Colors.transparent, height: 10),
                         TextButton(
                           onPressed: () {},
                           child: Center(child: Text('Try now!')),
@@ -76,27 +79,30 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 StaggeredGridTile.extent(
-                  crossAxisCellCount: context.responsive(sm: 1, md: 3),
+                  crossAxisCellCount: context.responsive(xs: 1, md: 3),
                   mainAxisExtent: MediaQuery.of(context).size.height *
-                      context.responsive(sm: 0.5, md: 4 / 5),
-                  child: CarouselSlider(
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      enlargeCenterPage: true,
-                      viewportFraction: 1,
-                    ),
-                    items: bannerList
-                        .map(
-                          (item) => ClipRRect(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
-                            child: Image.network(
-                              item,
-                              fit: BoxFit.cover,
+                      context.responsive(xs: 0.5, md: 4 / 5),
+                  child: Container(
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.black12,),
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        viewportFraction: 1,
+                      ),
+                      items: bannerList
+                          .map(
+                            (item) => ClipRRect(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0)),
+                              child: Image.network(
+                                item,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                        )
-                        .toList(),
+                          )
+                          .toList(),
+                    ),
                   ),
                 ),
               ],

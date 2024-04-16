@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 
 // More Detail Responsive as extenstion
 extension Responsive on BuildContext {
-  T responsive<T>({
-    required T sm,
+ T responsive<T>({
+    required T xs,
+    T? sm,
     T? md,
     T? lg,
     T? xl,
   }) {
-    final wd = MediaQuery.of(this).size.width;
-    return wd >= 1440
-        ? (xl ?? lg ?? md ?? sm)
-        : wd >= 1100
-            ? (lg ?? md ?? sm)
-            : wd >= 666
-                ? (md ?? sm)
-                : sm;
+    final width = MediaQuery.of(this).size.width;
+    return (width >= 1920) // TV
+        ? (xl ?? lg ?? md ?? sm ?? xs)
+        : (width >= 1440) // Computer
+            ? (lg ?? md ?? sm ?? xs)
+            : (width >= 1024) // Tablet Landscape
+                ? (md ?? sm ?? xs)
+                : (width >= 768) // Tablet Portrait
+                    ? (sm ?? xs)
+                    :  xs;
   }
 }

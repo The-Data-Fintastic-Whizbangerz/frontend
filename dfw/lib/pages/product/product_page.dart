@@ -92,7 +92,7 @@ class _ProductWidgetState extends State<ProductWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Flex(
-        direction: context.responsive(sm: Axis.vertical, md: Axis.horizontal),
+        direction: context.responsive(xs: Axis.vertical, sm: Axis.horizontal),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
@@ -225,8 +225,8 @@ class _ProductWidgetState extends State<ProductWidget> {
 
 Widget gridTile(BuildContext context, Text text, Widget widget) {
   return StaggeredGrid.count(
-      crossAxisCount: context.responsive(sm: 1, md: 2),
-      mainAxisSpacing: context.responsive(sm: 1, md: 10),
+      crossAxisCount: context.responsive(xs: 1, sm: 2),
+      mainAxisSpacing: context.responsive(xs: 1, sm: 10),
       children: [type(1, true, text), type(1, false, widget)]);
 }
 
@@ -274,7 +274,7 @@ Widget dropdownField({required List<DropdownMenuItem<String?>> items}) {
 Widget _form(BuildContext context) {
   return StaggeredGrid.count(
     crossAxisCount: 1,
-    mainAxisSpacing: context.responsive(sm: 1, md: 10),
+    mainAxisSpacing: context.responsive(xs: 1, sm: 10),
     children: [
       gridTile(
           context,
@@ -633,7 +633,8 @@ List<String> ageGroup = [
 
 // mapping numberOfDependents index
 List<String> numberOfDependents = [
-  '1 child',
+  
+  '0 - 1 child',
   '2 children or more',
 ];
 
