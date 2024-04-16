@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gauge_indicator/gauge_indicator.dart';
 
 class CreditResult extends StatefulWidget {
-  int score;
+  double score;
   CreditResult({
     Key? key,
     required this.score,
@@ -30,7 +30,7 @@ class _CreditResultState extends State<CreditResult> {
                 curve: Curves.elasticOut,
 
                 /// Gauge value.
-                value: widget.score.toDouble(),
+                value: widget.score,
                 builder: (context, child, value) => RadialGaugeLabel(
                   value: value,
                   style: TextStyle(
@@ -54,11 +54,11 @@ class _CreditResultState extends State<CreditResult> {
                   ),
 
                   /// Define the pointer that will indicate the progress (optional).
-                  pointer: GaugePointer.needle(
+                  pointer: GaugePointer.triangle(
                     width: 25,
                     height: width / 15,
                     position: GaugePointerPosition.surface(
-                        offset: Offset(0, width / 25)),
+                        offset: Offset(0, width / 30)),
                     color: Color(0xFF193663),
                   ),
 
@@ -95,14 +95,6 @@ class _CreditResultState extends State<CreditResult> {
                       cornerRadius: Radius.zero,
                     ),
                   ],
-
-                  /// You can also, define the child builder.
-                  /// You will build a value label in the following way, but you can use the widget of your choice.
-                  ///
-                  /// For non-value related widgets, take a look at the [child] parameter.
-                  /// ```
-
-                  /// ```
                 ),
               ),
             ),

@@ -21,7 +21,7 @@ class ProductRepository {
     }
   }
 
-  Future<String> submitData({
+  Future<double> submitData({
     required int creditamount,
     required int duration,
     required String purpose,
@@ -54,10 +54,10 @@ class ProductRepository {
           // headers: {'Accept': 'application/json'}, body: json.encode(map));
           headers: {'Accept': 'application/json'},
           body: creditForm.toJson());
-      return (json.decode(response.body)["predict"]);
+      return double.parse(json.decode(response.body)["predict"]);
     } catch (e) {
       print(e);
     }
-    return "No result.";
+    return 0;
   }
 }

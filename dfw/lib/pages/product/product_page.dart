@@ -189,7 +189,7 @@ class _ProductWidgetState extends State<ProductWidget> {
         print(creditForm.toJson());
         // ProductRepository.instance.testAPI();
 
-        String submit = await ProductRepository.instance.submitData(
+        double result = await ProductRepository.instance.submitData(
           creditamount: creditForm.creditamount,
           duration: creditForm.duration,
           purpose: creditForm.purpose,
@@ -203,12 +203,18 @@ class _ProductWidgetState extends State<ProductWidget> {
           numChild: creditForm.numChild,
         );
 
+        print(result);
+
+        // if (submit.contains("No result.")) {
+        //   result = int.parse(submit);
+        // }
+
         // setState(() {
         //   result = submit;
         // });
 
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => CreditResult(score: 620)));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CreditResult(score: result)));
       },
       child: Text('Check my eligibility'),
       style: TextButton.styleFrom(
