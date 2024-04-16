@@ -5,8 +5,8 @@ import 'package:The_Data_Fintastic_Whizbangerz_Group/base/models/creditForm.dart
 import 'package:http/http.dart' as http;
 
 class ProductRepository {
-  final url = 'http://127.0.0.1:5000';
-  // final url = 'https://dfw.cthtc.com';
+  // final url = 'http://127.0.0.1:5000';
+  final url = 'https://dfw.cthtc.com';
 
   ProductRepository._();
   static final ProductRepository instance = ProductRepository._();
@@ -21,7 +21,7 @@ class ProductRepository {
     }
   }
 
-  Future<String> submitData({
+  Future<double> submitData({
     required int creditamount,
     required int duration,
     required String purpose,
@@ -54,10 +54,10 @@ class ProductRepository {
           // headers: {'Accept': 'application/json'}, body: json.encode(map));
           headers: {'Accept': 'application/json'},
           body: creditForm.toJson());
-      return (json.decode(response.body)["predict"]);
+      return double.parse(json.decode(response.body)["predict"]);
     } catch (e) {
       print(e);
     }
-    return "No result.";
+    return 0;
   }
 }

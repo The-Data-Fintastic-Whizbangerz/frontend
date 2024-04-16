@@ -1,4 +1,5 @@
 import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/string.dart';
+import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/product/credit_result.dart';
 import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/product/service/product_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +55,7 @@ class _ProductWidgetState extends State<ProductWidget> {
   final ScrollController _controller = ScrollController();
   late bool isScrollEnd = false;
 
-  String? result;
+  // String? result;
 
   @override
   void initState() {
@@ -162,11 +163,11 @@ class _ProductWidgetState extends State<ProductWidget> {
                   ),
                 ),
                 _submit(),
-                if (result != null)
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text(result!),
-                  )
+                // if (result != null)
+                //   Padding(
+                //     padding: const EdgeInsets.all(20.0),
+                //     child: Text(result!),
+                //   )
 
                 // isScrollEnd  // For longer form
                 //     ? _submit(context)
@@ -187,7 +188,8 @@ class _ProductWidgetState extends State<ProductWidget> {
       onPressed: () async {
         print(creditForm.toJson());
         // ProductRepository.instance.testAPI();
-        String submit = await ProductRepository.instance.submitData(
+
+        double result = await ProductRepository.instance.submitData(
           creditamount: creditForm.creditamount,
           duration: creditForm.duration,
           purpose: creditForm.purpose,
@@ -201,9 +203,18 @@ class _ProductWidgetState extends State<ProductWidget> {
           numChild: creditForm.numChild,
         );
 
-        setState(() {
-          result = submit;
-        });
+        print(result);
+
+        // if (submit.contains("No result.")) {
+        //   result = int.parse(submit);
+        // }
+
+        // setState(() {
+        //   result = submit;
+        // });
+
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CreditResult(score: result)));
       },
       child: Text('Check my eligibility'),
       style: TextButton.styleFrom(

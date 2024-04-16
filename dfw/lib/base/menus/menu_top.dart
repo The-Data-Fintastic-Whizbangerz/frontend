@@ -135,11 +135,12 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
                                 if (hoverNotifier.value?.path == 'products') {
                                   return [
                                     PopupMenuItem(
-                                      child: Text('Borrowing calculator'),
+                                      child:
+                                          Text('Loan Eligibility Calculator'),
                                       onTap: () {
                                         widget.productNotifier.value =
                                             RouteType(
-                                          path: 'borrowing-calculator',
+                                          path: 'loan-eligibility-calculator',
                                           source: RouteSource.fromClick,
                                         );
                                         hoverNotifier.value = null;
