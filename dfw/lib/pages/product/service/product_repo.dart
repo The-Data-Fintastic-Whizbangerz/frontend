@@ -5,8 +5,8 @@ import 'package:The_Data_Fintastic_Whizbangerz_Group/base/models/creditForm.dart
 import 'package:http/http.dart' as http;
 
 class ProductRepository {
-  // final url = 'http://127.0.0.1:5000';
-  final url = 'https://dfw.cthtc.com';
+  final url = 'http://127.0.0.1:5000';
+  // final url = 'https://dfw.cthtc.com';
 
   ProductRepository._();
   static final ProductRepository instance = ProductRepository._();

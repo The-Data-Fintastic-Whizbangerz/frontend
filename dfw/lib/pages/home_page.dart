@@ -44,7 +44,8 @@ class _HomePageState extends State<HomePage> {
                   crossAxisCellCount: context.responsive(xs: 1),
                   mainAxisExtent: MediaQuery.of(context).size.height *
                       context.responsive(xs: 0.3, md: 4 / 5),
-                  child: Center(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       // crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,16 +54,23 @@ class _HomePageState extends State<HomePage> {
                           'Will I qualify for a loan?',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: context.responsive(xs: width /14, md: height/width *50) ,
+                            fontSize: context.responsive(
+                                xs: width / 20,
+                                sm: width / 30,
+                                md: height / width * 50),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Divider(color: Colors.transparent),
                         Text(
                           'Check your loan eligibility with our calculator in minutes - without affecting your credit score',
-                          textAlign: TextAlign.justify,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: context.responsive(
+                              xs: width / 40,
+                              sm: width / 60,
+                              md: height / width * 40,
+                            ),
                             height: 1.5,
                           ),
                         ),
@@ -83,7 +91,10 @@ class _HomePageState extends State<HomePage> {
                   mainAxisExtent: MediaQuery.of(context).size.height *
                       context.responsive(xs: 0.5, md: 4 / 5),
                   child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.black12,),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.black12,
+                    ),
                     child: CarouselSlider(
                       options: CarouselOptions(
                         autoPlay: true,
