@@ -42,7 +42,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           # github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dfw/build/web
+          publish_dir: ./dfw
           # force_orphan: true
           # user_name: 'github-ci[bot]'
           # user_email: 'github-actions[bot]@users.noreply.github.com'
