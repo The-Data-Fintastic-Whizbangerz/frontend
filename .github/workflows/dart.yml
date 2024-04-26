@@ -36,6 +36,7 @@ jobs:
         run: flutter pub get
 
       - name: Build
+        working-directory: ./dfw
         run: flutter build web
         
       - name: Deploy
