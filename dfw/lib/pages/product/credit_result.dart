@@ -215,7 +215,7 @@ class _CreditResultState extends State<CreditResult> {
                               ),
                             ),
                             Text(
-                                maxLines: 4,
+                                maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.justify,
                                 "While you won't be completely frozen out from getting credit if you need it, you'll have a limited number of lenders to choose from. It's likely you'll only be able to borrow small amounts of money and will be charged high interest rates."),
@@ -228,7 +228,7 @@ class _CreditResultState extends State<CreditResult> {
                               ),
                             ),
                             Text(
-                                maxLines: 4,
+                                maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.justify,
                                 "You'll have a few credit providers to choose from if you need to borrow money, but may find your choice is quite limited. You may only be able to borrow small amounts of money at high interest rates."),
@@ -249,7 +249,7 @@ class _CreditResultState extends State<CreditResult> {
                               ),
                             ),
                             Text(
-                                maxLines: 4,
+                                maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.justify,
                                 "If you need credit, you'll have a number of different providers to choose from. While you may have some offers and deals available, it's unlikely that you'll be eligible for the biggest loans."),
@@ -262,7 +262,7 @@ class _CreditResultState extends State<CreditResult> {
                               ),
                             ),
                             Text(
-                                maxLines: 4,
+                                maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.justify,
                                 "People with scores in this range typically experience easy approval processes when applying for new credit, and they are likely to be offered the best available lending terms, including the lowest interest rates and fees."),
