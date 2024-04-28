@@ -1,3 +1,4 @@
+import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/themes.dart';
 import 'package:The_Data_Fintastic_Whizbangerz_Group/base/routes/route_type.dart';
 import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -50,6 +51,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      theme: BasicTheme.lightTheme(),
       debugShowCheckedModeBanner: false,
       routerDelegate: delegate,
       routeInformationParser: parser,

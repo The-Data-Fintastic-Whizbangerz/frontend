@@ -87,7 +87,7 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
                     Expanded(
                       flex: (guests.length * 100) ~/ width,
                       child: SizedBox(
-                        height: 60,
+                        height: 50,
                         child: ListView.builder(
                           shrinkWrap: true,
                           // padding: EdgeInsets.zero,
@@ -166,7 +166,7 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
                     Expanded(
                       flex: (reglog.length * 100) ~/ width,
                       child: SizedBox(
-                        height: 60,
+                        height: 50,
                         child: NavigationMenuButton(
                           // init with guest route only
                           path: 'login',

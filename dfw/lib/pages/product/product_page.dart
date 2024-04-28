@@ -184,7 +184,7 @@ class _ProductWidgetState extends State<ProductWidget> {
   }
 
   Widget _submit() {
-    return ElevatedButton(
+    return TextButton(
       onPressed: () async {
         print(creditForm.toJson());
         // ProductRepository.instance.testAPI();
@@ -633,7 +633,6 @@ List<String> ageGroup = [
 
 // mapping numberOfDependents index
 List<String> numberOfDependents = [
-  
   '0 - 1 child',
   '2 children or more',
 ];
