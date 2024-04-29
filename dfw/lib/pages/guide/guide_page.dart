@@ -63,7 +63,7 @@ class GuidePage extends StatelessWidget {
                 // maxCrossAxisExtent: 200,
                 mainAxisSpacing: 4,
                 crossAxisSpacing: 4,
-                itemCount: 3,
+                itemCount: guides.length,
                 itemBuilder: (context, index) {
                   return Card(
                     margin: EdgeInsets.all(5),
@@ -71,23 +71,19 @@ class GuidePage extends StatelessWidget {
                       children: [
                         Container(
                           height: 200,
-                          color: Colors.grey,
-                          child: Image.network(
-                            guides[index].values.elementAt(0),
-                            fit: BoxFit.fill,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  value: loadingProgress.expectedTotalBytes !=
-                                          null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes!
-                                      : null,
-                                ),
-                              );
-                            },
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadiusDirectional.vertical(
+                                top: Radius.circular(10)),
+                            color: Colors.grey,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                guides[index].values.elementAt(0),
+                              ),
+                              // image: AssetImage(
+                              //   'images/guide-1.png',
+                              // ),
+                            ),
                           ),
                         ),
                         Container(
@@ -98,7 +94,7 @@ class GuidePage extends StatelessWidget {
                                 child: Text(
                               guides[index].values.elementAt(1),
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
+                                  fontWeight: FontWeight.bold, fontSize: 14),
                             ))),
                         Container(
                             // color: Colors.red,

@@ -54,10 +54,8 @@ class _HomePageState extends State<HomePage> {
                           'Will I qualify for a loan?',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: context.responsive(
-                                xs: width / 20,
-                                sm: width / 30,
-                                md: height / width * 50),
+                            fontSize:
+                                context.responsive(xs: 30, md: 20, lg: 30),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -66,21 +64,21 @@ class _HomePageState extends State<HomePage> {
                           'Check your loan eligibility with our calculator in minutes - without affecting your credit score',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: context.responsive(
-                              xs: width / 40,
-                              sm: width / 60,
-                              md: height / width * 40,
-                            ),
+                            fontSize:
+                                context.responsive(xs: 18, md: 16, lg: 20),
                             height: 1.5,
                           ),
                         ),
                         Divider(color: Colors.transparent, height: 10),
-                        TextButton(
-                          onPressed: () {},
-                          child: Center(child: Text('Try now!')),
-                          style: TextButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.purple[400]),
+                        SizedBox(
+                          width: 200,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Center(child: Text('Try now!')),
+                            style: TextButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.purple[400]),
+                          ),
                         ),
                       ],
                     ),

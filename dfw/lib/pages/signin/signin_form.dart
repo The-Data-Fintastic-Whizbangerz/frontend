@@ -26,7 +26,7 @@ class _SignInFormState extends State<SignInForm> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Loan Wise',
+            'Credit Wise',
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 60 * ratio,

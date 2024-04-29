@@ -10,13 +10,21 @@ class AboutWidget extends StatefulWidget {
   State<AboutWidget> createState() => _AboutWidgetState();
 }
 
+List<Map<String, dynamic>> profiles = [
+  {'image': 'images/avatar-1.jpg', 'name': 'Tammie Chua'},
+  {'image': 'images/avatar-2.jpg', 'name': 'Colette Ford'},
+  {'image': 'images/avatar-3.jpg', 'name': 'Legie Grieve'},
+  {'image': 'images/avatar-4.jpg', 'name': 'Tune Nguyen'},
+  {'image': 'images/avatar-5.jpg', 'name': 'Joshua Udemezue'},
+];
+
 class _AboutWidgetState extends State<AboutWidget> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    print(width);
-    Widget avatar_circle() {
+
+    Widget avatar_circle({required String image, required String name}) {
       return Padding(
         padding: EdgeInsets.symmetric(
             horizontal: width / 50, vertical: height / 100),
@@ -24,12 +32,13 @@ class _AboutWidgetState extends State<AboutWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
-              radius: width / context.responsive(xs: 7, sm: 12, md: 16, lg: 20),
+              radius: width /
+                  context.responsive(xs: 8, sm: 10, md: 14, lg: 18, xl: 22),
               backgroundColor: Colors.black26,
               foregroundColor: Colors.white,
-              child: Text('Image'),
+              backgroundImage: AssetImage(image),
             ),
-            Text('Name')
+            Container(margin: EdgeInsets.all(10), child: Text(name))
           ],
         ),
       );
@@ -46,16 +55,11 @@ class _AboutWidgetState extends State<AboutWidget> {
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
             Text(
+                textAlign: TextAlign.center,
                 'At LoanWise, we envision a future where accessing financial solutions is straightforward and empowering for everyone.'),
             Text(
+                textAlign: TextAlign.center,
                 'Our mission is to provide users a seamless loan process experience, tailored to your needs, while priortising your data privacy and security.'),
-            TextButton(
-              onPressed: () {},
-              child: Text('Get Started'),
-              style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.purple[400]),
-            )
           ],
         ),
       );
@@ -67,44 +71,38 @@ class _AboutWidgetState extends State<AboutWidget> {
           children: [
             Expanded(
               child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 50),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.white,
-                        Colors.pink[50]!,
-                        Colors.purple[100]!,
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: [0.3, 0.7, 1],
-                    ),
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 30),
                   child: aboutus_tile()),
             ),
             Expanded(
-                flex: 2,
+                flex: 3,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Meet Our Team',
-                      style: TextStyle(fontSize: 40),
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        avatar_circle(),
-                        avatar_circle(),
-                        avatar_circle(),
-                      ],
+                      children: List.generate(
+                        profiles.length - 2,
+                        (index) => avatar_circle(
+                          image: profiles[index].values.elementAt(0),
+                          name: profiles[index].values.elementAt(1),
+                        ),
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        avatar_circle(),
-                        avatar_circle(),
-                      ],
+                      children: List.generate(
+                        profiles.length - 3,
+                        (index) => avatar_circle(
+                          image: profiles[index + 3].values.elementAt(0),
+                          name: profiles[index + 3].values.elementAt(1),
+                        ),
+                      ),
                     ),
                   ],
                 )),
