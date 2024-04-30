@@ -19,6 +19,9 @@ class _CreditResultState extends State<CreditResult> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        leading: BackButton(),
+      ),
       body: Flex(
         direction: context.responsive(xs: Axis.vertical, lg: Axis.horizontal),
         children: [

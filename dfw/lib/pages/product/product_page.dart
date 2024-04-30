@@ -39,22 +39,23 @@ class ProductWidget extends StatefulWidget {
 }
 
 CreditForm creditForm = CreditForm(
-    creditamount: 0,
-    duration: 0,
-    purpose: 'purpose',
-    disposible: 0,
-    occupation: 0,
-    employLength: 0,
-    guarantor: 'guarantor',
-    house: 'house',
-    residentLength: 'residentLength',
-    ageGroup: 0,
-    numChild: 0);
+    // creditamount: 0,
+    // duration: 0,
+    // purpose: 'purpose',
+    // disposible: 0,
+    // occupation: 0,
+    // employLength: 0,
+    // guarantor: 'guarantor',
+    // house: 'house',
+    // residentLength: 'residentLength',
+    // ageGroup: 0,
+    // numChild: 0
+    );
 
 class _ProductWidgetState extends State<ProductWidget> {
   final ScrollController _controller = ScrollController();
   late bool isScrollEnd = false;
-
+  final _formKey = GlobalKey<FormState>();
   // String? result;
 
   @override
@@ -158,7 +159,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                       child: Container(
                           margin: EdgeInsets.symmetric(
                               horizontal: 30, vertical: 10),
-                          child: _form(context)),
+                          child: _form()),
                     ),
                   ),
                 ),
@@ -183,38 +184,224 @@ class _ProductWidgetState extends State<ProductWidget> {
     );
   }
 
+  Widget _form() {
+    return Form(
+      key: _formKey,
+      child: StaggeredGrid.count(
+        crossAxisCount: 1,
+        mainAxisSpacing: context.responsive(xs: 1, sm: 10),
+        children: [
+          gridTile(
+              context,
+              Text('What is the amount that you are looking to borrow?'),
+              dropdownField(
+                  items: List.generate(
+                      creditAmount.length,
+                      (index) => DropdownMenuItem(
+                          value: creditAmount[index],
+                          alignment: Alignment.center,
+                          child: Text(creditAmount[index]),
+                          onTap: () => creditForm.setCreditAmount =
+                              creditAmount.length - index)))),
+          gridTile(
+              context,
+              Text(
+                  'How many installments(in months) do you require to pay back the loan?'),
+              dropdownField(
+                  items: List.generate(
+                      duration.length,
+                      (index) => DropdownMenuItem(
+                          value: duration[index],
+                          alignment: Alignment.center,
+                          child: Text(duration[index]),
+                          onTap: () => creditForm.setDuration =
+                              duration.length - index)))),
+          gridTile(
+              context,
+              Text('Reason for needing a loan?'),
+              dropdownField(
+                  items: List.generate(
+                      purpose.length,
+                      (index) => DropdownMenuItem(
+                          value: purpose[index],
+                          alignment: Alignment.center,
+                          child: Text(purpose[index]
+                              .replaceAll(RegExp('_'), ' ')
+                              .toCapitalise()),
+                          onTap: () =>
+                              creditForm.setPurpose = purpose[index])))),
+          gridTile(
+              context,
+              Text(
+                  'What is your monthly income after essential costs such as rent/mortgage, bill, and car etc?'),
+              dropdownField(
+                  items: List.generate(
+                      disposible.length,
+                      (index) => DropdownMenuItem(
+                          value: disposible[index],
+                          alignment: Alignment.center,
+                          child: Text(disposible[index]),
+                          onTap: () => creditForm.setDisposible = index + 1)))),
+          gridTile(
+              context,
+              Text(
+                  'Do you currently have any other loans that you are paying back?'),
+              dropdownField(
+                  items: List.generate(
+                      numExistCredit.length,
+                      (index) => DropdownMenuItem(
+                          value: numExistCredit[index],
+                          alignment: Alignment.center,
+                          child: Text(numExistCredit[index]),
+                          onTap: () => creditForm.setNumExistCredit =
+                              numExistCredit.length - index)))), // Check?
+          gridTile(
+              context,
+              Text('What is the status of your current main bank account?'),
+              dropdownField(
+                  items: List.generate(
+                      statusExistCredit.length,
+                      (index) => DropdownMenuItem(
+                          value: statusExistCredit[index],
+                          alignment: Alignment.center,
+                          child: Text(statusExistCredit[index]),
+                          onTap: () => creditForm.setStatusExistCredit =
+                              statusExistCredit.length - index)))), // Check?
+          gridTile(
+              context,
+              Text('Have you responsibly repaid any loans in the past?'),
+              dropdownField(
+                  items: List.generate(
+                      creditHistory.length,
+                      (index) => DropdownMenuItem(
+                          value: creditHistory[index],
+                          alignment: Alignment.center,
+                          child: Text(creditHistory[index]),
+                          onTap: () => creditForm.setCreditHistory =
+                              creditHistory.length - index)))), // Check?
+          gridTile(
+              context,
+              Text(
+                  'Do you currently have any other payment plans with installments due? Credit Cards, Store Cards etc'),
+              dropdownField(
+                  items: List.generate(
+                      isOtherPlans.length,
+                      (index) => DropdownMenuItem(
+                          value: isOtherPlans[index],
+                          alignment: Alignment.center,
+                          child: Text(isOtherPlans[index]
+                              .replaceAll(RegExp('_'), ' ')
+                              .toCapitalise()),
+                          onTap: () => creditForm.setIsOtherPlans =
+                              isOtherPlans[index])))),
+          gridTile(
+              context,
+              Text('Are you currently employed?'),
+              dropdownField(
+                  items: List.generate(
+                      isEmployed.length,
+                      (index) => DropdownMenuItem(
+                          value: isEmployed[index],
+                          alignment: Alignment.center,
+                          child: Text(isEmployed[index]
+                              .replaceAll(RegExp('_'), ' ')
+                              .toCapitalise()),
+                          onTap: () =>
+                              creditForm.setIsEmployed = isEmployed[index])))),
+          gridTile(
+              context,
+              Text('How long have you been at your current employment?'),
+              dropdownField(
+                  items: List.generate(
+                      employLength.length,
+                      (index) => DropdownMenuItem(
+                          value: employLength[index],
+                          alignment: Alignment.center,
+                          child: Text(employLength[index]),
+                          onTap: () => creditForm.setEmployLength =
+                              employLength.length - index)))),
+          gridTile(
+              context,
+              Text(
+                  'In your current place of residence are you a homeowner, renting, or living there for free?'),
+              dropdownField(
+                  items: List.generate(
+                      housing.length,
+                      (index) => DropdownMenuItem(
+                          value: housing[index],
+                          alignment: Alignment.center,
+                          child: Text(housing[index]),
+                          onTap: () => creditForm.setHousing =
+                              housing.length - index)))),
+          gridTile(
+              context,
+              Text(
+                  'How many people are currently dependent on your income for support? Spouses, offspring, live in family'),
+              dropdownField(
+                  items: List.generate(
+                      numChild.length,
+                      (index) => DropdownMenuItem(
+                          value: numChild[index],
+                          alignment: Alignment.center,
+                          child: Text(numChild[index]),
+                          onTap: () => creditForm.setNumChild =
+                              numChild.length - index)))),
+        ],
+      ),
+    );
+  }
+
+  Widget dropdownField({required List<DropdownMenuItem<String?>> items}) {
+    return DropdownButtonFormField(
+      dropdownColor: Colors.purple[100],
+      elevation: 1,
+      isExpanded: true,
+      value: null,
+      onChanged: (newValue) {},
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Require";
+        }
+        return null;
+      },
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5),
+          borderSide: BorderSide(color: Colors.black12, width: 1.0),
+        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+        contentPadding: EdgeInsets.zero,
+      ),
+      items: items,
+    );
+  }
+
   Widget _submit() {
     return TextButton(
       onPressed: () async {
-        print(creditForm.toJson());
+        // print(creditForm.toJson());
         // ProductRepository.instance.testAPI();
 
         double result = await ProductRepository.instance.submitData(
-          creditamount: creditForm.creditamount,
+          creditAmount: creditForm.creditAmount,
           duration: creditForm.duration,
           purpose: creditForm.purpose,
           disposible: creditForm.disposible,
-          occupation: (creditForm.occupation),
+          numExistCredit: creditForm.numExistCredit,
+          statusExistCredit: creditForm.statusExistCredit,
+          creditHistory: creditForm.creditHistory,
+          isOtherPlans: creditForm.isOtherPlans,
+          isEmployed: creditForm.isEmployed,
           employLength: creditForm.employLength,
-          guarantor: creditForm.guarantor,
-          house: creditForm.house,
-          residentLength: creditForm.residentLength,
-          ageGroup: creditForm.ageGroup,
+          housing: creditForm.housing,
           numChild: creditForm.numChild,
         );
 
-        print(result);
-
-        // if (submit.contains("No result.")) {
-        //   result = int.parse(submit);
-        // }
-
-        // setState(() {
-        //   result = submit;
-        // });
-
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => CreditResult(score: result)));
+        if (_formKey.currentState!.validate()) {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => CreditResult(score: result)));
+        }
       },
       child: Text('Check my eligibility'),
       style: TextButton.styleFrom(
@@ -226,7 +413,8 @@ class _ProductWidgetState extends State<ProductWidget> {
 Widget gridTile(BuildContext context, Text text, Widget widget) {
   return StaggeredGrid.count(
       crossAxisCount: context.responsive(xs: 1, sm: 2),
-      mainAxisSpacing: context.responsive(xs: 1, sm: 10),
+      mainAxisSpacing: context.responsive(xs: 1, sm: 100),
+      crossAxisSpacing: context.responsive(xs: 0, sm: 20),
       children: [type(1, true, text), type(1, false, widget)]);
 }
 
@@ -234,7 +422,8 @@ Widget type(int cross, bool isText, Widget widget) {
   return StaggeredGridTile.fit(
     crossAxisCellCount: cross,
     child: Container(
-      height: 30,
+      margin: EdgeInsets.only(bottom: 10),
+      height: 40,
       decoration: isText
           ? null
           : BoxDecoration(
@@ -246,278 +435,8 @@ Widget type(int cross, bool isText, Widget widget) {
   );
 }
 
-Widget textfield() {
-  return TextField(
-    textAlign: TextAlign.center,
-    decoration: InputDecoration(
-      border: OutlineInputBorder(borderRadius: BorderRadius.zero),
-      contentPadding: EdgeInsets.all(25),
-    ),
-  );
-}
-
-Widget dropdownField({required List<DropdownMenuItem<String?>> items}) {
-  return DropdownButtonFormField(
-    dropdownColor: Colors.purple[100],
-    elevation: 1,
-    isExpanded: true,
-    value: null,
-    onChanged: (newValue) {},
-    decoration: InputDecoration(
-      border: OutlineInputBorder(borderRadius: BorderRadius.zero),
-      contentPadding: EdgeInsets.zero,
-    ),
-    items: items,
-  );
-}
-
-Widget _form(BuildContext context) {
-  return StaggeredGrid.count(
-    crossAxisCount: 1,
-    mainAxisSpacing: context.responsive(xs: 1, sm: 10),
-    children: [
-      gridTile(
-          context,
-          Text('Credit Amount'),
-          dropdownField(
-              items: List.generate(
-                  creditamount.length,
-                  (index) => DropdownMenuItem(
-                      value: creditamount[index],
-                      alignment: Alignment.center,
-                      child: Text(creditamount[index]),
-                      onTap: () => creditForm.setCreditamount =
-                          creditamount.length - index)))),
-      gridTile(
-          context,
-          Text('Duration (month)'),
-          dropdownField(
-              items: List.generate(
-                  duration.length,
-                  (index) => DropdownMenuItem(
-                      value: duration[index],
-                      alignment: Alignment.center,
-                      child: Text(duration[index]),
-                      onTap: () => creditForm.setDuration =
-                          duration.length - index - 1)))),
-      gridTile(
-          context,
-          Text('Purpose'),
-          dropdownField(
-              items: List.generate(
-                  purpose.length,
-                  (index) => DropdownMenuItem(
-                      value: purpose[index],
-                      alignment: Alignment.center,
-                      child: Text(purpose[index]
-                          .replaceAll(RegExp('_'), ' ')
-                          .toCapitalise()),
-                      onTap: () => creditForm.setPurpose = purpose[index])))),
-      gridTile(
-          context,
-          Text('Disposible'),
-          dropdownField(
-              items: List.generate(
-                  disposible.length,
-                  (index) => DropdownMenuItem(
-                      value: disposible[index],
-                      alignment: Alignment.center,
-                      child: Text(disposible[index]),
-                      onTap: () => creditForm.setDisposible = index + 1)))),
-      gridTile(
-          context,
-          Text('Occupation'),
-          dropdownField(
-              items: List.generate(
-                  occupation.length,
-                  (index) => DropdownMenuItem(
-                      value: occupation[index],
-                      alignment: Alignment.center,
-                      child: Text(occupation[index]),
-                      onTap: () => creditForm.setOccupation =
-                          occupation.length - index)))),
-      gridTile(
-          context,
-          Text('Employment Length'),
-          dropdownField(
-              items: List.generate(
-                  employmentLength.length,
-                  (index) => DropdownMenuItem(
-                      value: employmentLength[index],
-                      alignment: Alignment.center,
-                      child: Text(employmentLength[index]),
-                      onTap: () => creditForm.setEmployLength = index + 1)))),
-      gridTile(
-          context,
-          Text('Who are the other applicant?'),
-          dropdownField(
-              items: List.generate(
-                  otherDebtorsGuarantors.length,
-                  (index) => DropdownMenuItem(
-                      value: otherDebtorsGuarantors[index],
-                      alignment: Alignment.center,
-                      child: Text(otherDebtorsGuarantors[index]
-                          .replaceAll(RegExp('_'), ' ')
-                          .toCapitalise()),
-                      onTap: () => creditForm.setGuarantor =
-                          otherDebtorsGuarantors[index])))),
-      gridTile(
-          context,
-          Text('What type resident is yours?'),
-          dropdownField(
-              items: List.generate(
-                  housing.length,
-                  (index) => DropdownMenuItem(
-                      value: housing[index],
-                      alignment: Alignment.center,
-                      child: Text(housing[index]
-                          .replaceAll(RegExp('_'), ' ')
-                          .toCapitalise()),
-                      onTap: () => creditForm.setHouse = housing[index])))),
-      gridTile(
-          context,
-          Text('How long have you been living in this house?'),
-          dropdownField(
-              items: List.generate(
-                  residenceLength.length,
-                  (index) => DropdownMenuItem(
-                      value: residenceLength[index],
-                      alignment: Alignment.center,
-                      child: Text(residenceLength[index]
-                          .replaceAll(RegExp('_'), ' ')
-                          .toCapitalise()),
-                      onTap: () => creditForm.setResidentLength =
-                          residenceLength[index])))),
-      gridTile(
-          context,
-          Text('What is you age group?'),
-          dropdownField(
-              items: List.generate(
-                  ageGroup.length,
-                  (index) => DropdownMenuItem(
-                      value: ageGroup[index],
-                      alignment: Alignment.center,
-                      child: Text(ageGroup[index]),
-                      onTap: () => creditForm.setAgeGroup = index + 1)))),
-      gridTile(
-          context,
-          Text('Number of children'),
-          dropdownField(
-              items: List.generate(
-                  numberOfDependents.length,
-                  (index) => DropdownMenuItem(
-                      value: numberOfDependents[index],
-                      alignment: Alignment.center,
-                      child: Text(numberOfDependents[index]),
-                      onTap: () => creditForm.setNumChild =
-                          numberOfDependents.length - index)))),
-    ],
-    // children: [
-    //   type(
-    //       2,
-    //       true,
-    //       const Text('About the loan',
-    //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-    //   gridTile(
-    //       context, Text('How much would you like to borrow?'), textfield()),
-    //   gridTile(context, Text('What is the purpose of the loan?'), textfield()),
-    //   gridTile(
-    //       context,
-    //       Text('Loan grade'),
-    //       dropdownField(
-    //           items: List.generate(
-    //               loadGrade.length,
-    //               (index) => DropdownMenuItem(
-    //                   value: loadGrade[index],
-    //                   alignment: Alignment.center,
-    //                   child: Text(loadGrade[index]))))),
-    //   type(
-    //       2,
-    //       true,
-    //       const Text('About You',
-    //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-    //   gridTile(
-    //       context,
-    //       Text('Title'),
-    //       dropdownField(
-    //           items: List.generate(
-    //               title.length,
-    //               (index) => DropdownMenuItem(
-    //                   value: title[index],
-    //                   alignment: Alignment.center,
-    //                   child: Text(title[index]))))),
-    //   gridTile(context, Text('Full Name'), textfield()),
-    //   gridTile(context, Text('Age'), textfield()),
-    //   gridTile(
-    //       context,
-    //       Text('Marital Status'),
-    //       dropdownField(
-    //           items: List.generate(
-    //               maritalStatus.length,
-    //               (index) => DropdownMenuItem(
-    //                   value: maritalStatus[index],
-    //                   alignment: Alignment.center,
-    //                   child: Text(maritalStatus[index]))))),
-    //   gridTile(context, Text('Email Address'), textfield()),
-    //   gridTile(context, Text('Mobile Number'), textfield()),
-    //   gridTile(
-    //       context,
-    //       Text('Residential Status'),
-    //       dropdownField(
-    //           items: List.generate(
-    //               residentialStatus.length,
-    //               (index) => DropdownMenuItem(
-    //                   value: residentialStatus[index],
-    //                   alignment: Alignment.center,
-    //                   child: Text(residentialStatus[index]))))),
-    //   type(
-    //       2,
-    //       true,
-    //       const Text('Your Employment',
-    //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-    //   gridTile(
-    //       context,
-    //       Text('Employment Status'),
-    //       dropdownField(
-    //           items: List.generate(
-    //               employmentStatus.length,
-    //               (index) => DropdownMenuItem(
-    //                   value: employmentStatus[index],
-    //                   alignment: Alignment.center,
-    //                   child: Text(employmentStatus[index]))))),
-    //   // Need change Datetime
-    //   gridTile(context, Text('When did you work at current employment?'),
-    //       textfield()),
-    //   //
-    //   gridTile(
-    //       context,
-    //       Text('When do you get paid?'),
-    //       dropdownField(
-    //           items: List.generate(
-    //               paidPeriod.length,
-    //               (index) => DropdownMenuItem(
-    //                   value: paidPeriod[index],
-    //                   alignment: Alignment.center,
-    //                   child: Text(paidPeriod[index]))))),
-    //   type(
-    //       2,
-    //       true,
-    //       const Text('Your Finances',
-    //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-    //   gridTile(
-    //       context, Text('What is your monthly income after tax?'), textfield()),
-    //   gridTile(
-    //       context, Text('What is your monthly mortgage or rent?'), textfield()),
-    //   gridTile(context, Text('How many children or dependents do you have?'),
-    //       textfield()),
-    //   gridTile(context, Text('Person default'), textfield()),
-    //   gridTile(context, Text('Credit history length'), textfield()),
-    // ],
-  );
-}
-
 // mapping creditamount REVERSE index
-List<String> creditamount = [
+List<String> creditAmount = [
   'Below £2,000',
   '£2,001 - £4,000',
   '£4,001 - £6,000',
@@ -544,20 +463,16 @@ List<String> duration = [
   '46 to 50 months',
   '51 to 55 months',
   '56 to 60 months',
-  // '61 - 65',
-  // '66 - 70',
-  // '71 - 75',
-  // '76+',
 ];
 
 List<String> purpose = [
-  'radio_television',
+  'electronics',
   'car_new',
   'car_used',
   'furniture_equipment',
   'business',
   'education',
-  'repairs',
+  'Repairs',
   'domestic_appliances',
   'retraining',
   'others',
@@ -577,65 +492,32 @@ List<String> disposible = [
   'Above £18,001',
 ];
 
-// mapping occupation REVERSE index
-List<String> occupation = [
-  'Management/Selfemployed',
-  'Skilled Employee/official',
-  'Unskilled resident',
-  'Unemployed',
-  // 'unemployed_unskilled_nonresident',
-  // 'unskilled_resident',
-  // 'skilledEmployee_or_official',
-  // 'management_or_selfEmployed_or_highlyQualifiedEmployee',
+// return reverse int    | 0 - 4 and more
+List<String> numExistCredit = ['4 and more', '3', '2', '1', '0'];
+// return reverse int
+List<String> statusExistCredit = ['Above zero', 'Below zero', 'None'];
+//return reverse int
+List<String> creditHistory = [
+  'Never taken a loan',
+  'All credit paid in full',
+  'No missed payments of installements',
+  'Delayed paying of installments',
 ];
+List<String> isOtherPlans = ['Yes', 'No'];
+List<String> isEmployed = ['Yes', 'No'];
 
-// mapping employmentLength index
-List<String> employmentLength = [
-  'Less than 1 year',
-  '1 to 4 years',
-  '4 to 7 years',
+// return reverse int
+List<String> employLength = [
   'More than 7 years',
-
-  // 'Less_than_1_year',
-  // 'one_4_years',
-  // 'four_7_years',
-  // 'More_than_7_years',
+  '4 to 7 years',
+  '1 to 4 years',
+  'Less than 1 year',
+  'Not in employement',
 ];
-List<String> otherDebtorsGuarantors = [
-  'co_applicant',
-  'guarantor',
-  'none',
-];
-List<String> housing = [
-  'own',
-  'rent',
-  'for_free',
-];
-List<String> residenceLength = [
-  'one_year_or_less',
-  'two_years',
-  'three_years',
-  'More_than_4_years'
-];
-List<String> ageGroup = [
-  '18 to 25',
-  '26 to 30',
-  '31 to 35',
-  '36 to 40',
-  '41 to 45',
-  '46 to 50',
-  '51 to 55',
-  '56 to 60',
-  '61 to 65',
-  '66 to 70',
-  '71 to 75',
-];
-
-// mapping numberOfDependents index
-List<String> numberOfDependents = [
-  '0 - 1 child',
-  '2 children or more',
-];
+// return reverse int
+List<String> housing = ['Own', 'Rent', 'Live in for free'];
+// return reverse int
+List<String> numChild = ['2 or more', 'Only 1 child', 'No dependents'];
 
 
 
