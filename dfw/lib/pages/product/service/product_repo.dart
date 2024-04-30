@@ -22,31 +22,33 @@ class ProductRepository {
   }
 
   Future<double> submitData({
-    required int creditamount,
-    required int duration,
-    required String purpose,
-    required int disposible,
-    required int occupation,
-    required int employLength,
-    required String guarantor,
-    required String house,
-    required String residentLength,
-    required int ageGroup,
-    required int numChild,
+    required int? creditAmount,
+    required int? duration,
+    required String? purpose,
+    required int? disposible,
+    required int? numExistCredit,
+    required int? statusExistCredit,
+    required int? creditHistory,
+    required String? isOtherPlans,
+    required String? isEmployed,
+    required int? employLength,
+    required int? housing,
+    required int? numChild,
   }) async {
     var response;
     try {
       CreditForm creditForm = CreditForm.fromMap({
-        'creditamount': creditamount,
+        'creditAmount': creditAmount,
         'duration': duration,
         'purpose': purpose,
         'disposible': disposible,
-        'occupation': (occupation),
+        'numExistCredit': (numExistCredit),
+        'statusExistCredit': (statusExistCredit),
+        'creditHistory': creditHistory,
+        'isOtherPlans': isOtherPlans,
+        'isEmployed': isEmployed,
         'employLength': (employLength),
-        'guarantor': guarantor,
-        'house': house,
-        'residentLength': residentLength,
-        'ageGroup': (ageGroup),
+        'housing': (housing),
         'numChild': (numChild),
       });
 
@@ -56,7 +58,7 @@ class ProductRepository {
           body: creditForm.toJson());
       return double.parse(json.decode(response.body)["predict"]);
     } catch (e) {
-      print(e);
+      // print(e);
     }
     return 0;
   }

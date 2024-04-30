@@ -21,6 +21,8 @@ final List<String> bannerList = [
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -30,73 +32,103 @@ class _HomePageState extends State<HomePage> {
               borderRadius: BorderRadius.circular(10),
               color: Colors.white54,
             ),
-            margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            padding: EdgeInsets.all(15),
+            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+            // Consider FLEX
             child: StaggeredGrid.count(
-              crossAxisCount: context.responsive(sm: 1, md: 4),
+              crossAxisCount: context.responsive(xs: 1, md: 4),
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
               children: [
                 StaggeredGridTile.extent(
-                  crossAxisCellCount: context.responsive(sm: 1),
+                  crossAxisCellCount: context.responsive(xs: 1),
                   mainAxisExtent: MediaQuery.of(context).size.height *
-                      context.responsive(sm: 0.3, md: 4 / 5),
-                  child: Center(
+                      context.responsive(xs: 0.3, md: 4 / 5),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       // crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           'Will I qualify for a loan?',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 40,
+                            fontSize:
+                                context.responsive(xs: 30, md: 20, lg: 30),
                             fontWeight: FontWeight.bold,
                           ),
-                          textAlign: TextAlign.justify,
                         ),
                         Divider(color: Colors.transparent),
                         Text(
                           'Check your loan eligibility with our calculator in minutes - without affecting your credit score',
-                          textAlign: TextAlign.justify,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 16,
-                            height: 1.6,
+                            fontSize:
+                                context.responsive(xs: 18, md: 16, lg: 20),
+                            height: 1.5,
                           ),
                         ),
-                        Divider(color: Colors.transparent, height: 20),
-                        TextButton(
-                          onPressed: () {},
-                          child: Center(child: Text('Try now!')),
-                          style: TextButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.purple[400]),
+                        Divider(color: Colors.transparent, height: 10),
+                        SizedBox(
+                          width: 200,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Center(child: Text('Try now!')),
+                            style: TextButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.purple[400]),
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
                 StaggeredGridTile.extent(
-                  crossAxisCellCount: context.responsive(sm: 1, md: 3),
+                  crossAxisCellCount: context.responsive(xs: 1, md: 3),
                   mainAxisExtent: MediaQuery.of(context).size.height *
-                      context.responsive(sm: 0.5, md: 4 / 5),
-                  child: CarouselSlider(
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      enlargeCenterPage: true,
-                      viewportFraction: 1,
+                      context.responsive(xs: 0.5, md: 4 / 5),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.black12,
                     ),
-                    items: bannerList
-                        .map(
-                          (item) => ClipRRect(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
-                            child: Image.network(
-                              item,
-                              fit: BoxFit.cover,
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        viewportFraction: 1,
+                      ),
+                      items: bannerList
+                          .map(
+                            (item) => ClipRRect(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0)),
+                              child: Image.network(
+                                item,
+                                fit: BoxFit.cover,
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                        )
-                        .toList(),
+                          )
+                          .toList(),
+                    ),
                   ),
                 ),
               ],

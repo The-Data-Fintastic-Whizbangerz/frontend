@@ -16,45 +16,47 @@ class BasicTheme {
   //test
   static Color aaa = Colors.red;
   static Color bbb = Colors.amber;
-}
 
-class NeumorphismTheme {
   static ThemeData lightTheme() {
     final ThemeData baseLight = ThemeData.light();
 
     return baseLight.copyWith(
-      brightness: Brightness.light,
-      scaffoldBackgroundColor: BasicTheme.lightBackground,
-      colorScheme: ColorScheme.light(
-        background: BasicTheme.lightBackground,
-        primary: BasicTheme.lightPrimary,
-        secondary: BasicTheme.lightSecondary,
-      ),
-      appBarTheme: AppBarTheme(
-        backgroundColor: BasicTheme.lightPrimary,
-        centerTitle: true,
-        iconTheme: const IconThemeData(size: 40),
-      ),
-      drawerTheme: DrawerThemeData(
-        backgroundColor: BasicTheme.lightPrimary,
-        shadowColor: BasicTheme.lightSecondary,
-        elevation: 10,
-        width: 200,
-      ),
-      listTileTheme: ListTileThemeData(
-        selectedTileColor: BasicTheme.darkBackground,
-        textColor: BasicTheme.darkSecondary,
-        iconColor: BasicTheme.darkSecondary,
-        contentPadding: EdgeInsets.symmetric(horizontal: 15),
-        horizontalTitleGap: 0,
-        minVerticalPadding: 20,
-        dense: true,
-      ),
-      navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: BasicTheme.lightPrimary,
-        height: 65,
-      ),
-    );
+        brightness: Brightness.light,
+        // scaffoldBackgroundColor: BasicTheme.lightBackground,
+        // colorScheme: ColorScheme.light(
+        //   background: BasicTheme.lightBackground,
+        //   primary: BasicTheme.lightPrimary,
+        //   secondary: BasicTheme.lightSecondary,
+        // ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: BasicTheme.lightPrimary,
+          centerTitle: true,
+          iconTheme: const IconThemeData(size: 40),
+        ),
+        drawerTheme: DrawerThemeData(
+          backgroundColor: BasicTheme.lightPrimary,
+          shadowColor: BasicTheme.lightSecondary,
+          elevation: 10,
+          width: 200,
+        ),
+        listTileTheme: ListTileThemeData(
+          selectedTileColor: BasicTheme.darkBackground,
+          textColor: BasicTheme.darkSecondary,
+          iconColor: BasicTheme.darkSecondary,
+          contentPadding: EdgeInsets.symmetric(horizontal: 15),
+          horizontalTitleGap: 0,
+          minVerticalPadding: 20,
+          dense: true,
+        ),
+        // navigationBarTheme: NavigationBarThemeData(
+        //   backgroundColor: BasicTheme.lightPrimary,
+        //   height: 65,
+        // ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5))),
+        ));
   }
 
   static ThemeData darkTheme() {

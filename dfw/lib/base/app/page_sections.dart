@@ -142,6 +142,8 @@ class _PageSectionState extends State<PageSection> {
                       floatingActionButton: Visibility(
                         visible: isOnTop,
                         child: FloatingActionButton(
+                          shape: StadiumBorder(),
+                          foregroundColor: BasicTheme.lightPrimary,
                           backgroundColor: BasicTheme.leftBackground,
                           hoverColor: BasicTheme.rightBackground,
                           child: Icon(Icons.arrow_upward),
