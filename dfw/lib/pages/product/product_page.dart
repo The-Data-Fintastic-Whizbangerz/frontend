@@ -130,7 +130,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     ],
                   ),
                   Text(
-                    'At LoanWise, safeguarding your data privacy is paramount. We will not save or utilise any personal details provided for any purposes beyond what is intended. We are committed to ensuring your information remains secure and confidential.',
+                    'At CreditWise, safeguarding your data privacy is paramount. We will not save or utilise any personal details provided for any purposes beyond what is intended. We are committed to ensuring your information remains secure and confidential.',
                     style: TextStyle(
                       fontSize: 10,
                       height: 1.5,
