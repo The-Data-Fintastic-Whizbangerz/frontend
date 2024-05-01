@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../pages/product/product_page.dart';
 import '../app/page_sections.dart';
 import '../extensions/themes.dart';
 import '../menus/menu_top.dart';
-import '../routes/route_type.dart';
 
 class LandingPage extends StatelessWidget {
-  final ValueNotifier<RouteType?> productNotifier;
-
   LandingPage({
     Key? key,
-    required this.productNotifier,
   }) : super(key: key);
 
   @override
@@ -33,13 +28,9 @@ class LandingPage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            TopNavigationMenu(
-              productNotifier: productNotifier,
-            ),
+            TopNavigationMenu(),
             Expanded(
-              child: PageSection(
-                productNotifier: productNotifier,
-              ),
+              child: PageSection(),
             ),
           ],
         ),

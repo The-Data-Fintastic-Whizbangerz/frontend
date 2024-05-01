@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_value_listenable_builder/multi_value_listenable_builder.dart';
 
+import '../../pages/product/credit_result.dart';
 import '../../pages/product/loan_page.dart';
 import '../../pages/product/product_page.dart';
 import '../routes/constants.dart';
@@ -10,11 +11,11 @@ import '../routes/route_type.dart';
 import '/base/extensions/themes.dart';
 
 class PageSection extends StatefulWidget {
-  final ValueNotifier<RouteType?> productNotifier;
+  // final ValueNotifier<RouteType?> productNotifier;
 
   const PageSection({
     Key? key,
-    required this.productNotifier,
+    // required this.productNotifier,
   }) : super(key: key);
 
   @override
@@ -25,7 +26,7 @@ class _PageSectionState extends State<PageSection> {
   // final double _minPageHeight = 600;
 
   PageController _guestController = PageController();
-  PageController _productController = PageController();
+  // PageController _productController = PageController();
   PageController _reglogController = PageController();
 
   ValueNotifier<RouteType?> guest_notifier = ValueNotifier(null);
@@ -51,13 +52,12 @@ class _PageSectionState extends State<PageSection> {
   initState() {
     super.initState();
 
-    widget.productNotifier.addListener(() {
-      final fromClick =
-          widget.productNotifier.value?.source == RouteSource.fromClick;
-      if (_productController.hasClients && !fromClick) {
-        _productController.jumpToPage(0);
-      }
-    });
+    // guest_notifier.addListener(() {
+    //   final fromClick = guest_notifier.value?.source == RouteSource.fromClick;
+    //   if (_guestController.hasClients && !fromClick) {
+    //     _guestController.jumpToPage(0);
+    //   }
+    // });
   }
 
   @override
@@ -95,7 +95,6 @@ class _PageSectionState extends State<PageSection> {
         return MultiValueListenableBuilder(
           valueListenables: [
             guest_notifier,
-            widget.productNotifier,
             reglog_notifier,
           ],
           builder: (context, values, child) {
@@ -119,8 +118,16 @@ class _PageSectionState extends State<PageSection> {
                     controller: _reglogController,
                     physics: NeverScrollableScrollPhysics()),
               );
-            } else if ((values[1] as RouteType?)?.path != null) {
+            }
+            // need to be dynamic path
+            else if ((values[0] as RouteType?)?.path ==
+                'products/loan-eligibility-calculator') {
               return LoanPage();
+            }
+            // need to call bloc
+            else if ((values[0] as RouteType?)?.path ==
+                'products/loan-eligibility-calculator/result') {
+              return CreditResult(score: 100);
             } else {
               return LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
@@ -174,6 +181,11 @@ class _PageSectionState extends State<PageSection> {
     RouteConst.NEWS_PAGE,
     RouteConst.ABOUT_PAGE,
     RouteConst.CONTACT_PAGE,
+  ];
+
+  List<RouteConst> productRoutes = [
+    RouteConst.LOAN_PAGE,
+    RouteConst.REPAYMENT_PAGE,
   ];
 
   List<RouteConst> reglogRoutes = [

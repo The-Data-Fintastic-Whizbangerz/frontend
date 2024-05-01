@@ -10,10 +10,10 @@ import '../routes/route_type.dart';
 import 'menu_button.dart';
 
 class TopNavigationMenu extends StatefulWidget {
-  final ValueNotifier<RouteType?> productNotifier;
+  // final ValueNotifier<RouteType?> productNotifier;
   const TopNavigationMenu({
     Key? key,
-    required this.productNotifier,
+    // required this.productNotifier,
   }) : super(key: key);
 
   @override
@@ -31,8 +31,11 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
   List<RouteType> guests = [];
   List<RouteType> reglog = [];
   int getCurrent(List<RouteType> s1, RouteType? s2) {
-    int index = s1.indexWhere((element) => element.path == s2?.path);
-    return index > -1 ? index : 0;
+    print(s1);
+    print(s2);
+    int index =
+        s1.indexWhere((element) => element.path == s2?.path.split('/')[0]);
+    return index > -1 ? index : -1;
   }
 
   @override
@@ -57,7 +60,7 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
             guest_notifier,
             reglog_notifier,
             hoverNotifier,
-            widget.productNotifier
+            // widget.productNotifier
           ],
           builder: (context, values, child) {
             return Container(
@@ -99,8 +102,7 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
                               selected:
                                   getCurrent(guests, guest_notifier.value) ==
                                           index &&
-                                      reglog_notifier.value == null &&
-                                      widget.productNotifier.value == null,
+                                      reglog_notifier.value == null,
                               hasSubMenu:
                                   hoverNotifier.value?.path == 'products',
                               onPressed: () {
@@ -110,26 +112,13 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
                                 );
                                 hoverNotifier.value = null;
                                 reglog_notifier.value = null;
-                                widget.productNotifier.value = null;
-
-                                // context.read<RouteBloc>().add(Guest_RouteEvent(
-                                //     guests: test_guests,
-                                //     notifier: test_notifier));
                                 print('MENUTOP CLICK: ${guest_notifier}');
                               },
                               onHover: (value) {
-                                // test_notifier.value = RouteType(
-                                //   path: test_guests[index].path,
-                                //   source: RouteSource.fromHover,
-                                // );
-
                                 hoverNotifier.value = RouteType(
                                   path: guests[index].path,
                                   source: RouteSource.fromHover,
                                 );
-                                // widget.reglogNotifier.value = null;
-
-                                // print('MENUTOP HOVER: ${test_notifier}');
                               },
                               itemBuilder: (context) {
                                 if (hoverNotifier.value?.path == 'products') {
@@ -138,14 +127,15 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
                                       child:
                                           Text('Loan Eligibility Calculator'),
                                       onTap: () {
-                                        widget.productNotifier.value =
-                                            RouteType(
-                                          path: 'loan-eligibility-calculator',
+                                        hoverNotifier.value = null;
+                                        guest_notifier.value = RouteType(
+                                          path:
+                                              'products/loan-eligibility-calculator',
                                           source: RouteSource.fromClick,
                                         );
-                                        hoverNotifier.value = null;
-                                        guest_notifier.value = null;
                                         reglog_notifier.value = null;
+                                        print(
+                                            'MENUTOP CLICK: ${guest_notifier}');
                                       },
                                     ),
                                     PopupMenuItem(
