@@ -120,14 +120,14 @@ class _PageSectionState extends State<PageSection> {
               );
             }
             // need to be dynamic path
-            else if ((values[0] as RouteType?)?.path ==
+            else if ((values.first as RouteType?)?.path ==
                 'products/loan-eligibility-calculator') {
               return LoanPage();
             }
             // need to call bloc
-            else if ((values[0] as RouteType?)?.path ==
+            else if ((values.first as RouteType?)?.path ==
                 'products/loan-eligibility-calculator/result') {
-              return CreditResult(score: 100);
+              return CreditResult();
             } else {
               return LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {

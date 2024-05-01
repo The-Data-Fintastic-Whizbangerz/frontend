@@ -21,7 +21,7 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
   final List<RouteInitial> routes;
 
   RouteDelegate({required this.routes}) {
-    final test_guest =
+    final level_guest =
         routes.where((route) => route.level == RouteLevel.guest).toList();
     final test_reglog =
         routes.where((route) => route.level == RouteLevel.reglog).toList();
@@ -31,7 +31,7 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
         child: BlocProvider(
           create: (context) => RouteBloc()
             ..add(Guest_RouteEvent(
-              guests: test_guest.map((guest) => guest.type).toList(),
+              guests: level_guest.map((guest) => guest.type).toList(),
               notifier: _guestNotifier,
             ))
             ..add(Reglog_RouteEvent(
@@ -40,12 +40,12 @@ class RouteDelegate extends RouterDelegate<RouteConfiguration>
             )),
           child: BlocConsumer<RouteBloc, RouteState>(
             listener: (context, state) {
-              if (state is Guest_RouteState) {
-                print('DELEGATE guest: ${state.notifier}');
-              }
-              if (state is Reglog_RouteState) {
-                print('DELEGATE reg: ${state.notifier}');
-              }
+              // if (state is Guest_RouteState) {
+              //   print('DELEGATE guest: ${state.notifier}');
+              // }
+              // if (state is Reglog_RouteState) {
+              //   print('DELEGATE reg: ${state.notifier}');
+              // }
             },
             builder: (context, state) {
               return LandingPage();

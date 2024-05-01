@@ -31,3 +31,13 @@ class Account_RouteEvent extends RouteEvent {
     required this.accounts,
   });
 }
+
+class Product_RouteEvent extends RouteEvent {
+  final ValueNotifier<RouteType?> notifier;
+  final double result;
+
+  Product_RouteEvent({
+    required this.notifier,
+    required this.result,
+  });
+}

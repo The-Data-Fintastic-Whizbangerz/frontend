@@ -23,14 +23,13 @@ class RouteParser extends RouteInformationParser<RouteConfiguration> {
       } else {
         return RouteConfiguration.unknown();
       }
-    } else if (uri.pathSegments.length == 2) {
+    } else if (uri.pathSegments.length != 1) {
       print('information');
       final first = uri.pathSegments[0].toLowerCase();
-      // print(first);
-      final second = uri.pathSegments[1].toLowerCase();
-      // print(second);
+      // print(uri.path);
       if (first == 'products') {
-        return RouteConfiguration.guest(guestPath: 'products/$second');
+        return RouteConfiguration.guest(
+            guestPath: uri.path.replaceFirst('/', ''));
       } else {
         return RouteConfiguration.unknown();
       }

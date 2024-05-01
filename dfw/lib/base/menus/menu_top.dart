@@ -32,8 +32,8 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
   List<RouteType> guests = [];
   List<RouteType> reglog = [];
   int getCurrent(List<RouteType> s1, RouteType? s2) {
-    print(s1);
-    print(s2);
+    // print(s1);
+    // print(s2);
     int index =
         s1.indexWhere((element) => element.path == s2?.path.split('/')[0]);
     return index > -1 ? index : -1;
@@ -49,6 +49,9 @@ class _TopNavigationMenuState extends State<TopNavigationMenu> {
         if (state is Guest_RouteState) {
           guests = state.routes;
           guest_notifier = state.notifier;
+          context
+              .read<RouteBloc>()
+              .add(Guest_RouteEvent(guests: guests, notifier: guest_notifier));
         }
         if (state is Reglog_RouteState) {
           reglog = state.routes;

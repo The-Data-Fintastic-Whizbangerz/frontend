@@ -26,14 +26,20 @@ class RouteState extends Equatable {
 class Guest_RouteState extends RouteState {
   final ValueNotifier<RouteType?> notifier;
   Guest_RouteState({required this.notifier, super.routes, super.status});
-
-  // int getCurrent(List<RouteType> s1, RouteType? s2) {
-  //   int index = s1.indexWhere((element) => element.path == s2?.path);
-  //   return index > -1 ? index : 0;
-  // }
 }
 
 class Reglog_RouteState extends RouteState {
   final ValueNotifier<RouteType?> notifier;
   Reglog_RouteState({required this.notifier, super.routes, super.status});
+}
+
+class Product_RouteState extends RouteState {
+  final ValueNotifier<RouteType?> notifier;
+  final double result;
+  Product_RouteState({
+    required this.notifier,
+    required this.result,
+    super.routes,
+    super.status,
+  });
 }

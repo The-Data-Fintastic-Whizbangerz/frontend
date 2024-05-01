@@ -25,6 +25,12 @@ class RouteBloc extends Bloc<RouteEvent, RouteState> {
             routes: event.reglogs,
             status: StatusSucess()));
       }
+      if (event is Product_RouteEvent) {
+        emit(Product_RouteState(
+            result: event.result,
+            notifier: event.notifier,
+            status: StatusSucess()));
+      }
     });
   }
 }
