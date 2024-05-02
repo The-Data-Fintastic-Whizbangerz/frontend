@@ -31,6 +31,10 @@ class RouteBloc extends Bloc<RouteEvent, RouteState> {
             notifier: event.notifier,
             status: StatusSucess()));
       }
+      if (event is Guide_RouteEvent) {
+        emit(Guide_RouteState(
+            crossAxisCount: event.crossAxisCount, status: StatusSucess()));
+      }
     });
   }
 }

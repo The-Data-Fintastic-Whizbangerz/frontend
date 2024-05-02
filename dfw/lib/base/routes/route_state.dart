@@ -33,6 +33,12 @@ class Reglog_RouteState extends RouteState {
   Reglog_RouteState({required this.notifier, super.routes, super.status});
 }
 
+class Guide_RouteState extends RouteState {
+  // final ValueNotifier<RouteType?> notifier;
+  final int crossAxisCount;
+  Guide_RouteState({required this.crossAxisCount, super.routes, super.status});
+}
+
 class Product_RouteState extends RouteState {
   final ValueNotifier<RouteType?> notifier;
   final double result;

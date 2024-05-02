@@ -41,3 +41,11 @@ class Product_RouteEvent extends RouteEvent {
     required this.result,
   });
 }
+
+class Guide_RouteEvent extends RouteEvent {
+  final int crossAxisCount;
+
+  Guide_RouteEvent({
+    required this.crossAxisCount,
+  });
+}
