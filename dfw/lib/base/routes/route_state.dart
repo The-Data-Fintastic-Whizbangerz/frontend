@@ -33,6 +33,11 @@ class Reglog_RouteState extends RouteState {
   Reglog_RouteState({required this.notifier, super.routes, super.status});
 }
 
+class Home_RouteState extends RouteState {
+  final PageController controller;
+  Home_RouteState({required this.controller, super.routes, super.status});
+}
+
 class Guide_RouteState extends RouteState {
   // final ValueNotifier<RouteType?> notifier;
   final int crossAxisCount;

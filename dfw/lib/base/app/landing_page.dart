@@ -26,6 +26,8 @@ class LandingPage extends StatelessWidget {
             stops: [0.1, 0.3, 0.8, 1],
           ),
         ),
+        // need to set initial frame for each platform
+        // constraints: BoxConstraints.expand(),
         child: Column(
           children: [
             TopNavigationMenu(),

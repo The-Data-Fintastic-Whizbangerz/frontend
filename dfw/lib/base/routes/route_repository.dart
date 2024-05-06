@@ -1,6 +1,5 @@
 import '../../pages/about/about_page.dart';
 import '../../pages/contact/contact_page.dart';
-import '../../pages/dashboard/dashboard_page.dart';
 import '../../pages/guide/guide_page.dart';
 import '../../pages/home_page.dart';
 import '../../pages/news/news_page.dart';
@@ -54,9 +53,5 @@ class RouteRepository {
         type: RouteType(path: 'register'),
         level: RouteLevel.reglog,
         widget: SignUpPage()),
-    RouteInitial(
-        type: RouteType(path: 'dashboard'),
-        level: RouteLevel.account,
-        widget: DashboardPage()),
   ];
 }

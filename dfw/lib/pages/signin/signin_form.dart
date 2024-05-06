@@ -1,6 +1,8 @@
 import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/responsiveContext.dart';
 import 'package:flutter/material.dart';
 
+import '../error/construction_page.dart';
+
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
 
@@ -130,7 +132,14 @@ class _SignInFormState extends State<SignInForm> {
           backgroundColor: Colors.black,
         ),
         child: Center(heightFactor: 3, child: Text('Log In')),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ConstructionPage(),
+            ),
+          );
+        },
       ),
     );
   }
@@ -148,11 +157,12 @@ class _SignInFormState extends State<SignInForm> {
         ),
         child: Center(heightFactor: 3, child: Text('Register')),
         onPressed: () {
-          // guestNotifier.value = null;
-          // reglogNotifier.value = RouteType(
-          //   path: 'register',
-          //   source: RouteSelectionSource.fromButtonClick,
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ConstructionPage(),
+            ),
+          );
         },
       ),
     );
@@ -171,11 +181,12 @@ class _SignInFormState extends State<SignInForm> {
         ),
         child: Center(heightFactor: 3, child: Text('Forgot Password')),
         onPressed: () {
-          // guestNotifier.value = null;
-          // reglogNotifier.value = RouteType(
-          //   path: 'register',
-          //   source: RouteSelectionSource.fromButtonClick,
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ConstructionPage(),
+            ),
+          );
         },
       ),
     );

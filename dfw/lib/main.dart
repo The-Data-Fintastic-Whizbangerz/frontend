@@ -12,7 +12,6 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  // final AppRouter? routers;
   const MyApp({
     Key? key,
   }) : super(key: key);
@@ -31,7 +30,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     delegate = RouteDelegate(routes: RouteRepository.routes);
     parser = RouteParser(guests: _guest, reglog: _reglog);
-    // Fluro.setupRouter();
   }
 
   // This widget is the root of your application.

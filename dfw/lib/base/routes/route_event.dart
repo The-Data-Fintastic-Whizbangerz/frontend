@@ -32,6 +32,13 @@ class Account_RouteEvent extends RouteEvent {
   });
 }
 
+class Home_RouteEvent extends RouteEvent {
+  final PageController controller;
+  Home_RouteEvent({
+    required this.controller,
+  });
+}
+
 class Product_RouteEvent extends RouteEvent {
   final ValueNotifier<RouteType?> notifier;
   final double result;

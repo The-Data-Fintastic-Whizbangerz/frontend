@@ -1,10 +1,9 @@
-import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/responsiveContext.dart';
-import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/product/product_list.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gauge_indicator/gauge_indicator.dart';
 
+import "product_list.dart";
+import '../../base/extensions/responsiveContext.dart';
 import '../../base/routes/route_bloc.dart';
 import '../guide/guide_page.dart';
 
@@ -16,6 +15,25 @@ class CreditResult extends StatefulWidget {
   @override
   State<CreditResult> createState() => _CreditResultState();
 }
+
+List<Map<String, dynamic>> creditScores = [
+  {
+    'Poor':
+        'This range means you may have missed several repayments, a bad credit history, and very low income after contextual expenses. Lenders consider individuals in this range as high-risk borrowers, making it challenging to secure a loan. If approved, the credit\'s interest rates might be high and come with unfavourable terms.',
+  },
+  {
+    'Fair':
+        'This range means you may have missed several repayments, a bad credit history, and very low income after contextual expenses, though not as severe as those in the lower range. Lenders may grant loan with high interest rate and less favourable condition compared to those with higher range.',
+  },
+  {
+    'Good':
+        'This range means you may have had a few missed repayments, a fair credit history, and favourable income after contextual expenses. Lenders consider this range as low risk, increasing the likelihood of loan approval with competitive interest rates and more favourable terms.',
+  },
+  {
+    'Excellent':
+        'This range means you have never missed a repayment, possess an excellent credit history, and have high income after contextual expenses. Lenders consider this range extremely low-risk and offer the most favourable interest rates and optimal terms.',
+  },
+];
 
 class _CreditResultState extends State<CreditResult> {
   double score = 0;
@@ -31,7 +49,7 @@ class _CreditResultState extends State<CreditResult> {
       child: Container(
         width: width / 2.5,
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(30),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -39,6 +57,7 @@ class _CreditResultState extends State<CreditResult> {
                 'How does my score mean?',
                 textAlign: TextAlign.center,
                 style: TextStyle(
+                  height: 2,
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
@@ -57,10 +76,11 @@ class _CreditResultState extends State<CreditResult> {
                 ),
               ),
               Text(
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.justify,
-                  "While you won't be completely frozen out from getting credit if you need it, you'll have a limited number of lenders to choose from. It's likely you'll only be able to borrow small amounts of money and will be charged high interest rates."),
+                creditScores[0].values.elementAt(0),
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.justify,
+              ),
               Divider(color: Colors.orange, thickness: 5),
               Text(
                 'Fair (450-600)',
@@ -70,10 +90,11 @@ class _CreditResultState extends State<CreditResult> {
                 ),
               ),
               Text(
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.justify,
-                  "You'll have a few credit providers to choose from if you need to borrow money, but may find your choice is quite limited. You may only be able to borrow small amounts of money at high interest rates."),
+                creditScores[1].values.elementAt(0),
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.justify,
+              ),
               Divider(color: Colors.lightGreen, thickness: 5),
               Text(
                 'Good (600-750)',
@@ -83,10 +104,11 @@ class _CreditResultState extends State<CreditResult> {
                 ),
               ),
               Text(
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.justify,
-                  "If you need credit, you'll have a number of different providers to choose from. While you may have some offers and deals available, it's unlikely that you'll be eligible for the biggest loans."),
+                creditScores[2].values.elementAt(0),
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.justify,
+              ),
               Divider(color: Colors.green, thickness: 5),
               Text(
                 'Excellent (750-900)',
@@ -96,10 +118,11 @@ class _CreditResultState extends State<CreditResult> {
                 ),
               ),
               Text(
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.justify,
-                  "People with scores in this range typically experience easy approval processes when applying for new credit, and they are likely to be offered the best available lending terms, including the lowest interest rates and fees."),
+                creditScores[3].values.elementAt(0),
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.justify,
+              ),
             ],
           ),
         ),
@@ -117,8 +140,7 @@ class _CreditResultState extends State<CreditResult> {
         if (state is Product_RouteState) {
           score = state.result;
         }
-        // context.read<RouteBloc>().add(
-        //     Guide_RouteEvent(crossAxisCount: context.responsive(xs: 3, sm: 2)));
+        ;
         return Scaffold(
           body: Flex(
             direction:

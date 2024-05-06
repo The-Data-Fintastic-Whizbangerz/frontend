@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/error/construction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -141,7 +142,12 @@ class GuideWidget extends StatelessWidget {
                                 ))),
                             InkWell(
                                 onTap: () {
-                                  print(guides[index].values.elementAt(3));
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ConstructionPage(),
+                                    ),
+                                  );
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
