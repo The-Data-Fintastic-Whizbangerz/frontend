@@ -31,3 +31,28 @@ class Account_RouteEvent extends RouteEvent {
     required this.accounts,
   });
 }
+
+class Home_RouteEvent extends RouteEvent {
+  final PageController controller;
+  Home_RouteEvent({
+    required this.controller,
+  });
+}
+
+class Product_RouteEvent extends RouteEvent {
+  final ValueNotifier<RouteType?> notifier;
+  final double result;
+
+  Product_RouteEvent({
+    required this.notifier,
+    required this.result,
+  });
+}
+
+class Guide_RouteEvent extends RouteEvent {
+  final int crossAxisCount;
+
+  Guide_RouteEvent({
+    required this.crossAxisCount,
+  });
+}

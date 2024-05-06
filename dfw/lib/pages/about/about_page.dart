@@ -25,22 +25,17 @@ class _AboutWidgetState extends State<AboutWidget> {
     final height = MediaQuery.of(context).size.height;
 
     Widget avatar_circle({required String image, required String name}) {
-      return Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: width / 50, vertical: height / 100),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: width /
-                  context.responsive(xs: 8, sm: 10, md: 14, lg: 18, xl: 22),
-              backgroundColor: Colors.black26,
-              foregroundColor: Colors.white,
-              backgroundImage: AssetImage(image),
-            ),
-            Container(margin: EdgeInsets.all(10), child: Text(name))
-          ],
-        ),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            radius: width / context.responsive(xs: 9, sm: 12, md: 18, lg: 24),
+            backgroundColor: Colors.black26,
+            foregroundColor: Colors.white,
+            backgroundImage: AssetImage(image),
+          ),
+          Container(margin: EdgeInsets.all(10), child: Text(name))
+        ],
       );
     }
 
@@ -56,7 +51,7 @@ class _AboutWidgetState extends State<AboutWidget> {
             ),
             Text(
                 textAlign: TextAlign.center,
-                'At LoanWise, we envision a future where accessing financial solutions is straightforward and empowering for everyone.'),
+                'At CreditWise, we envision a future where accessing financial solutions is straightforward and empowering for everyone.'),
             Text(
                 textAlign: TextAlign.center,
                 'Our mission is to provide users a seamless loan process experience, tailored to your needs, while priortising your data privacy and security.'),
@@ -77,20 +72,21 @@ class _AboutWidgetState extends State<AboutWidget> {
             Expanded(
                 flex: 3,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      'Meet Our Team',
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                    ),
+                    Text('Meet Our Team',
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
                         profiles.length - 2,
-                        (index) => avatar_circle(
-                          image: profiles[index].values.elementAt(0),
-                          name: profiles[index].values.elementAt(1),
+                        (index) => Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: avatar_circle(
+                            image: profiles[index].values.elementAt(0),
+                            name: profiles[index].values.elementAt(1),
+                          ),
                         ),
                       ),
                     ),
@@ -98,9 +94,12 @@ class _AboutWidgetState extends State<AboutWidget> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
                         profiles.length - 3,
-                        (index) => avatar_circle(
-                          image: profiles[index + 3].values.elementAt(0),
-                          name: profiles[index + 3].values.elementAt(1),
+                        (index) => Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: avatar_circle(
+                            image: profiles[index + 3].values.elementAt(0),
+                            name: profiles[index + 3].values.elementAt(1),
+                          ),
                         ),
                       ),
                     ),

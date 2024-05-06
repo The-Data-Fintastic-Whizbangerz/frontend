@@ -8,7 +8,7 @@ class RouteInitial extends Equatable {
   final RouteLevel level;
   final Widget? widget;
 
-  const RouteInitial({
+  RouteInitial({
     required this.type,
     required this.level,
     this.widget,
@@ -22,10 +22,6 @@ class RouteInitial extends Equatable {
       widget,
     ];
   }
-
-  // List<RouteFloor> get floor {
-  //   return category.item.values.single;
-  // }
 }
 
 enum RouteStatus { public, protected, private }

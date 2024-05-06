@@ -1,10 +1,14 @@
 import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/string.dart';
+import 'package:The_Data_Fintastic_Whizbangerz_Group/base/routes/route_repository.dart';
 import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/product/credit_result.dart';
 import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/product/service/product_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../base/models/creditForm.dart';
+import '../../base/routes/route_bloc.dart';
+import '../../base/routes/route_initial.dart';
+import '../../base/routes/route_type.dart';
 import '/base/extensions/responsiveContext.dart';
 import '/base/extensions/themes.dart';
 import '/pages/product/loan_page.dart';
@@ -56,7 +60,11 @@ class _ProductWidgetState extends State<ProductWidget> {
   final ScrollController _controller = ScrollController();
   late bool isScrollEnd = false;
   final _formKey = GlobalKey<FormState>();
-  // String? result;
+  ValueNotifier<RouteType?> guest_notifier = ValueNotifier(null);
+
+  final level_guest = RouteRepository.routes
+      .where((route) => route.level == RouteLevel.guest)
+      .toList();
 
   @override
   void initState() {
@@ -130,7 +138,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     ],
                   ),
                   Text(
-                    'At LoanWise, safeguarding your data privacy is paramount. We will not save or utilise any personal details provided for any purposes beyond what is intended. We are committed to ensuring your information remains secure and confidential.',
+                    'At CreditWise, safeguarding your data privacy is paramount. We will not save or utilise any personal details provided for any purposes beyond what is intended. We are committed to ensuring your information remains secure and confidential.',
                     style: TextStyle(
                       fontSize: 10,
                       height: 1.5,
@@ -378,34 +386,55 @@ class _ProductWidgetState extends State<ProductWidget> {
   }
 
   Widget _submit() {
-    return TextButton(
-      onPressed: () async {
-        // print(creditForm.toJson());
-        // ProductRepository.instance.testAPI();
+    return BlocConsumer<RouteBloc, RouteState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return ValueListenableBuilder(
+          valueListenable: guest_notifier,
+          builder: (context, values, child) {
+            if (state is Guest_RouteState) {
+              guest_notifier = state.notifier;
+            }
+            return TextButton(
+              onPressed: () async {
+                // print(creditForm.toJson());
+                // ProductRepository.instance.testAPI();
 
-        double result = await ProductRepository.instance.submitData(
-          creditAmount: creditForm.creditAmount,
-          duration: creditForm.duration,
-          purpose: creditForm.purpose,
-          disposible: creditForm.disposible,
-          numExistCredit: creditForm.numExistCredit,
-          statusExistCredit: creditForm.statusExistCredit,
-          creditHistory: creditForm.creditHistory,
-          isOtherPlans: creditForm.isOtherPlans,
-          isEmployed: creditForm.isEmployed,
-          employLength: creditForm.employLength,
-          housing: creditForm.housing,
-          numChild: creditForm.numChild,
+                double result = await ProductRepository.instance.submitData(
+                  creditAmount: creditForm.creditAmount,
+                  duration: creditForm.duration,
+                  purpose: creditForm.purpose,
+                  disposible: creditForm.disposible,
+                  numExistCredit: creditForm.numExistCredit,
+                  statusExistCredit: creditForm.statusExistCredit,
+                  creditHistory: creditForm.creditHistory,
+                  isOtherPlans: creditForm.isOtherPlans,
+                  isEmployed: creditForm.isEmployed,
+                  employLength: creditForm.employLength,
+                  housing: creditForm.housing,
+                  numChild: creditForm.numChild,
+                );
+                if (_formKey.currentState!.validate()) {
+                  guest_notifier.value = RouteType(
+                    path: 'products/loan-eligibility-calculator/result',
+                    source: RouteSource.fromClick,
+                  );
+
+                  context.read<RouteBloc>().add(Product_RouteEvent(
+                        notifier: guest_notifier,
+                        result: result,
+                      ));
+                  print('PAGE CLICK: ${guest_notifier}');
+                }
+              },
+              child: Text('Check my eligibility'),
+              style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.purple[400]),
+            );
+          },
         );
-
-        if (_formKey.currentState!.validate()) {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => CreditResult(score: result)));
-        }
       },
-      child: Text('Check my eligibility'),
-      style: TextButton.styleFrom(
-          foregroundColor: Colors.white, backgroundColor: Colors.purple[400]),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/responsiveContext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../base/utils/authentications/auth_bloc.dart';
@@ -22,12 +23,7 @@ class SignInWidget extends StatelessWidget {
     double ratio = MediaQuery.of(context).size.aspectRatio;
     return Container(
       color: Colors.black26,
-      child: Container(
-        margin:
-            EdgeInsets.symmetric(horizontal: ratio * 200, vertical: ratio * 80),
-        // color: Colors.amber,
-        child: SignInForm(),
-      ),
+      child: SignInForm(),
     );
   }
 }

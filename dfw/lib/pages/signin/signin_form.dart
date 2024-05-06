@@ -1,4 +1,7 @@
+import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/responsiveContext.dart';
 import 'package:flutter/material.dart';
+
+import '../error/construction_page.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -18,24 +21,29 @@ class _SignInFormState extends State<SignInForm> {
 
   @override
   Widget build(BuildContext context) {
-    double ratio = MediaQuery.of(context).size.aspectRatio;
     return Form(
       key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
-          Text(
-            'Credit Wise',
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 60 * ratio,
-                fontWeight: FontWeight.bold),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Credit Wise',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize:
+                        context.responsive(xs: 30, sm: 40, md: 50, lg: 60),
+                    fontWeight: FontWeight.bold),
+              ),
+              _usernameField(),
+              _passwordField(),
+              _loginButton(),
+              _registerButton(),
+            ],
           ),
-          _usernameField(),
-          _passwordField(),
-          _loginButton(),
-          _registerButton(),
+          _forgotPasswordButton(),
         ],
       ),
     );
@@ -44,6 +52,8 @@ class _SignInFormState extends State<SignInForm> {
   Widget _usernameField() {
     return Container(
       height: 50.0,
+      width: MediaQuery.of(context).size.width /
+          context.responsive(xs: 1.5, sm: 2, md: 3, lg: 4, xl: 6),
       margin: EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
         color: Colors.white60,
@@ -58,7 +68,7 @@ class _SignInFormState extends State<SignInForm> {
           border: InputBorder.none,
           prefixIcon: Icon(Icons.email),
           hintText: 'Enter Email',
-          contentPadding: EdgeInsets.only(top: 15),
+          contentPadding: EdgeInsets.only(top: 12),
         ),
         keyboardType: TextInputType.emailAddress,
         validator: (value) {
@@ -76,6 +86,8 @@ class _SignInFormState extends State<SignInForm> {
   Widget _passwordField() {
     return Container(
       height: 50.0,
+      width: MediaQuery.of(context).size.width /
+          context.responsive(xs: 1.5, sm: 2, md: 3, lg: 4, xl: 6),
       margin: EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
         color: Colors.white60,
@@ -94,7 +106,7 @@ class _SignInFormState extends State<SignInForm> {
               icon: Icon(Icons.remove_red_eye),
             ),
             prefixIcon: Icon(Icons.remove_red_eye),
-            contentPadding: const EdgeInsets.only(top: 18.0),
+            contentPadding: const EdgeInsets.only(top: 12.0),
             hintText: 'Enter Password',
           ),
           validator: (value) {
@@ -111,13 +123,23 @@ class _SignInFormState extends State<SignInForm> {
   Widget _loginButton() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
+      height: 40.0,
+      width: MediaQuery.of(context).size.width /
+          context.responsive(xs: 1.5, sm: 2, md: 3, lg: 4, xl: 6),
       child: TextButton(
         style: TextButton.styleFrom(
           foregroundColor: Colors.white,
           backgroundColor: Colors.black,
         ),
         child: Center(heightFactor: 3, child: Text('Log In')),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ConstructionPage(),
+            ),
+          );
+        },
       ),
     );
   }
@@ -125,18 +147,46 @@ class _SignInFormState extends State<SignInForm> {
   Widget _registerButton() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
+      height: 40.0,
+      width: MediaQuery.of(context).size.width /
+          context.responsive(xs: 1.5, sm: 2, md: 3, lg: 4, xl: 6),
       child: TextButton(
         style: TextButton.styleFrom(
-          foregroundColor: Colors.black,
+          foregroundColor: Colors.white,
           backgroundColor: Colors.transparent,
         ),
         child: Center(heightFactor: 3, child: Text('Register')),
         onPressed: () {
-          // guestNotifier.value = null;
-          // reglogNotifier.value = RouteType(
-          //   path: 'register',
-          //   source: RouteSelectionSource.fromButtonClick,
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ConstructionPage(),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _forgotPasswordButton() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 5),
+      height: 40.0,
+      width: MediaQuery.of(context).size.width /
+          context.responsive(xs: 1.5, sm: 2, md: 3, lg: 4, xl: 6),
+      child: TextButton(
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
+        ),
+        child: Center(heightFactor: 3, child: Text('Forgot Password')),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ConstructionPage(),
+            ),
+          );
         },
       ),
     );

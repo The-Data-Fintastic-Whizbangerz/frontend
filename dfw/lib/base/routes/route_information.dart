@@ -23,13 +23,13 @@ class RouteParser extends RouteInformationParser<RouteConfiguration> {
       } else {
         return RouteConfiguration.unknown();
       }
-      // testing only for products??? need change global
-    } else if (uri.pathSegments.length == 2) {
-      print('object');
+    } else if (uri.pathSegments.length != 1) {
+      print('information');
       final first = uri.pathSegments[0].toLowerCase();
-      final second = uri.pathSegments[1].toLowerCase();
+      // print(uri.path);
       if (first == 'products') {
-        return RouteConfiguration.product(productPath: second);
+        return RouteConfiguration.guest(
+            guestPath: uri.path.replaceFirst('/', ''));
       } else {
         return RouteConfiguration.unknown();
       }
@@ -43,16 +43,18 @@ class RouteParser extends RouteInformationParser<RouteConfiguration> {
     if (configuration.isUnknown) {
       return RouteInformation(location: '/unknown');
     } else if (configuration.isPage) {
+      print('configuration.isPage');
       return RouteInformation(
         location: '/${configuration.guestPath}',
       );
     } else if (configuration.isReglog) {
+      print('configuration.isReglog');
       return RouteInformation(
         location: '/${configuration.reglogPath}',
       );
     } else if (configuration.isProductsPage) {
-      return RouteInformation(
-          location: '/products/${configuration.productPath}');
+      print('configuration.isProductsPage');
+      return RouteInformation(location: '/${configuration.guestPath}');
     } else {
       return null;
     }

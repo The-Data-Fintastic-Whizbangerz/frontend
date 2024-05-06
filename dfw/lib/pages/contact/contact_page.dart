@@ -1,7 +1,9 @@
 import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/responsiveContext.dart';
 import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/themes.dart';
 import 'package:The_Data_Fintastic_Whizbangerz_Group/pages/product/product_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 List<String> companies = [
@@ -74,19 +76,22 @@ class ContactPage extends StatelessWidget {
     Widget part(List<String> list) {
       return Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.only(top: context.responsive(xs: 10, sm: 30)),
+        padding: EdgeInsets.only(top: context.responsive(xs: 0, sm: 30)),
         child: Column(
           children: [
             textOnly(text: list[0], isTitle: true),
-            Flex(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                direction:
-                    context.responsive(xs: Axis.horizontal, sm: Axis.vertical),
-                children: List.generate(
-                    list.length - 1,
-                    (index) =>
-                        textOnly(text: list[index + 1], isTitle: false))),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Flex(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  direction: context.responsive(
+                      xs: Axis.horizontal, sm: Axis.vertical),
+                  children: List.generate(
+                      list.length - 1,
+                      (index) =>
+                          textOnly(text: list[index + 1], isTitle: false))),
+            ),
           ],
         ),
       );
@@ -103,7 +108,7 @@ class ContactPage extends StatelessWidget {
             flex: 3,
             child: Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.only(top: context.responsive(xs: 10, sm: 30)),
+              padding: EdgeInsets.only(top: context.responsive(xs: 0, sm: 30)),
               child: Column(children: [
                 textOnly(text: 'Newletters', isTitle: true),
                 textOnly(

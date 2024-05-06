@@ -2,6 +2,8 @@ import 'package:The_Data_Fintastic_Whizbangerz_Group/base/extensions/responsiveC
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../error/construction_page.dart';
+
 List<Map<String, dynamic>> news = [
   {
     'image':
@@ -71,7 +73,14 @@ class NewsPage extends StatelessWidget {
                     child: Center(
                         child: Text('Read More...',
                             style: TextStyle(color: Colors.black))),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ConstructionPage(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -126,7 +135,12 @@ class NewsPage extends StatelessWidget {
                               ))),
                           InkWell(
                               onTap: () {
-                                print(news[index].values.elementAt(3));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ConstructionPage(),
+                                  ),
+                                );
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
